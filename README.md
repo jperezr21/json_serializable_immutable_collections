@@ -16,11 +16,11 @@ Currently supported:
 
 ## How to use
 
-Add to your dev_dependencies:
+Add to your dev_dependencies (package is not published on pub.dev yet, I might find a better name):
 
     immutable_json_list_builder:
       git:
-        url: https://github.com/knaeckeKami/immutable_json_list_serializer.gitAdd to your build.yaml:
+        url: https://github.com/knaeckeKami/immutable_json_list_serializer.git
         ref: master
 
 Add to your build.yaml:
