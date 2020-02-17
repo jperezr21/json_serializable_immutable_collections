@@ -16,8 +16,12 @@ Currently supported:
 
 ## How to use
 
-Add to your build.yaml:
+Add to your dev_dependencies:
 
+    immutable_json_list_builder:
+      git:
+        url: https://github.com/knaeckeKami/immutable_json_list_serializer.gitAdd to your build.yaml:
+        ref: master
 
     targets:
       $default:
