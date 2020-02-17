@@ -1,0 +1,28 @@
+targets:
+  $default:
+    builders:
+      immutable_json_list_builder:
+        options:
+          explicit_to_json: true
+        generate_for:
+          include:
+            - lib/**
+            - test/**
+      json_serializable:json_serializable:
+        options:
+          explicit_to_json: true
+        generate_for:
+          include:
+          exclude:
+            - test/**
+            - lib/**
+
+
+builders:
+  immutable_json_list_builder:
+    import: "package:immutable_json_list_builder/builder.dart"
+    builder_factories: ["jsonSerializable"]
+    build_extensions: {".dart": ["json_serializable.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
