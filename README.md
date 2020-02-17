@@ -1,14 +1,35 @@
 # immutable_json_list_builder
 
-A new Flutter package.
+(De-)Serialize more collections using json_serializable.
 
-## Getting Started
+Very early status.
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+## Features:
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Behaves like json_serializable, but supports more collections.
+
+Currently supported:
+
+- BuiltList
+- BuiltSet
+
+
+## How to use
+
+Add to your build.yaml:
+
+
+    targets:
+      $default:
+        builders:
+          immutable_json_list_builder:
+            # configure your options here, same as json_serializable
+            options:
+              explicit_to_json: true
+          json_serializable:json_serializable:
+            generate_for:
+              # exclude everyting, this lib uses a custom builder 
+              include:
+              exclude:
+                - test/**
+                - lib/**
