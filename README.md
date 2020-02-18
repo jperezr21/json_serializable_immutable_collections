@@ -16,7 +16,6 @@ Currently supported:
 
 TODO:
 
-- BuiltMap
 - potentially other immutable collections, like kt.dart.
 
 ## How to use
