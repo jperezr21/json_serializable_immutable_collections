@@ -12,7 +12,12 @@ Currently supported:
 
 - BuiltList
 - BuiltSet
+- BuiltMap
 
+TODO:
+
+- BuiltMap
+- potentially other immutable collections, like kt.dart.
 
 ## How to use
 

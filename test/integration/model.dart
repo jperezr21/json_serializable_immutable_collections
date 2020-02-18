@@ -7,9 +7,12 @@ part 'model.g.dart';
 class MyModel {
   const MyModel(
       {this.myList,
+      this.builtMapString,
       this.myString,
       this.myNested,
       this.normalList,
+      this.builtMap,
+      this.builtMapNested,
       this.normalSet});
 
   final BuiltList<int> myList;
@@ -21,6 +24,12 @@ class MyModel {
   final List<String> normalList;
 
   final Set<String> normalSet;
+
+  final BuiltMap<int, String> builtMap;
+
+  final BuiltMap<String, String> builtMapString;
+
+  final BuiltMap<int, Nested> builtMapNested;
 
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
@@ -34,7 +43,7 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet}';
+    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested}';
   }
 }
 
