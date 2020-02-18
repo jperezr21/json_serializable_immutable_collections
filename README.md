@@ -2,8 +2,6 @@
 
 (De-)Serialize more collections using json_serializable.
 
-Very early status.
-
 ## Features:
 
 Behaves like json_serializable, but supports more collections.
