@@ -8,6 +8,7 @@ Behaves like json_serializable, but supports more collections.
 
 Currently supported:
 
+- All types supporte by json_serializable
 - BuiltList
 - BuiltSet
 - BuiltMap
