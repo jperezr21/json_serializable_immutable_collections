@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:kt_dart/collection.dart';
 
 part 'model.g.dart';
 
@@ -13,7 +14,16 @@ class MyModel {
       this.normalList,
       this.builtMap,
       this.builtMapNested,
-      this.normalSet});
+      this.nullList,
+      this.nullMap,
+      this.nullSet,
+      this.normalSet,
+      this.nestedKtList,
+      this.nestedKtSet,
+      this.nullKtList,
+      this.nullKtSet,
+      this.stringKtList,
+      this.stringKtSet});
 
   final BuiltList<int> myList;
 
@@ -31,6 +41,24 @@ class MyModel {
 
   final BuiltMap<int, Nested> builtMapNested;
 
+  final BuiltList<String> nullList;
+
+  final BuiltSet<String> nullSet;
+
+  final BuiltMap<String, String> nullMap;
+
+  final KtList<String> stringKtList;
+
+  final KtSet<String> stringKtSet;
+
+  final KtList<Nested> nestedKtList;
+
+  final KtSet<Nested> nestedKtSet;
+
+  final KtList<String> nullKtList;
+
+  final KtSet<String> nullKtSet;
+
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
 
@@ -43,7 +71,7 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested}';
+    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringKtList: $stringKtList, stringKtSet: $stringKtSet, nestedKtList: $nestedKtList, nestedKtSet: $nestedKtSet, nullKtList: $nullKtList, nullKtSet: $nullKtSet}';
   }
 }
 

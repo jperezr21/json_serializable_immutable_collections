@@ -11,8 +11,16 @@ import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
 import 'package:json_serializable/src/type_helpers/to_from_string.dart';
+import 'package:analyzer/src/dart/element/type.dart' show InterfaceTypeImpl;
 
 import 'package:built_collection/built_collection.dart';
+
+String wrapNullableIfNecessary(String expression, String output, bool nullable){
+  if(!nullable){
+    return output;
+  }
+  return expression + " != null ? " + output + " : null";
+}
 
 class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
   const BuiltIterableTypeHelper();
@@ -42,7 +50,7 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
     // anything fancy
     if (closureArg == itemSubVal &&
         builtListTypeChecker.isExactlyType(targetType)) {
-      return '($output).toBuiltList()';
+      return wrapNullableIfNecessary(expression, '($output).toBuiltList()' , context.nullable );
     }
 
     output = '($output)';
@@ -55,12 +63,12 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
     }
 
     if (builtListTypeChecker.isExactlyType(targetType)) {
-      output += '$optionalQuestion.toBuiltList()';
+      output += '.toBuiltList()';
     } else if (builtSetTypeChecker.isExactlyType(targetType)) {
-      output += '$optionalQuestion.toBuiltSet()';
+      output += '.toBuiltSet()';
     }
 
-    return output;
+    return wrapNullableIfNecessary(expression,output, context.nullable);
   }
 }
 
@@ -86,14 +94,15 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
         _forType(keyType)?.serialize(keyType, _keyParam, false) ??
             context.serialize(keyType, _keyParam);
 
-    if (closureArg == subFieldValue && _keyParam == subKeyValue) {
-      return expression+ ".toMap()";
-    }
-
     final optionalQuestion = context.nullable ? '?' : '';
 
+    if (closureArg == subFieldValue && _keyParam == subKeyValue) {
+      return expression +  optionalQuestion + ".toMap()";
+    }
+
+
     return '$expression$optionalQuestion'
-        '.toMap().map(($_keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
+        '.toMap()$optionalQuestion.map(($_keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
   }
 
   @override
@@ -106,7 +115,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
 
-    final prefix =
+    var prefix =
         "BuiltMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.of";
 
     _checkSafeKeyType(expression, keyArg);
@@ -118,12 +127,12 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
       if (valueArgIsAny) {
         if (context.config.anyMap) {
           if (_isObjectOrDynamic(keyArg)) {
-            return '$prefix($expression as Map)';
+            return wrapNullableIfNecessary(expression,'$prefix($expression as Map)', context.nullable);
           }
         } else {
           // this is the trivial case. Do a runtime cast to the known type of JSON
           // map values - `Map<String, dynamic>`
-          return 'BuiltList<String,dynamic>.of($expression as Map<String, dynamic>)';
+          return wrapNullableIfNecessary(expression,'BuiltList<String,dynamic>.of($expression as Map<String, dynamic>)', context.nullable);
         }
       }
 
@@ -131,7 +140,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
           (valueArgIsAny ||
               simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
         // No mapping of the values or null check required!
-        return 'BuiltList<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))';
+        return wrapNullableIfNecessary(expression,'BuiltList<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))' ,context.nullable);
       }
     }
 
@@ -140,7 +149,6 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
 
     final itemSubVal = context.deserialize(valueArg, closureArg);
 
-    final optionalQuestion = context.nullable ? '?' : '';
 
     final mapCast =
         context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
@@ -159,8 +167,8 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
       keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true);
     }
 
-    return '$prefix(($expression $mapCast)$optionalQuestion.map('
-        '($_keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))';
+    return wrapNullableIfNecessary(expression,'$prefix(($expression $mapCast).map('
+        '($_keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))', context.nullable);
   }
 }
 
