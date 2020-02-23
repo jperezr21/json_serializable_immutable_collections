@@ -29,10 +29,11 @@ Builder jsonSerializable(BuilderOptions options) {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
       JsonSerializableGenerator.withDefaultHelpers(
-        [
+        const [
           BuiltIterableTypeHelper(),
           BuiltMapTypeHelper(),
-          KtIterableTypeHelper()
+          KtIterableTypeHelper(),
+          KtMapTypeHelper()
         ],
         config: config,
       ),

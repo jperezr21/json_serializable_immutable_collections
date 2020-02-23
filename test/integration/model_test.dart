@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:test/test.dart';
-
 import 'model.dart';
 
 final model = MyModel(
@@ -24,6 +23,14 @@ final model = MyModel(
   nestedKtSet: KtSet.from([Nested(1)]),
   nullKtList: null,
   nullKtSet: null,
+  dynamicMap: BuiltMap<String, Object>.of({
+    "a": 1,
+    "b": "string",
+  }),
+  stringKtMap: KtMap.from({"a": "a"}),
+  nestedKtMap: KtMap.from({"a": Nested(0)}),
+  nullKtMap: null,
+  dynamicKtMap: KtMap.from({"a": "a", "b": 1, "c": null}),
 );
 
 const jsonMapExpected = {
@@ -52,6 +59,16 @@ const jsonMapExpected = {
   ],
   "nullKtList": null,
   "nullKtSet": null,
+  "dynamicMap": {
+    "a": 1,
+    "b": "string",
+  },
+  "stringKtMap": {"a": "a"},
+  "nestedKtMap": {
+    "a": {"a": 0}
+  },
+  "nullKtMap": null,
+  "dynamicKtMap": {"a": "a", "b": 1, "c": null},
 };
 
 void main() {

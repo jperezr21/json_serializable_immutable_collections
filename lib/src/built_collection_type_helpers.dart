@@ -3,6 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:analyzer/dart/element/type.dart';
+import 'package:immutable_json_list_builder/src/utils.dart';
+import 'package:immutable_json_list_builder/src/wrap_nullable.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
 
@@ -15,12 +17,7 @@ import 'package:analyzer/src/dart/element/type.dart' show InterfaceTypeImpl;
 
 import 'package:built_collection/built_collection.dart';
 
-String wrapNullableIfNecessary(String expression, String output, bool nullable){
-  if(!nullable){
-    return output;
-  }
-  return expression + " != null ? " + output + " : null";
-}
+
 
 class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
   const BuiltIterableTypeHelper();
@@ -87,22 +84,22 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
     final keyType = args[0];
     final valueType = args[1];
 
-    _checkSafeKeyType(expression, keyType);
+    checkSafeKeyType(expression, keyType);
 
     final subFieldValue = context.serialize(valueType, closureArg);
     final subKeyValue =
-        _forType(keyType)?.serialize(keyType, _keyParam, false) ??
-            context.serialize(keyType, _keyParam);
+        forType(keyType)?.serialize(keyType, keyParam, false) ??
+            context.serialize(keyType, keyParam);
 
     final optionalQuestion = context.nullable ? '?' : '';
 
-    if (closureArg == subFieldValue && _keyParam == subKeyValue) {
+    if (closureArg == subFieldValue && keyParam == subKeyValue) {
       return expression +  optionalQuestion + ".toMap()";
     }
 
 
     return '$expression$optionalQuestion'
-        '.toMap()$optionalQuestion.map(($_keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
+        '.toMap()$optionalQuestion.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
   }
 
   @override
@@ -118,21 +115,21 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
     var prefix =
         "BuiltMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.of";
 
-    _checkSafeKeyType(expression, keyArg);
+    checkSafeKeyType(expression, keyArg);
 
-    final valueArgIsAny = _isObjectOrDynamic(valueArg);
-    final isKeyStringable = _isKeyStringable(keyArg);
+    final valueArgIsAny = isObjectOrDynamic(valueArg);
+    final keyStringable = isKeyStringable(keyArg);
 
-    if (!isKeyStringable) {
+    if (!keyStringable) {
       if (valueArgIsAny) {
         if (context.config.anyMap) {
-          if (_isObjectOrDynamic(keyArg)) {
+          if (isObjectOrDynamic(keyArg)) {
             return wrapNullableIfNecessary(expression,'$prefix($expression as Map)', context.nullable);
           }
         } else {
           // this is the trivial case. Do a runtime cast to the known type of JSON
           // map values - `Map<String, dynamic>`
-          return wrapNullableIfNecessary(expression,'BuiltList<String,dynamic>.of($expression as Map<String, dynamic>)', context.nullable);
+          return wrapNullableIfNecessary(expression,'BuiltMap<String,Object>.of($expression as Map<String, dynamic>)', context.nullable);
         }
       }
 
@@ -140,7 +137,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
           (valueArgIsAny ||
               simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
         // No mapping of the values or null check required!
-        return wrapNullableIfNecessary(expression,'BuiltList<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))' ,context.nullable);
+        return wrapNullableIfNecessary(expression,'BuiltMap<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))' ,context.nullable);
       }
     }
 
@@ -155,68 +152,25 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
 
     String keyUsage;
     if (isEnum(keyArg)) {
-      keyUsage = context.deserialize(keyArg, _keyParam).toString();
-    } else if (context.config.anyMap && !_isObjectOrDynamic(keyArg)) {
-      keyUsage = '$_keyParam as String';
+      keyUsage = context.deserialize(keyArg, keyParam).toString();
+    } else if (context.config.anyMap && !isObjectOrDynamic(keyArg)) {
+      keyUsage = '$keyParam as String';
     } else {
-      keyUsage = _keyParam;
+      keyUsage = keyParam;
     }
 
-    final toFromString = _forType(keyArg);
+    final toFromString = forType(keyArg);
     if (toFromString != null) {
       keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true);
     }
 
     return wrapNullableIfNecessary(expression,'$prefix(($expression $mapCast).map('
-        '($_keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))', context.nullable);
+        '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))', context.nullable);
   }
 }
 
-final _intString = ToFromStringHelper('int.parse', 'toString()', 'int');
 
-/// [ToFromStringHelper] instances representing non-String types that can
-/// be used as [Map] keys.
-final _instances = [
-  bigIntString,
-  dateTimeString,
-  _intString,
-  uriString,
-];
 
-ToFromStringHelper _forType(DartType type) =>
-    _instances.singleWhere((i) => i.matches(type), orElse: () => null);
-
-bool _isObjectOrDynamic(DartType type) => type.isObject || type.isDynamic;
-
-/// Returns `true` if [keyType] can be automatically converted to/from String –
-/// and is therefor usable as a key in a [Map].
-bool _isKeyStringable(DartType keyType) =>
-    isEnum(keyType) || _instances.any((inst) => inst.matches(keyType));
-
-void _checkSafeKeyType(String expression, DartType keyArg) {
-  // We're not going to handle converting key types at the moment
-  // So the only safe types for key are dynamic/Object/String/enum
-  final safeKey = _isObjectOrDynamic(keyArg) ||
-      coreStringTypeChecker.isExactlyType(keyArg) ||
-      _isKeyStringable(keyArg);
-
-  if (!safeKey) {
-    throw UnsupportedTypeError(keyArg, expression,
-        'Map keys must be one of: ${_allowedTypeNames.join(', ')}.');
-  }
-}
-
-/// The names of types that can be used as [Map] keys.
-///
-/// Used in [_checkSafeKeyType] to provide a helpful error with unsupported
-/// types.
-Iterable<String> get _allowedTypeNames => const [
-      'Object',
-      'dynamic',
-      'enum',
-      'String',
-    ].followedBy(_instances.map((i) => i.coreTypeName));
-const _keyParam = 'k';
 
 final builtListTypeChecker = TypeChecker.fromRuntime(BuiltList);
 final builtSetTypeChecker = TypeChecker.fromRuntime(BuiltSet);

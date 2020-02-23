@@ -20,6 +20,10 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
     myString: json['myString'] != null
         ? (json['myString'] as List)?.map((e) => e as String).toBuiltSet()
         : null,
+    dynamicMap: json['dynamicMap'] != null
+        ? BuiltMap<String, Object>.of(
+            json['dynamicMap'] as Map<String, dynamic>)
+        : null,
     myNested: json['myNested'] != null
         ? (json['myNested'] as List)
             ?.map((e) =>
@@ -77,6 +81,26 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
         ? KtSet<String>.from(
             (json['stringKtSet'] as List).map((e) => e as String))
         : null,
+    nestedKtMap: json['nestedKtMap'] != null
+        ? KtMap<String, Nested>.from(
+            (json['nestedKtMap'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k,
+                e == null ? null : Nested.fromJson(e as Map<String, dynamic>)),
+          ))
+        : null,
+    stringKtMap: json['stringKtMap'] != null
+        ? KtMap<String, String>.from(
+            (json['stringKtMap'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e as String),
+          ))
+        : null,
+    nullKtMap: json['nullKtMap'] != null
+        ? KtMap<String, dynamic>.from(json['nullKtMap'] as Map<String, dynamic>)
+        : null,
+    dynamicKtMap: json['dynamicKtMap'] != null
+        ? KtMap<String, dynamic>.from(
+            json['dynamicKtMap'] as Map<String, dynamic>)
+        : null,
   );
 }
 
@@ -103,6 +127,13 @@ Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
           instance.nestedKtSet?.map((e) => e?.toJson())?.iter?.toList(),
       'nullKtList': instance.nullKtList?.asList(),
       'nullKtSet': instance.nullKtSet?.iter?.toList(),
+      'dynamicMap': instance.dynamicMap?.toMap(),
+      'nestedKtMap': instance.nestedKtMap
+          ?.asMap()
+          ?.map((k, e) => MapEntry(k, e?.toJson())),
+      'stringKtMap': instance.stringKtMap?.asMap(),
+      'nullKtMap': instance.nullKtMap?.asMap(),
+      'dynamicKtMap': instance.dynamicKtMap?.asMap(),
     };
 
 Nested _$NestedFromJson(Map<String, dynamic> json) {

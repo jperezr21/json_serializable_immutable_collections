@@ -1,24 +1,28 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:immutable_json_list_builder/src/built_collection_type_helpers.dart';
+import 'package:immutable_json_list_builder/src/utils.dart';
+import 'package:immutable_json_list_builder/src/wrap_nullable.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
-
+import 'package:immutable_json_list_builder/src/utils.dart';
 import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
-import 'package:json_serializable/src/type_helpers/to_from_string.dart';
 
 import "package:kt_dart/collection.dart";
 
 const ktIterableTypeChecker = TypeChecker.fromRuntime(KtIterable);
 const ktListTypeChecker = TypeChecker.fromRuntime(KtList);
 const ktSetTypeChecker = TypeChecker.fromRuntime(KtSet);
+const ktMapTypeChecker = TypeChecker.fromRuntime(KtMap);
 
 DartType ktIterableGenericType(DartType type) =>
     typeArgumentsOf(type, ktIterableTypeChecker).single;
 
 class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
+
+  const KtIterableTypeHelper();
+
   @override
   String serialize(
       DartType targetType, String expression, TypeHelperContext context) {
@@ -81,23 +85,124 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 
     output = '($output)';
 
-
     if (closureArg != itemSubVal) {
       final lambda = LambdaResult.process(itemSubVal, closureArg);
       output += '.map($lambda)';
     }
 
-
     if (ktListTypeChecker.isExactlyType(targetType)) {
-      output =  'KtList<$iterableGenericType>.from($output)';
+      output = 'KtList<$iterableGenericType>.from($output)';
     } else if (ktSetTypeChecker.isExactlyType(targetType)) {
       output = 'KtSet<$iterableGenericType>.from($output)';
     }
-
-
 
     return wrapNullableIfNecessary(expression, output, context.nullable);
   }
 }
 
-final builtListTypeChecker = TypeChecker.fromRuntime(KtList);
+class KtMapTypeHelper extends TypeHelper<TypeHelperContext> {
+
+  const KtMapTypeHelper();
+  @override
+  Object serialize(
+      DartType targetType, String expression, TypeHelperContext context) {
+    if (!ktMapTypeChecker.isAssignableFromType(targetType)) {
+      return null;
+    }
+    final args = typeArgumentsOf(targetType, ktMapTypeChecker);
+    assert(args.length == 2);
+
+    final keyType = args[0];
+    final valueType = args[1];
+
+    checkSafeKeyType(expression, keyType);
+
+    final subFieldValue = context.serialize(valueType, closureArg);
+    final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
+        context.serialize(keyType, keyParam);
+
+    final optionalQuestion = context.nullable ? '?' : '';
+
+    if (closureArg == subFieldValue && keyParam == subKeyValue) {
+      return expression + optionalQuestion + ".asMap()";
+    }
+
+    return '$expression$optionalQuestion'
+        '.asMap()$optionalQuestion.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
+  }
+
+  @override
+  Object deserialize(DartType targetType, String expression, dynamic context) {
+    if (!ktMapTypeChecker.isExactlyType(targetType)) {
+      return null;
+    }
+    final typeArgs = typeArgumentsOf(targetType, ktMapTypeChecker);
+    assert(typeArgs.length == 2);
+    final keyArg = typeArgs.first;
+    final valueArg = typeArgs.last;
+
+    var prefix =
+        "KtMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.from";
+
+    checkSafeKeyType(expression, keyArg);
+
+    final valueArgIsAny = isObjectOrDynamic(valueArg);
+    final keyStringable = isKeyStringable(keyArg);
+
+    if (!keyStringable) {
+      if (valueArgIsAny) {
+        if (context.config.anyMap) {
+          if (isObjectOrDynamic(keyArg)) {
+            return wrapNullableIfNecessary(
+                expression, '$prefix($expression as Map)', context.nullable);
+          }
+        } else {
+          // this is the trivial case. Do a runtime cast to the known type of JSON
+          // map values - `Map<String, dynamic>`
+          return wrapNullableIfNecessary(
+              expression,
+              'KtMap<String,dynamic>.from($expression as Map<String, dynamic>)',
+              context.nullable);
+        }
+      }
+
+      if (!context.nullable &&
+          (valueArgIsAny ||
+              simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
+        // No mapping of the values or null check required!
+        return wrapNullableIfNecessary(
+            expression,
+            'KtMap<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))',
+            context.nullable);
+      }
+    }
+
+    // In this case, we're going to create a new Map with matching reified
+    // types.
+
+    final itemSubVal = context.deserialize(valueArg, closureArg);
+
+    final mapCast =
+        context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
+
+    String keyUsage;
+    if (isEnum(keyArg)) {
+      keyUsage = context.deserialize(keyArg, keyParam).toString();
+    } else if (context.config.anyMap && !isObjectOrDynamic(keyArg)) {
+      keyUsage = '$keyParam as String';
+    } else {
+      keyUsage = keyParam;
+    }
+
+    final toFromString = forType(keyArg);
+    if (toFromString != null) {
+      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true);
+    }
+
+    return wrapNullableIfNecessary(
+        expression,
+        '$prefix(($expression $mapCast).map('
+        '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))',
+        context.nullable);
+  }
+}

@@ -6,24 +6,30 @@ part 'model.g.dart';
 
 @JsonSerializable()
 class MyModel {
-  const MyModel(
-      {this.myList,
-      this.builtMapString,
-      this.myString,
-      this.myNested,
-      this.normalList,
-      this.builtMap,
-      this.builtMapNested,
-      this.nullList,
-      this.nullMap,
-      this.nullSet,
-      this.normalSet,
-      this.nestedKtList,
-      this.nestedKtSet,
-      this.nullKtList,
-      this.nullKtSet,
-      this.stringKtList,
-      this.stringKtSet});
+  const MyModel({
+    this.myList,
+    this.builtMapString,
+    this.myString,
+    this.dynamicMap,
+    this.myNested,
+    this.normalList,
+    this.builtMap,
+    this.builtMapNested,
+    this.nullList,
+    this.nullMap,
+    this.nullSet,
+    this.normalSet,
+    this.nestedKtList,
+    this.nestedKtSet,
+    this.nullKtList,
+    this.nullKtSet,
+    this.stringKtList,
+    this.stringKtSet,
+    this.nestedKtMap,
+    this.stringKtMap,
+    this.nullKtMap,
+    this.dynamicKtMap,
+  });
 
   final BuiltList<int> myList;
 
@@ -59,6 +65,16 @@ class MyModel {
 
   final KtSet<String> nullKtSet;
 
+  final BuiltMap<String, dynamic> dynamicMap;
+
+  final KtMap<String, Nested> nestedKtMap;
+
+  final KtMap<String, String> stringKtMap;
+
+  final KtMap<String, Object> nullKtMap;
+
+  final KtMap<String, dynamic> dynamicKtMap;
+
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
 
@@ -71,8 +87,10 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringKtList: $stringKtList, stringKtSet: $stringKtSet, nestedKtList: $nestedKtList, nestedKtSet: $nestedKtSet, nullKtList: $nullKtList, nullKtSet: $nullKtSet}';
+    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringKtList: $stringKtList, stringKtSet: $stringKtSet, nestedKtList: $nestedKtList, nestedKtSet: $nestedKtSet, nullKtList: $nullKtList, nullKtSet: $nullKtSet, dynamicMap: $dynamicMap, nestedKtMap: $nestedKtMap, stringKtMap: $stringKtMap, nullKtMap: $nullKtMap, dynamicKtMap: $dynamicKtMap}';
   }
+
+
 }
 
 @JsonSerializable()
