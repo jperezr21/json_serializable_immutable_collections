@@ -12,8 +12,7 @@ import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
-import 'package:json_serializable/src/type_helpers/to_from_string.dart';
-import 'package:analyzer/src/dart/element/type.dart' show InterfaceTypeImpl;
+
 
 import 'package:built_collection/built_collection.dart';
 
