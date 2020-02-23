@@ -19,7 +19,6 @@ DartType ktIterableGenericType(DartType type) =>
     typeArgumentsOf(type, ktIterableTypeChecker).single;
 
 class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
-
   const KtIterableTypeHelper();
 
   @override
@@ -100,8 +99,8 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 }
 
 class KtMapTypeHelper extends TypeHelper<TypeHelperContext> {
-
   const KtMapTypeHelper();
+
   @override
   Object serialize(
       DartType targetType, String expression, TypeHelperContext context) {

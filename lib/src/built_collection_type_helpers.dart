@@ -13,7 +13,6 @@ import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
 
-
 import 'package:built_collection/built_collection.dart';
 
 class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
