@@ -1,5 +1,8 @@
 # json_serializable_immutable_collections
 
+[![Pub Package](https://img.shields.io/pub/v/json_serializable_immutable_collections.svg)](https://pub.dartlang.org/packages/json_serializable_immutable_collections)
+
+
 (De-)Serialize more collections using json_serializable.
 
 Unofficial package, meant to extend the functionality of json_serializable.
