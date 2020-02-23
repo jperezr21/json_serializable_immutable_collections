@@ -14,10 +14,10 @@ Currently supported:
 - BuiltMap
 - KtList
 - KtSet
-
-TODO:
-
 - KtMap
+
+Do you want to use even more types? Feel free to open an issue. PRs also welcome.
+
 
 ## How to use
 
