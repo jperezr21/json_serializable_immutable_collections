@@ -1,6 +1,8 @@
-# immutable_json_list_builder
+# json_serializable_immutable_collections
 
 (De-)Serialize more collections using json_serializable.
+
+Unofficial package, meant to extend the functionality of json_serializable.
 
 ## Features:
 
@@ -23,7 +25,7 @@ Do you want to use even more types? Feel free to open an issue. PRs also welcome
 
 Add to your dev_dependencies (package is not published on pub.dev yet, I might find a better name):
 
-    immutable_json_list_builder:
+    json_serializable_immutable_collections:
       git:
         url: https://github.com/knaeckeKami/immutable_json_list_serializer.git
         ref: master
@@ -33,7 +35,7 @@ Add to your build.yaml:
     targets:
       $default:
         builders:
-          immutable_json_list_builder:
+          json_serializable_immutable_collections:
             # configure your options here, same as json_serializable
             options:
               explicit_to_json: true

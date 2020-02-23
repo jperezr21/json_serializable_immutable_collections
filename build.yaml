@@ -1,7 +1,7 @@
 targets:
   $default:
     builders:
-      immutable_json_list_builder:
+      json_serializable_immutable_collections:
         options:
           explicit_to_json: true
         generate_for:
@@ -19,8 +19,8 @@ targets:
 
 
 builders:
-  immutable_json_list_builder:
-    import: "package:immutable_json_list_builder/builder.dart"
+  json_serializable_immutable_collections:
+    import: "package:json_serializable_immutable_collections/builder.dart"
     builder_factories: ["jsonSerializable"]
     build_extensions: {".dart": ["json_serializable.g.part"]}
     auto_apply: dependents
