@@ -1,8 +1,8 @@
-name: immutable_json_list_builder
+name: json_serializable_immutable_collections
 description: Adding support for immutable collections for json_serializable
 version: 0.0.1
 author:
-homepage:
+homepage: https://github.com/knaeckeKami/immutable_json_list_serializer
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
