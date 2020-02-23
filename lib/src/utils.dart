@@ -1,16 +1,9 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:immutable_json_list_builder/src/wrap_nullable.dart';
-import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
 
-import 'package:json_serializable/src/constants.dart';
-import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:json_serializable/src/utils.dart';
 import 'package:json_serializable/src/type_helpers/to_from_string.dart';
-
-import "package:kt_dart/collection.dart";
 
 final _intString = ToFromStringHelper('int.parse', 'toString()', 'int');
 

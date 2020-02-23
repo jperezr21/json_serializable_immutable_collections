@@ -89,8 +89,6 @@ class MyModel {
   String toString() {
     return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringKtList: $stringKtList, stringKtSet: $stringKtSet, nestedKtList: $nestedKtList, nestedKtSet: $nestedKtSet, nullKtList: $nullKtList, nullKtSet: $nullKtSet, dynamicMap: $dynamicMap, nestedKtMap: $nestedKtMap, stringKtMap: $stringKtMap, nullKtMap: $nullKtMap, dynamicKtMap: $dynamicKtMap}';
   }
-
-
 }
 
 @JsonSerializable()

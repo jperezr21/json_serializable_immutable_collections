@@ -7,8 +7,6 @@ homepage: https://github.com/knaeckeKami/immutable_json_list_serializer
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
-dependencies:
-
 
 dev_dependencies:
   json_serializable: <4.0.0

@@ -1,9 +1,8 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:immutable_json_list_builder/src/utils.dart';
-import 'package:immutable_json_list_builder/src/wrap_nullable.dart';
+import 'package:json_serializable_immutable_collections/src/utils.dart';
+import 'package:json_serializable_immutable_collections/src/wrap_nullable.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
-import 'package:immutable_json_list_builder/src/utils.dart';
 import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';

@@ -13,8 +13,8 @@
 library immutable_json_list_builder;
 
 import 'package:build/build.dart';
-import 'package:immutable_json_list_builder/src/built_collection_type_helpers.dart';
-import 'package:immutable_json_list_builder/src/kt_dart_type_helpers.dart.dart';
+import 'package:json_serializable_immutable_collections/src/built_collection_type_helpers.dart';
+import 'package:json_serializable_immutable_collections/src/kt_dart_type_helpers.dart.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:source_gen/source_gen.dart';
