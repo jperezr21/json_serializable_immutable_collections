@@ -23,15 +23,15 @@ Do you want to use even more types? Feel free to open an issue. PRs also welcome
 
 ## How to use
 
-Add to your dev_dependencies (package is not published on pub.dev yet, I might find a better name):
+Add to your dev_dependencies:
 
-    json_serializable_immutable_collections:
-      git:
-        url: https://github.com/knaeckeKami/immutable_json_list_serializer.git
-        ref: master
-
+```yaml
+    json_serializable_immutable_collections: <current_version>
+```    
+    
 Add to your build.yaml:
 
+```yaml
     targets:
       $default:
         builders:
@@ -46,6 +46,7 @@ Add to your build.yaml:
               exclude:
                 - test/**
                 - lib/**
+```
 
 
 
