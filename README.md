@@ -32,7 +32,7 @@ Add to your dev_dependencies:
     json_serializable_immutable_collections: <current_version>
 ```    
     
-Add to your build.yaml:
+Add to your `build.yaml` (create the file if necessary, this is necessary to avoid conflicts between json_serializable and this library):
 
 ```yaml
     targets:
@@ -44,7 +44,7 @@ Add to your build.yaml:
               explicit_to_json: true
           json_serializable:json_serializable:
             generate_for:
-              # exclude everyting, this lib uses a custom builder 
+              # exclude everything to avoid conflicts, this library uses a custom builder
               include:
               exclude:
                 - test/**
