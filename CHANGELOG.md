@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Remove unnecessary null check when generating code for BuiltList
+
 ## 0.1.1
 
 - Loosen up dependency version ranges
