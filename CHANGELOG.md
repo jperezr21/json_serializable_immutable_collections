@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Loosen up dependency version ranges
+
 ## 0.1.0
 
 - Badge

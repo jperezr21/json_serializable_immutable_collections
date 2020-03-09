@@ -49,11 +49,9 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 
     output = '($output)';
 
-    final optionalQuestion = context.nullable ? '?' : '';
-
     if (closureArg != itemSubVal) {
       final lambda = LambdaResult.process(itemSubVal, closureArg);
-      output += '$optionalQuestion.map($lambda)';
+      output += '.map($lambda)';
     }
 
     if (builtListTypeChecker.isExactlyType(targetType)) {

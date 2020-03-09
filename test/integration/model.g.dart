@@ -9,7 +9,7 @@ part of 'model.dart';
 MyModel _$MyModelFromJson(Map<String, dynamic> json) {
   return MyModel(
     myList: json['myList'] != null
-        ? (json['myList'] as List)?.map((e) => e as int).toBuiltList()
+        ? (json['myList'] as List).map((e) => e as int).toBuiltList()
         : null,
     builtMapString: json['builtMapString'] != null
         ? BuiltMap<String, String>.of(
@@ -18,7 +18,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
           ))
         : null,
     myString: json['myString'] != null
-        ? (json['myString'] as List)?.map((e) => e as String).toBuiltSet()
+        ? (json['myString'] as List).map((e) => e as String).toBuiltSet()
         : null,
     dynamicMap: json['dynamicMap'] != null
         ? BuiltMap<String, Object>.of(
@@ -26,7 +26,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
         : null,
     myNested: json['myNested'] != null
         ? (json['myNested'] as List)
-            ?.map((e) =>
+            .map((e) =>
                 e == null ? null : Nested.fromJson(e as Map<String, dynamic>))
             .toBuiltList()
         : null,
@@ -45,7 +45,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
           ))
         : null,
     nullList: json['nullList'] != null
-        ? (json['nullList'] as List)?.map((e) => e as String).toBuiltList()
+        ? (json['nullList'] as List).map((e) => e as String).toBuiltList()
         : null,
     nullMap: json['nullMap'] != null
         ? BuiltMap<String, String>.of(
@@ -54,7 +54,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
           ))
         : null,
     nullSet: json['nullSet'] != null
-        ? (json['nullSet'] as List)?.map((e) => e as String).toBuiltSet()
+        ? (json['nullSet'] as List).map((e) => e as String).toBuiltSet()
         : null,
     normalSet: (json['normalSet'] as List)?.map((e) => e as String)?.toSet(),
     nestedKtList: json['nestedKtList'] != null
