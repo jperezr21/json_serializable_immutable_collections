@@ -1,3 +1,8 @@
+## 0.3.0
+
+- Depend on json_serializable ^3.3.0 to use types which are now exported on this version
+- Update dependencies
+
 ## 0.2.0
 
 - Remove unnecessary null check when generating code for BuiltList

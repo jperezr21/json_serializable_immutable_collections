@@ -15,19 +15,19 @@ import 'package:json_serializable/src/utils.dart';
 
 import 'package:built_collection/built_collection.dart';
 
-class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
+class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const BuiltIterableTypeHelper();
 
   @override
   String serialize(
-      DartType targetType, String expression, TypeHelperContext context) {
+      DartType targetType, String expression, TypeHelperContextWithConfig context) {
     //default iterable helper will serialize all iterables fine
     return null;
   }
 
   @override
   String deserialize(
-      DartType targetType, String expression, TypeHelperContext context) {
+      DartType targetType, String expression, TypeHelperContextWithConfig context) {
     if (!(coreIterableTypeChecker.isExactlyType(targetType) ||
         builtListTypeChecker.isExactlyType(targetType) ||
         builtSetTypeChecker.isExactlyType(targetType))) {
@@ -64,12 +64,12 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContext> {
   }
 }
 
-class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
+class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const BuiltMapTypeHelper();
 
   @override
   String serialize(
-      DartType targetType, String expression, TypeHelperContext context) {
+      DartType targetType, String expression, TypeHelperContextWithConfig context) {
     if (!builtMapTypeChecker.isAssignableFromType(targetType)) {
       return null;
     }
@@ -96,7 +96,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContext> {
   }
 
   @override
-  String deserialize(DartType targetType, String expression, dynamic context) {
+  String deserialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
     if (!builtMapTypeChecker.isExactlyType(targetType)) {
       return null;
     }

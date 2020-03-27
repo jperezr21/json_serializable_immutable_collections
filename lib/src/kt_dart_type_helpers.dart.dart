@@ -98,7 +98,7 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
   }
 }
 
-class KtMapTypeHelper extends TypeHelper<TypeHelperContext> {
+class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const KtMapTypeHelper();
 
   @override
@@ -130,7 +130,7 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContext> {
   }
 
   @override
-  Object deserialize(DartType targetType, String expression, dynamic context) {
+  Object deserialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
     if (!ktMapTypeChecker.isExactlyType(targetType)) {
       return null;
     }
