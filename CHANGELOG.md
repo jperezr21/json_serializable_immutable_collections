@@ -1,3 +1,7 @@
+## 0.3.0+1
+
+- Add example
+
 ## 0.3.0
 
 - Depend on json_serializable ^3.3.0 to use types which are now exported on this version
