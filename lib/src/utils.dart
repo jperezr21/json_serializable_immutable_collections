@@ -44,8 +44,6 @@ final instances = [
 ToFromStringHelper forType(DartType type) =>
     instances.singleWhere((i) => i.matches(type), orElse: () => null);
 
-bool isObjectOrDynamic(DartType type) => type.isDartCoreObject || type.isDynamic;
-
 /// Returns `true` if [keyType] can be automatically converted to/from String –
 /// and is therefor usable as a key in a [Map].
 bool isKeyStringable(DartType keyType) =>
