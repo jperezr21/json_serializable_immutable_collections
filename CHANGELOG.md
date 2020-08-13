@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Fix usage of deprecated member (isObject -> isDartCoreObject)
+
 ## 0.3.0+1
 
 - Add example
