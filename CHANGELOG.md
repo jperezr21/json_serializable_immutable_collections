@@ -1,3 +1,7 @@
+## 0.4.0
+
+- support json_serializable 3.4.0 (resolve conflicts with types the json_serializable now exports, that have not been exported before)
+
 ## 0.3.1
 
 - Fix usage of deprecated member (isObject -> isDartCoreObject)
