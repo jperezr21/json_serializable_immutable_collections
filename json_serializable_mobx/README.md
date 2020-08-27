@@ -1,6 +1,6 @@
 # json_serializable_immutable_collections
 
-[![Pub Package](https://img.shields.io/pub/v/json_serializable_immutable_collections.svg)](https://pub.dartlang.org/packages/json_serializable_immutable_collections)
+[![Pub Package](https://img.shields.io/pub/v/json_serializable_mobx.svg)](https://pub.dartlang.org/packages/json_serializable_mobx)
 
 
 (De-)Serialize more collections using json_serializable.
