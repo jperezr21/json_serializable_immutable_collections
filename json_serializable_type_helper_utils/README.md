@@ -1,0 +1,1 @@
+Helper package for generating own TypeHelpers for json_serializable

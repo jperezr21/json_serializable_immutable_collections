@@ -1,0 +1,13 @@
+name: json_serializable_type_helper_utils
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=2.8.1 <3.0.0'
+
+#dependencies:
+#  path: ^1.7.0
+
+dev_dependencies:
+  json_serializable: '>=3.3.0 <4.0.0'

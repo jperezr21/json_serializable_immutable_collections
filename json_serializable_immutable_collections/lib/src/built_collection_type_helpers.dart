@@ -3,8 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:analyzer/dart/element/type.dart';
-import 'package:json_serializable_immutable_collections/src/utils.dart';
-import 'package:json_serializable_immutable_collections/src/wrap_nullable.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
 
@@ -12,6 +10,7 @@ import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
+import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
 
 import 'package:built_collection/built_collection.dart';
 
@@ -19,15 +18,15 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const BuiltIterableTypeHelper();
 
   @override
-  String serialize(
-      DartType targetType, String expression, TypeHelperContextWithConfig context) {
+  String serialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context) {
     //default iterable helper will serialize all iterables fine
     return null;
   }
 
   @override
-  String deserialize(
-      DartType targetType, String expression, TypeHelperContextWithConfig context) {
+  String deserialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context) {
     if (!(coreIterableTypeChecker.isExactlyType(targetType) ||
         builtListTypeChecker.isExactlyType(targetType) ||
         builtSetTypeChecker.isExactlyType(targetType))) {
@@ -68,8 +67,8 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const BuiltMapTypeHelper();
 
   @override
-  String serialize(
-      DartType targetType, String expression, TypeHelperContextWithConfig context) {
+  String serialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context) {
     if (!builtMapTypeChecker.isAssignableFromType(targetType)) {
       return null;
     }
@@ -96,7 +95,8 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   }
 
   @override
-  String deserialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
+  String deserialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context) {
     if (!builtMapTypeChecker.isExactlyType(targetType)) {
       return null;
     }

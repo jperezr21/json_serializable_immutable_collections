@@ -1,0 +1,30 @@
+targets:
+  $default:
+    builders:
+      json_serializable_mobx:
+        options:
+          explicit_to_json: true
+        generate_for:
+          include:
+            - lib/**
+            - test/**
+            - example/**
+      json_serializable:json_serializable:
+        options:
+          explicit_to_json: true
+        generate_for:
+          include:
+          exclude:
+            - test/**
+            - lib/**
+            - example/**
+
+
+builders:
+  json_serializable_mobx:
+    import: "package:json_serializable_mobx/builder.dart"
+    builder_factories: ["jsonSerializable"]
+    build_extensions: {".dart": ["json_serializable.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

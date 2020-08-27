@@ -13,12 +13,12 @@
 library immutable_json_list_builder;
 
 import 'package:build/build.dart';
-import 'package:json_serializable_immutable_collections/src/built_collection_type_helpers.dart';
-import 'package:json_serializable_immutable_collections/src/kt_dart_type_helpers.dart.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:source_gen/source_gen.dart';
 import 'package:json_serializable/json_serializable.dart';
+
+import 'type_helpers.dart';
 
 /// Supports `package:build_runner` creation and configuration of
 /// `json_serializable`.
