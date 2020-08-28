@@ -19,10 +19,10 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   @override
   String serialize(
       DartType targetType, String expression, TypeHelperContext context) {
-     return null;
+    return null;
   }
 
-   @override
+  @override
   String deserialize(DartType targetType, String expression,
       TypeHelperContextWithConfig context) {
     if (!(coreIterableTypeChecker.isExactlyType(targetType) ||
@@ -42,7 +42,9 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     if (closureArg == itemSubVal &&
         mobxListTypeChecker.isExactlyType(targetType)) {
       return wrapNullableIfNecessary(
-          expression, 'ObservableList<${iterableGenericType.getDisplayString()}>.of($output)', context.nullable);
+          expression,
+          'ObservableList<${iterableGenericType.getDisplayString()}>.of($output)',
+          context.nullable);
     }
 
     output = '($output)';
@@ -53,9 +55,11 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     }
 
     if (mobxListTypeChecker.isExactlyType(targetType)) {
-      output = 'ObservableList<${iterableGenericType.getDisplayString()}>.of($output)';
+      output =
+          'ObservableList<${iterableGenericType.getDisplayString()}>.of($output)';
     } else if (mobxSetTypeChecker.isExactlyType(targetType)) {
-       output = 'ObservableSet<${iterableGenericType.getDisplayString()}>.of($output)';
+      output =
+          'ObservableSet<${iterableGenericType.getDisplayString()}>.of($output)';
     }
 
     return wrapNullableIfNecessary(expression, output, context.nullable);
@@ -103,7 +107,6 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     assert(typeArgs.length == 2);
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
-
 
     var prefix =
         "ObservableMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.of";

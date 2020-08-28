@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-
 part 'main.g.dart';
 
 @JsonSerializable()

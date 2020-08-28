@@ -1,4 +1,3 @@
-
 import 'package:mobx/mobx.dart';
 import 'package:test/test.dart';
 import 'model.dart';

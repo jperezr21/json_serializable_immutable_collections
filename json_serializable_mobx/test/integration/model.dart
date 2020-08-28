@@ -5,23 +5,22 @@ part 'model.g.dart';
 
 @JsonSerializable()
 class MyModel {
-  const MyModel({
-    this.myList,
-    this.builtMapString,
-    this.myString,
-    this.dynamicMap,
-    this.myNested,
-    this.normalList,
-    this.builtMap,
-    this.builtMapNested,
-    this.nullList,
-    this.nullMap,
-    this.nullSet,
-    this.normalSet,
-    this.stringSet,
-    this.nestedMap,
-    this.nestedSet
-  });
+  const MyModel(
+      {this.myList,
+      this.builtMapString,
+      this.myString,
+      this.dynamicMap,
+      this.myNested,
+      this.normalList,
+      this.builtMap,
+      this.builtMapNested,
+      this.nullList,
+      this.nullMap,
+      this.nullSet,
+      this.normalSet,
+      this.stringSet,
+      this.nestedMap,
+      this.nestedSet});
 
   final ObservableList<int> myList;
 
@@ -52,7 +51,6 @@ class MyModel {
   final ObservableMap<String, dynamic> dynamicMap;
 
   final ObservableMap<String, Nested> nestedMap;
-
 
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
