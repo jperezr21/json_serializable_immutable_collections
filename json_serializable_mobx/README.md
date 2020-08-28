@@ -1,4 +1,4 @@
-# json_serializable_immutable_collections
+# json_serializable_mobx
 
 [![Pub Package](https://img.shields.io/pub/v/json_serializable_mobx.svg)](https://pub.dartlang.org/packages/json_serializable_mobx)
 
