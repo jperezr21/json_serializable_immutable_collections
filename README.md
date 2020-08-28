@@ -14,3 +14,8 @@ This package adds support for mobx observable collections
 ## [json_serializable_type_helper_utils](https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/json_serializable_type_helper_utils)
 
 Utility functions for custom TypeHelpers, used by json_serializable_mobx and json_serializable_immutable_collections, might be used by other people do build their own TypeHelpers, too.
+
+## Why?
+
+json_serializable lacks support for configuring custom collection/container types. Due to the architecture of json_serializable and build_runner in general, that's not easy to solve. 
+This should add support for the most common non-standard collections, and give advanced users the tools the make it easier to create a custom runner which custom behaviour.
