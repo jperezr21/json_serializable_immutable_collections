@@ -30,7 +30,7 @@ Builder jsonSerializable(BuilderOptions options) {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
       JsonSerializableGenerator.withDefaultHelpers(
-        const [MobxIterableTypeHelper(), MobxMapTypeHelper()],
+        const [MobxIterableTypeHelper(), MobxMapTypeHelper(), ObservableTypeHelper()],
         config: config,
       ),
       const JsonLiteralGenerator()

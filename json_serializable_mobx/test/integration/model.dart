@@ -20,6 +20,8 @@ class MyModel {
       this.normalSet,
       this.stringSet,
       this.nestedMap,
+        this.stringObservable,
+        this.nullobservable,
       this.nestedSet});
 
   final ObservableList<int> myList;
@@ -52,6 +54,10 @@ class MyModel {
 
   final ObservableMap<String, Nested> nestedMap;
 
+  final Observable<String> stringObservable;
+
+  final Observable<int> nullobservable;
+
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
 
@@ -64,7 +70,7 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap}';
+    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap, stringObservable: $stringObservable}';
   }
 }
 

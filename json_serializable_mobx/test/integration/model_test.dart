@@ -18,6 +18,8 @@ final model = MyModel(
   builtMapString: ObservableMap.of({"a": "b"}),
   myNested: ObservableList.of([Nested(0), Nested(1)]),
   dynamicMap: ObservableMap.of({"a": "a", "b": 1, "c": null}),
+  stringObservable: Observable<String>("string"),
+  nullobservable: null,
 );
 
 const jsonMapExpected = {
@@ -46,6 +48,8 @@ const jsonMapExpected = {
     {"a": 1}
   ],
   "dynamicMap": {"a": "a", "b": 1, "c": null},
+  "stringObservable": "string",
+  "nullobservable" : null,
 };
 
 void main() {

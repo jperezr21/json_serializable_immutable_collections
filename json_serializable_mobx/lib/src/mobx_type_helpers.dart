@@ -173,3 +173,26 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         context.nullable);
   }
 }
+
+class ObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
+  const ObservableTypeHelper();
+
+  @override
+  String serialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
+    if (observableTypeChecker.isExactlyType(targetType)) {
+      return context.serialize(typeArgumentsOf(targetType, observableTypeChecker).single, "($expression)?.value");
+    }
+    return null;
+  }
+
+  @override
+  String deserialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
+    if (observableTypeChecker.isExactlyType(targetType)) {
+      return 'Observable(${context.deserialize(typeArgumentsOf(targetType, observableTypeChecker).single, expression)})';
+    }
+
+    return null;
+  }
+}
+
+const observableTypeChecker = TypeChecker.fromRuntime(Observable);
