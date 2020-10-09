@@ -1,3 +1,7 @@
+## 0.4.1
+
+- support analyzer ^0.40.0
+
 ## 0.4.0
 
 - support json_serializable 3.4.0 (resolve conflicts with types the json_serializable now exports, that have not been exported before)
