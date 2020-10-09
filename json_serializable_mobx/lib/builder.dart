@@ -30,14 +30,18 @@ Builder jsonSerializable(BuilderOptions options) {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
       JsonSerializableGenerator.withDefaultHelpers(
-        const [MobxIterableTypeHelper(), MobxMapTypeHelper(), ObservableTypeHelper()],
+        const [
+          MobxIterableTypeHelper(),
+          MobxMapTypeHelper(),
+          MobxObservableTypeHelper(),
+        ],
         config: config,
       ),
       const JsonLiteralGenerator()
     ], 'json_serializable');
   } on CheckedFromJsonException catch (e) {
     final lines = <String>[
-      'Could not parse the options provided for `json_serializable`.'
+      'Could not parse the options provided for `json_serializable_mobx`.'
     ];
 
     if (e.key != null) {

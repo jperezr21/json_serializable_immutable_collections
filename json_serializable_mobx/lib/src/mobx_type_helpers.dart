@@ -8,7 +8,6 @@ import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
 
-//const ktIterableTypeChecker = TypeChecker.fromRuntime(KtIterable);
 const mobxListTypeChecker = TypeChecker.fromRuntime(ObservableList);
 const mobxSetTypeChecker = TypeChecker.fromRuntime(ObservableSet);
 const mobxMapTypeChecker = TypeChecker.fromRuntime(ObservableMap);
@@ -174,8 +173,8 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   }
 }
 
-class ObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  const ObservableTypeHelper();
+class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
+  const MobxObservableTypeHelper();
 
   @override
   String serialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
