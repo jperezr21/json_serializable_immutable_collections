@@ -12,6 +12,8 @@ const mobxListTypeChecker = TypeChecker.fromRuntime(ObservableList);
 const mobxSetTypeChecker = TypeChecker.fromRuntime(ObservableSet);
 const mobxMapTypeChecker = TypeChecker.fromRuntime(ObservableMap);
 
+const withNullability = false;
+
 class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const MobxIterableTypeHelper();
 
@@ -42,7 +44,7 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         mobxListTypeChecker.isExactlyType(targetType)) {
       return wrapNullableIfNecessary(
           expression,
-          'ObservableList<${iterableGenericType.getDisplayString()}>.of($output)',
+          'ObservableList<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)',
           context.nullable);
     }
 
@@ -55,10 +57,10 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     if (mobxListTypeChecker.isExactlyType(targetType)) {
       output =
-          'ObservableList<${iterableGenericType.getDisplayString()}>.of($output)';
+          'ObservableList<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)';
     } else if (mobxSetTypeChecker.isExactlyType(targetType)) {
       output =
-          'ObservableSet<${iterableGenericType.getDisplayString()}>.of($output)';
+          'ObservableSet<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)';
     }
 
     return wrapNullableIfNecessary(expression, output, context.nullable);
@@ -108,7 +110,7 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final valueArg = typeArgs.last;
 
     var prefix =
-        "ObservableMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.of";
+        "ObservableMap<${keyArg.getDisplayString(withNullability: withNullability)},${valueArg.getDisplayString(withNullability: withNullability)}>.of";
 
     checkSafeKeyType(expression, keyArg);
 

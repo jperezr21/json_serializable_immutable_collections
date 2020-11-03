@@ -98,7 +98,9 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 }
 
 class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  const KtMapTypeHelper();
+  final bool withNullability;
+
+  const KtMapTypeHelper({this.withNullability = false});
 
   @override
   Object serialize(
@@ -140,7 +142,7 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final valueArg = typeArgs.last;
 
     var prefix =
-        "KtMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.from";
+        "KtMap<${keyArg.getDisplayString(withNullability: withNullability)},${valueArg.getDisplayString(withNullability: withNullability)}>.from";
 
     checkSafeKeyType(expression, keyArg);
 
