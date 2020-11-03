@@ -1,3 +1,7 @@
+## 0.4.2
+
+- deactiviate support for analyzer 0.40.0, causes problems, fallback to 0.39.0
+
 ## 0.4.1
 
 - support analyzer ^0.40.0
