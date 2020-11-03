@@ -1,4 +1,4 @@
-## 0.4.1
+## 0.5.0-alpha.1
 
 - support analyzer ^0.40.0
 
