@@ -1,3 +1,7 @@
+## 0.3.0
+
+- fix issue with analyzer 0.40.0
+
 ## 0.2.0
 
 - add support for the Observable type

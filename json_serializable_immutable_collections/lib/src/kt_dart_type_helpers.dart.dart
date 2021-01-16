@@ -18,7 +18,11 @@ DartType ktIterableGenericType(DartType type) =>
     typeArgumentsOf(type, ktIterableTypeChecker).single;
 
 class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
-  const KtIterableTypeHelper();
+
+  final bool withNullability;
+
+  const KtIterableTypeHelper({this.withNullability = false});
+
 
   @override
   String serialize(
@@ -69,7 +73,10 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 
     final iterableGenericType = ktIterableGenericType(targetType);
 
+    final displayedGenericTypeString = iterableGenericType.getDisplayString(withNullability: this.withNullability);
+
     final itemSubVal = context.deserialize(iterableGenericType, closureArg);
+
 
     var output = '$expression as List';
 
@@ -77,7 +84,7 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
     // anything fancy
     if (closureArg == itemSubVal &&
         !ktSetTypeChecker.isExactlyType(targetType)) {
-      return 'KtList<$iterableGenericType>.from($output)';
+      return 'KtList<$displayedGenericTypeString>.from($output)';
     }
 
     output = '($output)';
@@ -88,9 +95,9 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
     }
 
     if (ktListTypeChecker.isExactlyType(targetType)) {
-      output = 'KtList<$iterableGenericType>.from($output)';
+      output = 'KtList<$displayedGenericTypeString>.from($output)';
     } else if (ktSetTypeChecker.isExactlyType(targetType)) {
-      output = 'KtSet<$iterableGenericType>.from($output)';
+      output = 'KtSet<$displayedGenericTypeString>.from($output)';
     }
 
     return wrapNullableIfNecessary(expression, output, context.nullable);
@@ -98,7 +105,9 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 }
 
 class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  const KtMapTypeHelper();
+  final bool withNullability;
+
+  const KtMapTypeHelper({this.withNullability = false});
 
   @override
   Object serialize(
@@ -140,7 +149,7 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final valueArg = typeArgs.last;
 
     var prefix =
-        "KtMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.from";
+        "KtMap<${keyArg.getDisplayString(withNullability: withNullability)},${valueArg.getDisplayString(withNullability: withNullability)}>.from";
 
     checkSafeKeyType(expression, keyArg);
 

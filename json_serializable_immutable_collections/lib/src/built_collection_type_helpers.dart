@@ -15,7 +15,10 @@ import 'package:json_serializable_type_helper_utils/json_serializable_type_helpe
 import 'package:built_collection/built_collection.dart';
 
 class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  const BuiltIterableTypeHelper();
+
+  final bool withNullability;
+
+  const BuiltIterableTypeHelper({this.withNullability = false});
 
   @override
   String serialize(DartType targetType, String expression,
@@ -64,7 +67,10 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 }
 
 class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  const BuiltMapTypeHelper();
+
+  final bool withNullability;
+
+  const BuiltMapTypeHelper({this.withNullability = false});
 
   @override
   String serialize(DartType targetType, String expression,
@@ -106,7 +112,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final valueArg = typeArgs.last;
 
     var prefix =
-        "BuiltMap<${keyArg.getDisplayString()},${valueArg.getDisplayString()}>.of";
+        "BuiltMap<${keyArg.getDisplayString(withNullability: this.withNullability)},${valueArg.getDisplayString(withNullability: this.withNullability)}>.of";
 
     checkSafeKeyType(expression, keyArg);
 
