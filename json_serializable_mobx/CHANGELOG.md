@@ -1,3 +1,7 @@
+## 0.4.0
+
+- support analyzer 0.40.0
+
 ## 0.3.0
 
 - fix issue with analyzer 0.40.0
