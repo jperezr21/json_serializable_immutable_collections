@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/type.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:json_serializable/type_helper.dart';
 
 import 'package:json_serializable/src/shared_checkers.dart';
@@ -10,7 +11,7 @@ final _intString = ToFromStringHelper('int.parse', 'toString()', 'int');
 void checkSafeKeyType(String expression, DartType keyArg) {
   // We're not going to handle converting key types at the moment
   // So the only safe types for key are dynamic/Object/String/enum
-  final safeKey = isObjectOrDynamic(keyArg) ||
+  final safeKey = isLikeDynamic(keyArg) ||
       coreStringTypeChecker.isExactlyType(keyArg) ||
       isKeyStringable(keyArg);
 
@@ -41,8 +42,8 @@ final instances = [
   uriString,
 ];
 
-ToFromStringHelper forType(DartType type) =>
-    instances.singleWhere((i) => i.matches(type), orElse: () => null);
+ToFromStringHelper? forType(DartType type) =>
+    instances.singleWhereOrNull((i) => i.matches(type));
 
 /// Returns `true` if [keyType] can be automatically converted to/from String –
 /// and is therefor usable as a key in a [Map].
