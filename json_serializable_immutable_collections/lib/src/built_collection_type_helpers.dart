@@ -2,10 +2,12 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+
+
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
-
+import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
@@ -15,21 +17,24 @@ import 'package:json_serializable_type_helper_utils/json_serializable_type_helpe
 import 'package:built_collection/built_collection.dart';
 
 class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-
   final bool withNullability;
 
-  const BuiltIterableTypeHelper({this.withNullability = false});
+  const BuiltIterableTypeHelper({this.withNullability = true});
 
   @override
-  String serialize(DartType targetType, String expression,
+  String? serialize(DartType targetType, String expression,
       TypeHelperContextWithConfig context) {
     //default iterable helper will serialize all iterables fine
     return null;
   }
 
   @override
-  String deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context) {
+  String? deserialize(
+    DartType targetType,
+    String expression,
+    TypeHelperContextWithConfig context,
+    bool defaultProvided,
+  ) {
     if (!(coreIterableTypeChecker.isExactlyType(targetType) ||
         builtListTypeChecker.isExactlyType(targetType) ||
         builtSetTypeChecker.isExactlyType(targetType))) {
@@ -41,12 +46,14 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     var output = '$expression as List';
 
+    final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
+
     // If `itemSubVal` is the same and it's not a Set, then we don't need to do
     // anything fancy
     if (closureArg == itemSubVal &&
         builtListTypeChecker.isExactlyType(targetType)) {
       return wrapNullableIfNecessary(
-          expression, '($output).toBuiltList()', context.nullable);
+          expression, '($output).toBuiltList()', targetTypeIsNullable);
     }
 
     output = '($output)';
@@ -62,18 +69,17 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
       output += '.toBuiltSet()';
     }
 
-    return wrapNullableIfNecessary(expression, output, context.nullable);
+    return wrapNullableIfNecessary(expression, output, targetTypeIsNullable);
   }
 }
 
 class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-
   final bool withNullability;
 
-  const BuiltMapTypeHelper({this.withNullability = false});
+  const BuiltMapTypeHelper({this.withNullability = true});
 
   @override
-  String serialize(DartType targetType, String expression,
+  String? serialize(DartType targetType, String expression,
       TypeHelperContextWithConfig context) {
     if (!builtMapTypeChecker.isAssignableFromType(targetType)) {
       return null;
@@ -90,7 +96,10 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
         context.serialize(keyType, keyParam);
 
-    final optionalQuestion = context.nullable ? '?' : '';
+    final targetTypeIsNullable = targetType.isNullableType;
+
+
+    final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     if (closureArg == subFieldValue && keyParam == subKeyValue) {
       return expression + optionalQuestion + ".toMap()";
@@ -101,8 +110,8 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   }
 
   @override
-  String deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context) {
+  String? deserialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context, bool defaultProvided) {
     if (!builtMapTypeChecker.isExactlyType(targetType)) {
       return null;
     }
@@ -111,39 +120,44 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
 
+    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
+
+
     var prefix =
         "BuiltMap<${keyArg.getDisplayString(withNullability: this.withNullability)},${valueArg.getDisplayString(withNullability: this.withNullability)}>.of";
 
     checkSafeKeyType(expression, keyArg);
 
-    final valueArgIsAny = isObjectOrDynamic(valueArg);
+    final valueArgIsAny = isLikeDynamic(valueArg);
     final keyStringable = isKeyStringable(keyArg);
+
+    final anyMap = context.config.anyMap ?? false;
 
     if (!keyStringable) {
       if (valueArgIsAny) {
-        if (context.config.anyMap) {
-          if (isObjectOrDynamic(keyArg)) {
+        if (anyMap) {
+          if (isLikeDynamic(keyArg)) {
             return wrapNullableIfNecessary(
-                expression, '$prefix($expression as Map)', context.nullable);
+                expression, '$prefix($expression as Map)', targetTypeIsNullable);
           }
         } else {
           // this is the trivial case. Do a runtime cast to the known type of JSON
           // map values - `Map<String, dynamic>`
           return wrapNullableIfNecessary(
               expression,
-              'BuiltMap<String,Object>.of($expression as Map<String, dynamic>)',
-              context.nullable);
+              'BuiltMap<String,Object?>.of($expression as Map<String, dynamic>)',
+              targetTypeIsNullable);
         }
       }
 
-      if (!context.nullable &&
+      if (!targetTypeIsNullable &&
           (valueArgIsAny ||
               simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
         // No mapping of the values or null check required!
         return wrapNullableIfNecessary(
             expression,
             'BuiltMap<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))',
-            context.nullable);
+            targetTypeIsNullable);
       }
     }
 
@@ -153,12 +167,12 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final itemSubVal = context.deserialize(valueArg, closureArg);
 
     final mapCast =
-        context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
+    anyMap ? 'as Map' : 'as Map<String, dynamic>';
 
     String keyUsage;
     if (isEnum(keyArg)) {
       keyUsage = context.deserialize(keyArg, keyParam).toString();
-    } else if (context.config.anyMap && !isObjectOrDynamic(keyArg)) {
+    } else if (anyMap && !isLikeDynamic(keyArg)) {
       keyUsage = '$keyParam as String';
     } else {
       keyUsage = keyParam;
@@ -173,7 +187,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         expression,
         '$prefix(($expression $mapCast).map('
         '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))',
-        context.nullable);
+        targetTypeIsNullable);
   }
 }
 

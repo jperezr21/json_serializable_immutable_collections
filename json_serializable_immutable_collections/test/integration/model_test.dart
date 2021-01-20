@@ -19,6 +19,8 @@ final model = MyModel(
   nullMap: null,
   stringKtList: KtList.from(["a"]),
   stringKtSet: KtSet.from(["a"]),
+  stringKtListWithNulls: KtList.from(["", null]),
+  stringKtSetWithNulls: KtSet.from(["", null]),
   nestedKtList: KtList.from([Nested(1)]),
   nestedKtSet: KtSet.from([Nested(1)]),
   nullKtList: null,
@@ -28,7 +30,9 @@ final model = MyModel(
     "b": "string",
   }),
   stringKtMap: KtMap.from({"a": "a"}),
+  stringKtMapWithNulls: KtMap.from({"a": null}),
   nestedKtMap: KtMap.from({"a": Nested(0)}),
+  nestedKtMapWithNulls: KtMap.from({"a": null}),
   nullKtMap: null,
   dynamicKtMap: KtMap.from({"a": "a", "b": 1, "c": null}),
 );
@@ -51,6 +55,8 @@ const jsonMapExpected = {
   "nullMap": null,
   "stringKtList": ["a"],
   "stringKtSet": ["a"],
+  "stringKtListWithNulls": ["", null],
+  "stringKtSetWithNulls": ["", null],
   "nestedKtList": [
     {"a": 1}
   ],
@@ -64,15 +70,18 @@ const jsonMapExpected = {
     "b": "string",
   },
   "stringKtMap": {"a": "a"},
+  "stringKtMapWithNulls": {"a": null},
   "nestedKtMap": {
     "a": {"a": 0}
   },
+  "nestedKtMapWithNulls": {"a": null},
   "nullKtMap": null,
   "dynamicKtMap": {"a": "a", "b": 1, "c": null},
 };
 
 void main() {
   test("can serialize", () {
+
     final jsonMap = model.toJson();
     expect(jsonMap, jsonMapExpected);
   });
@@ -80,4 +89,6 @@ void main() {
   test("can deserialize", () {
     expect(MyModel.fromJson(jsonMapExpected), model);
   });
+
+
 }

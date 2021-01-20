@@ -1,3 +1,4 @@
+
 import 'package:analyzer/dart/element/type.dart';
 import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
@@ -21,11 +22,11 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 
   final bool withNullability;
 
-  const KtIterableTypeHelper({this.withNullability = false});
+  const KtIterableTypeHelper({this.withNullability = true});
 
 
   @override
-  String serialize(
+  String? serialize(
       DartType targetType, String expression, TypeHelperContext context) {
     if (!ktIterableTypeChecker.isAssignableFromType(targetType)) {
       return null;
@@ -39,7 +40,10 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
     var isList = ktListTypeChecker.isAssignableFromType(targetType);
     final subField = context.serialize(itemType, closureArg);
 
-    final optionalQuestion = context.nullable ? '?' : '';
+    final targetTypeIsNullable = targetType.isNullableType;
+
+
+    final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     // In the case of trivial JSON types (int, String, etc), `subField`
     // will be identical to `substitute` – so no explicit mapping is needed.
@@ -63,8 +67,8 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
   }
 
   @override
-  String deserialize(
-      DartType targetType, String expression, TypeHelperContext context) {
+  String? deserialize(
+      DartType targetType, String expression, TypeHelperContext context, bool defaultProvided) {
     if (!(ktIterableTypeChecker.isExactlyType(targetType) ||
         ktListTypeChecker.isExactlyType(targetType) ||
         ktSetTypeChecker.isExactlyType(targetType))) {
@@ -100,17 +104,20 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
       output = 'KtSet<$displayedGenericTypeString>.from($output)';
     }
 
-    return wrapNullableIfNecessary(expression, output, context.nullable);
+    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
+
+
+    return wrapNullableIfNecessary(expression, output, targetTypeIsNullable );
   }
 }
 
 class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   final bool withNullability;
 
-  const KtMapTypeHelper({this.withNullability = false});
+  const KtMapTypeHelper({this.withNullability = true});
 
   @override
-  Object serialize(
+  Object? serialize(
       DartType targetType, String expression, TypeHelperContext context) {
     if (!ktMapTypeChecker.isAssignableFromType(targetType)) {
       return null;
@@ -127,7 +134,10 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
         context.serialize(keyType, keyParam);
 
-    final optionalQuestion = context.nullable ? '?' : '';
+    final targetTypeIsNullable = targetType.isNullableType;
+
+
+    final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     if (closureArg == subFieldValue && keyParam == subKeyValue) {
       return expression + optionalQuestion + ".asMap()";
@@ -138,8 +148,8 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   }
 
   @override
-  Object deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context) {
+  Object? deserialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context, bool defaultProvided) {
     if (!ktMapTypeChecker.isExactlyType(targetType)) {
       return null;
     }
@@ -153,15 +163,19 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     checkSafeKeyType(expression, keyArg);
 
-    final valueArgIsAny = isObjectOrDynamic(valueArg);
+    final valueArgIsAny = isLikeDynamic(valueArg);
     final keyStringable = isKeyStringable(keyArg);
+
+    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
+    final anyMap = context.config.anyMap ?? false;
+
 
     if (!keyStringable) {
       if (valueArgIsAny) {
-        if (context.config.anyMap) {
-          if (isObjectOrDynamic(keyArg)) {
+        if (anyMap) {
+          if (isLikeDynamic(keyArg)) {
             return wrapNullableIfNecessary(
-                expression, '$prefix($expression as Map)', context.nullable);
+                expression, '$prefix($expression as Map)',targetTypeIsNullable);
           }
         } else {
           // this is the trivial case. Do a runtime cast to the known type of JSON
@@ -169,18 +183,18 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
           return wrapNullableIfNecessary(
               expression,
               'KtMap<String,dynamic>.from($expression as Map<String, dynamic>)',
-              context.nullable);
+              targetTypeIsNullable);
         }
       }
 
-      if (!context.nullable &&
+      if (!targetTypeIsNullable &&
           (valueArgIsAny ||
               simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
         // No mapping of the values or null check required!
         return wrapNullableIfNecessary(
             expression,
-            'KtMap<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))',
-            context.nullable);
+            'KtMap<String,$valueArg>.from(Map<String, $valueArg>.from($expression as Map))',
+            targetTypeIsNullable);
       }
     }
 
@@ -189,13 +203,15 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final itemSubVal = context.deserialize(valueArg, closureArg);
 
+
+
     final mapCast =
-        context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
+    anyMap ? 'as Map' : 'as Map<String, dynamic>';
 
     String keyUsage;
     if (isEnum(keyArg)) {
       keyUsage = context.deserialize(keyArg, keyParam).toString();
-    } else if (context.config.anyMap && !isObjectOrDynamic(keyArg)) {
+    } else if (anyMap && !isLikeDynamic(keyArg)) {
       keyUsage = '$keyParam as String';
     } else {
       keyUsage = keyParam;
@@ -210,6 +226,6 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         expression,
         '$prefix(($expression $mapCast).map('
         '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))',
-        context.nullable);
+        targetTypeIsNullable);
   }
 }

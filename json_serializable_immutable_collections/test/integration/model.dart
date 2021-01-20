@@ -6,30 +6,33 @@ part 'model.g.dart';
 
 @JsonSerializable()
 class MyModel {
-  const MyModel({
-    this.myList,
-    this.builtMapString,
-    this.myString,
-    this.dynamicMap,
-    this.myNested,
-    this.normalList,
-    this.builtMap,
-    this.builtMapNested,
-    this.nullList,
-    this.nullMap,
-    this.nullSet,
-    this.normalSet,
-    this.nestedKtList,
-    this.nestedKtSet,
-    this.nullKtList,
-    this.nullKtSet,
-    this.stringKtList,
-    this.stringKtSet,
-    this.nestedKtMap,
-    this.stringKtMap,
-    this.nullKtMap,
-    this.dynamicKtMap,
-  });
+  const MyModel(
+      {required this.myList,
+      required this.builtMapString,
+      required this.myString,
+      required this.dynamicMap,
+      required this.myNested,
+      required this.normalList,
+      required this.builtMap,
+      required this.builtMapNested,
+      required this.nullList,
+      required this.nullMap,
+      required this.nullSet,
+      required this.normalSet,
+      required this.nestedKtList,
+      required this.nestedKtSet,
+      required this.nullKtList,
+      required this.nullKtSet,
+      required this.stringKtList,
+      required this.stringKtSet,
+      required this.nestedKtMap,
+      required this.nestedKtMapWithNulls,
+      required this.stringKtMap,
+      required this.stringKtMapWithNulls,
+      required this.nullKtMap,
+      required this.dynamicKtMap,
+      required this.stringKtListWithNulls,
+      required this.stringKtSetWithNulls});
 
   final BuiltList<int> myList;
 
@@ -47,31 +50,39 @@ class MyModel {
 
   final BuiltMap<int, Nested> builtMapNested;
 
-  final BuiltList<String> nullList;
+  final BuiltList<String>? nullList;
 
-  final BuiltSet<String> nullSet;
+  final BuiltSet<String>? nullSet;
 
-  final BuiltMap<String, String> nullMap;
+  final BuiltMap<String, String>? nullMap;
 
   final KtList<String> stringKtList;
 
+  final KtList<String?> stringKtListWithNulls;
+
   final KtSet<String> stringKtSet;
+
+  final KtSet<String?> stringKtSetWithNulls;
 
   final KtList<Nested> nestedKtList;
 
   final KtSet<Nested> nestedKtSet;
 
-  final KtList<String> nullKtList;
+  final KtList<String>? nullKtList;
 
-  final KtSet<String> nullKtSet;
+  final KtSet<String>? nullKtSet;
 
   final BuiltMap<String, dynamic> dynamicMap;
 
   final KtMap<String, Nested> nestedKtMap;
 
+  final KtMap<String, Nested?> nestedKtMapWithNulls;
+
   final KtMap<String, String> stringKtMap;
 
-  final KtMap<String, Object> nullKtMap;
+  final KtMap<String, String?> stringKtMapWithNulls;
+
+  final KtMap<String, Object>? nullKtMap;
 
   final KtMap<String, dynamic> dynamicKtMap;
 
@@ -87,7 +98,7 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringKtList: $stringKtList, stringKtSet: $stringKtSet, nestedKtList: $nestedKtList, nestedKtSet: $nestedKtSet, nullKtList: $nullKtList, nullKtSet: $nullKtSet, dynamicMap: $dynamicMap, nestedKtMap: $nestedKtMap, stringKtMap: $stringKtMap, nullKtMap: $nullKtMap, dynamicKtMap: $dynamicKtMap}';
+    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringKtList: $stringKtList, stringKtListWithNulls: $stringKtListWithNulls, stringKtSet: $stringKtSet, stringKtSetWithNulls: $stringKtSetWithNulls, nestedKtList: $nestedKtList, nestedKtSet: $nestedKtSet, nullKtList: $nullKtList, nullKtSet: $nullKtSet, dynamicMap: $dynamicMap, nestedKtMap: $nestedKtMap, nestedKtMapWithNulls: $nestedKtMapWithNulls, stringKtMap: $stringKtMap, stringKtMapWithNulls: $stringKtMapWithNulls, nullKtMap: $nullKtMap, dynamicKtMap: $dynamicKtMap}';
   }
 }
 

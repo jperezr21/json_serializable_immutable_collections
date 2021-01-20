@@ -8,42 +8,26 @@ part of 'model.dart';
 
 MyModel _$MyModelFromJson(Map<String, dynamic> json) {
   return MyModel(
-    myList: json['myList'] != null
-        ? (json['myList'] as List).map((e) => e as int).toBuiltList()
-        : null,
-    builtMapString: json['builtMapString'] != null
-        ? BuiltMap<String, String>.of(
-            (json['builtMapString'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k, e as String),
-          ))
-        : null,
-    myString: json['myString'] != null
-        ? (json['myString'] as List).map((e) => e as String).toBuiltSet()
-        : null,
-    dynamicMap: json['dynamicMap'] != null
-        ? BuiltMap<String, Object>.of(
-            json['dynamicMap'] as Map<String, dynamic>)
-        : null,
-    myNested: json['myNested'] != null
-        ? (json['myNested'] as List)
-            .map((e) =>
-                e == null ? null : Nested.fromJson(e as Map<String, dynamic>))
-            .toBuiltList()
-        : null,
-    normalList: (json['normalList'] as List)?.map((e) => e as String)?.toList(),
-    builtMap: json['builtMap'] != null
-        ? BuiltMap<int, String>.of(
-            (json['builtMap'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(int.parse(k), e as String),
-          ))
-        : null,
-    builtMapNested: json['builtMapNested'] != null
-        ? BuiltMap<int, Nested>.of(
-            (json['builtMapNested'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(int.parse(k),
-                e == null ? null : Nested.fromJson(e as Map<String, dynamic>)),
-          ))
-        : null,
+    myList: (json['myList'] as List).map((e) => e as int).toBuiltList(),
+    builtMapString: BuiltMap<String, String>.of(
+        Map<String, String>.from(json['builtMapString'] as Map)),
+    myString: (json['myString'] as List).map((e) => e as String).toBuiltSet(),
+    dynamicMap: BuiltMap<String, Object?>.of(
+        json['dynamicMap'] as Map<String, dynamic>),
+    myNested: (json['myNested'] as List)
+        .map((e) => Nested.fromJson(e as Map<String, dynamic>))
+        .toBuiltList(),
+    normalList:
+        (json['normalList'] as List<dynamic>).map((e) => e as String).toList(),
+    builtMap:
+        BuiltMap<int, String>.of((json['builtMap'] as Map<String, dynamic>).map(
+      (k, e) => MapEntry(int.parse(k), e as String),
+    )),
+    builtMapNested: BuiltMap<int, Nested>.of(
+        (json['builtMapNested'] as Map<String, dynamic>).map(
+      (k, e) =>
+          MapEntry(int.parse(k), Nested.fromJson(e as Map<String, dynamic>)),
+    )),
     nullList: json['nullList'] != null
         ? (json['nullList'] as List).map((e) => e as String).toBuiltList()
         : null,
@@ -56,15 +40,12 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
     nullSet: json['nullSet'] != null
         ? (json['nullSet'] as List).map((e) => e as String).toBuiltSet()
         : null,
-    normalSet: (json['normalSet'] as List)?.map((e) => e as String)?.toSet(),
-    nestedKtList: json['nestedKtList'] != null
-        ? KtList<Nested>.from((json['nestedKtList'] as List).map((e) =>
-            e == null ? null : Nested.fromJson(e as Map<String, dynamic>)))
-        : null,
-    nestedKtSet: json['nestedKtSet'] != null
-        ? KtSet<Nested>.from((json['nestedKtSet'] as List).map((e) =>
-            e == null ? null : Nested.fromJson(e as Map<String, dynamic>)))
-        : null,
+    normalSet:
+        (json['normalSet'] as List<dynamic>).map((e) => e as String).toSet(),
+    nestedKtList: KtList<Nested>.from((json['nestedKtList'] as List)
+        .map((e) => Nested.fromJson(e as Map<String, dynamic>))),
+    nestedKtSet: KtSet<Nested>.from((json['nestedKtSet'] as List)
+        .map((e) => Nested.fromJson(e as Map<String, dynamic>))),
     nullKtList: json['nullKtList'] != null
         ? KtList<String>.from(
             (json['nullKtList'] as List).map((e) => e as String))
@@ -73,67 +54,72 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
         ? KtSet<String>.from(
             (json['nullKtSet'] as List).map((e) => e as String))
         : null,
-    stringKtList: json['stringKtList'] != null
-        ? KtList<String>.from(
-            (json['stringKtList'] as List).map((e) => e as String))
-        : null,
-    stringKtSet: json['stringKtSet'] != null
-        ? KtSet<String>.from(
-            (json['stringKtSet'] as List).map((e) => e as String))
-        : null,
-    nestedKtMap: json['nestedKtMap'] != null
-        ? KtMap<String, Nested>.from(
-            (json['nestedKtMap'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k,
-                e == null ? null : Nested.fromJson(e as Map<String, dynamic>)),
-          ))
-        : null,
-    stringKtMap: json['stringKtMap'] != null
-        ? KtMap<String, String>.from(
-            (json['stringKtMap'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k, e as String),
-          ))
-        : null,
+    stringKtList: KtList<String>.from(
+        (json['stringKtList'] as List).map((e) => e as String)),
+    stringKtSet: KtSet<String>.from(
+        (json['stringKtSet'] as List).map((e) => e as String)),
+    nestedKtMap: KtMap<String, Nested>.from(
+        (json['nestedKtMap'] as Map<String, dynamic>).map(
+      (k, e) => MapEntry(k, Nested.fromJson(e as Map<String, dynamic>)),
+    )),
+    nestedKtMapWithNulls: KtMap<String, Nested?>.from(
+        (json['nestedKtMapWithNulls'] as Map<String, dynamic>).map(
+      (k, e) => MapEntry(
+          k, e == null ? null : Nested.fromJson(e as Map<String, dynamic>)),
+    )),
+    stringKtMap: KtMap<String, String>.from(
+        Map<String, String>.from(json['stringKtMap'] as Map)),
+    stringKtMapWithNulls: KtMap<String, String?>.from(
+        Map<String, String?>.from(json['stringKtMapWithNulls'] as Map)),
     nullKtMap: json['nullKtMap'] != null
-        ? KtMap<String, dynamic>.from(json['nullKtMap'] as Map<String, dynamic>)
+        ? KtMap<String, Object>.from(
+            (json['nullKtMap'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e as Object),
+          ))
         : null,
-    dynamicKtMap: json['dynamicKtMap'] != null
-        ? KtMap<String, dynamic>.from(
-            json['dynamicKtMap'] as Map<String, dynamic>)
-        : null,
+    dynamicKtMap: KtMap<String, dynamic>.from(
+        json['dynamicKtMap'] as Map<String, dynamic>),
+    stringKtListWithNulls: KtList<String?>.from(
+        (json['stringKtListWithNulls'] as List).map((e) => e as String?)),
+    stringKtSetWithNulls: KtSet<String?>.from(
+        (json['stringKtSetWithNulls'] as List).map((e) => e as String?)),
   );
 }
 
 Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
-      'myList': instance.myList?.toList(),
-      'myString': instance.myString?.toList(),
-      'myNested': instance.myNested?.map((e) => e?.toJson())?.toList(),
+      'myList': instance.myList.toList(),
+      'myString': instance.myString.toList(),
+      'myNested': instance.myNested.map((e) => e.toJson()).toList(),
       'normalList': instance.normalList,
-      'normalSet': instance.normalSet?.toList(),
+      'normalSet': instance.normalSet.toList(),
       'builtMap':
-          instance.builtMap?.toMap()?.map((k, e) => MapEntry(k.toString(), e)),
-      'builtMapString': instance.builtMapString?.toMap(),
+          instance.builtMap.toMap().map((k, e) => MapEntry(k.toString(), e)),
+      'builtMapString': instance.builtMapString.toMap(),
       'builtMapNested': instance.builtMapNested
-          ?.toMap()
-          ?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
+          .toMap()
+          .map((k, e) => MapEntry(k.toString(), e.toJson())),
       'nullList': instance.nullList?.toList(),
       'nullSet': instance.nullSet?.toList(),
       'nullMap': instance.nullMap?.toMap(),
-      'stringKtList': instance.stringKtList?.asList(),
-      'stringKtSet': instance.stringKtSet?.iter?.toList(),
+      'stringKtList': instance.stringKtList.asList(),
+      'stringKtListWithNulls': instance.stringKtListWithNulls.asList(),
+      'stringKtSet': instance.stringKtSet.iter.toList(),
+      'stringKtSetWithNulls': instance.stringKtSetWithNulls.iter.toList(),
       'nestedKtList':
-          instance.nestedKtList?.map((e) => e?.toJson())?.iter?.toList(),
-      'nestedKtSet':
-          instance.nestedKtSet?.map((e) => e?.toJson())?.iter?.toList(),
+          instance.nestedKtList.map((e) => e.toJson()).iter.toList(),
+      'nestedKtSet': instance.nestedKtSet.map((e) => e.toJson()).iter.toList(),
       'nullKtList': instance.nullKtList?.asList(),
       'nullKtSet': instance.nullKtSet?.iter?.toList(),
-      'dynamicMap': instance.dynamicMap?.toMap(),
-      'nestedKtMap': instance.nestedKtMap
-          ?.asMap()
-          ?.map((k, e) => MapEntry(k, e?.toJson())),
-      'stringKtMap': instance.stringKtMap?.asMap(),
+      'dynamicMap': instance.dynamicMap.toMap(),
+      'nestedKtMap':
+          instance.nestedKtMap.asMap().map((k, e) => MapEntry(k, e.toJson())),
+      'nestedKtMapWithNulls': instance.nestedKtMapWithNulls
+          .asMap()
+          .map((k, e) => MapEntry(k, e?.toJson())),
+      'stringKtMap': instance.stringKtMap.asMap(),
+      'stringKtMapWithNulls': instance.stringKtMapWithNulls.asMap(),
       'nullKtMap': instance.nullKtMap?.asMap(),
-      'dynamicKtMap': instance.dynamicKtMap?.asMap(),
+      'dynamicKtMap': instance.dynamicKtMap.asMap(),
     };
 
 Nested _$NestedFromJson(Map<String, dynamic> json) {

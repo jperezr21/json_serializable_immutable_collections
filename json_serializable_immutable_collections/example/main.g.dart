@@ -8,12 +8,11 @@ part of 'main.dart';
 
 Model _$ModelFromJson(Map<String, dynamic> json) {
   return Model(
-    myIntList: json['myIntList'] != null
-        ? KtList<int>.from((json['myIntList'] as List).map((e) => e as int))
-        : null,
+    myIntList:
+        KtList<int>.from((json['myIntList'] as List).map((e) => e as int)),
   );
 }
 
 Map<String, dynamic> _$ModelToJson(Model instance) => <String, dynamic>{
-      'myIntList': instance.myIntList?.asList(),
+      'myIntList': instance.myIntList.asList(),
     };
