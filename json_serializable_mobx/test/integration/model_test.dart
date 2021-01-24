@@ -6,6 +6,7 @@ final model = MyModel(
   myList: ObservableList.of([1, 2, 3]),
   myListWithNulls: ObservableList.of([1, null]),
   myString: ObservableList.of(["1", "2", "3"]),
+  myStringWithNulls: ObservableList.of(["1", null]),
   normalList: ["a", "b"],
   normalSet: {"a", "b", "c"},
   nullList: null,
@@ -19,6 +20,7 @@ final model = MyModel(
   nestedMapWithNulls: ObservableMap.of({"a": Nested(1), "b": null}),
   builtMapString: ObservableMap.of({"a": "b"}),
   myNested: ObservableList.of([Nested(0), Nested(1)]),
+  myNestedWithNulls: ObservableList.of([Nested(0), null]),
   dynamicMap: ObservableMap.of({"a": "a", "b": 1, "c": null}),
   stringObservable: Observable<String>("string"),
   nullobservable: null,
@@ -27,6 +29,7 @@ final model = MyModel(
 const jsonMapExpected = {
   "myList": [1, 2, 3],
   "myListWithNulls": [1, null],
+  "myStringWithNulls": ["1", null],
   "myString": ["1", "2", "3"],
   "normalList": ["a", "b"],
   "normalSet": ["a", "b", "c"],
@@ -53,6 +56,10 @@ const jsonMapExpected = {
   "myNested": [
     {"a": 0},
     {"a": 1}
+  ],
+  "myNestedWithNulls": [
+    {"a": 0},
+    null,
   ],
   "dynamicMap": {"a": "a", "b": 1, "c": null},
   "stringObservable": "string",

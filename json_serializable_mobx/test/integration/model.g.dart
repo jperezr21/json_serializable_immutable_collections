@@ -16,10 +16,15 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
         Map<String, String>.of(json['builtMapString'] as Map<String, String>)),
     myString: ObservableList<String>.of(
         (json['myString'] as List).map((e) => e as String)),
+    myStringWithNulls: ObservableList<String?>.of(
+        (json['myStringWithNulls'] as List).map((e) => e as String?)),
     dynamicMap: ObservableMap<String, dynamic>.of(
         json['dynamicMap'] as Map<String, dynamic>),
     myNested: ObservableList<Nested>.of((json['myNested'] as List)
         .map((e) => Nested.fromJson(e as Map<String, dynamic>))),
+    myNestedWithNulls: ObservableList<Nested?>.of(
+        (json['myNestedWithNulls'] as List).map((e) =>
+            e == null ? null : Nested.fromJson(e as Map<String, dynamic>))),
     normalList:
         (json['normalList'] as List<dynamic>).map((e) => e as String).toList(),
     builtMap: ObservableMap<int, String>.of(
@@ -69,7 +74,10 @@ Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
       'myList': instance.myList,
       'myListWithNulls': instance.myListWithNulls,
       'myString': instance.myString,
+      'myStringWithNulls': instance.myStringWithNulls,
       'myNested': instance.myNested.map((e) => e.toJson()).toList(),
+      'myNestedWithNulls':
+          instance.myNestedWithNulls.map((e) => e?.toJson()).toList(),
       'normalList': instance.normalList,
       'normalSet': instance.normalSet.toList(),
       'builtMap': instance.builtMap.map((k, e) => MapEntry(k.toString(), e)),

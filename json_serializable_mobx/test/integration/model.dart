@@ -5,26 +5,28 @@ part 'model.g.dart';
 
 @JsonSerializable()
 class MyModel {
-  const MyModel(
-      {required this.myList,
-      required this.myListWithNulls,
-      required this.builtMapString,
-      required this.myString,
-      required this.dynamicMap,
-      required this.myNested,
-      required this.normalList,
-      required this.builtMap,
-      required this.builtMapNested,
-      required this.nullList,
-      required this.nullMap,
-      required this.nullSet,
-      required this.normalSet,
-      required this.stringSet,
-      required this.nestedMap,
-      required this.nestedMapWithNulls,
-      required this.stringObservable,
-      required this.nullobservable,
-      required this.nestedSet});
+  const MyModel({
+    required this.myList,
+    required this.myListWithNulls,
+    required this.builtMapString,
+    required this.myString,
+    required this.myStringWithNulls,
+    required this.dynamicMap,
+    required this.myNested,
+    required this.myNestedWithNulls,
+    required this.normalList,
+    required this.builtMap,
+    required this.builtMapNested,
+    required this.nullList,
+    required this.nullMap,
+    required this.nullSet,
+    required this.normalSet,
+    required this.stringSet,
+    required this.nestedMap,
+    required this.nestedMapWithNulls,
+    required this.stringObservable,
+    required this.nullobservable,
+    required this.nestedSet});
 
   final ObservableList<int> myList;
 
@@ -32,7 +34,11 @@ class MyModel {
 
   final ObservableList<String> myString;
 
+  final ObservableList<String?> myStringWithNulls;
+
   final ObservableList<Nested> myNested;
+
+  final ObservableList<Nested?> myNestedWithNulls;
 
   final List<String> normalList;
 
@@ -72,11 +78,11 @@ class MyModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MyModel && toString() == other.toString();
+          other is MyModel && toString() == other.toString();
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myListWithNulls: $myListWithNulls, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap, nestedMapWithNulls: $nestedMapWithNulls, stringObservable: $stringObservable, nullobservable: ${nullobservable?.value}';
+    return 'MyModel{myList: $myList, myListWithNulls: $myListWithNulls, myString: $myString, myStringWithNulls: $myStringWithNulls, myNested: $myNested, myNestedWithNulls: $myNestedWithNulls, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap, nestedMapWithNulls: $nestedMapWithNulls, stringObservable: $stringObservable, nullobservable: ${nullobservable?.value}';
   }
 }
 
@@ -93,7 +99,7 @@ class Nested {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Nested && runtimeType == other.runtimeType && a == other.a;
+          other is Nested && runtimeType == other.runtimeType && a == other.a;
 
   @override
   int get hashCode => a.hashCode;
