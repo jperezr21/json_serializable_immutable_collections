@@ -6,25 +6,29 @@ part 'model.g.dart';
 @JsonSerializable()
 class MyModel {
   const MyModel(
-      {this.myList,
-      this.builtMapString,
-      this.myString,
-      this.dynamicMap,
-      this.myNested,
-      this.normalList,
-      this.builtMap,
-      this.builtMapNested,
-      this.nullList,
-      this.nullMap,
-      this.nullSet,
-      this.normalSet,
-      this.stringSet,
-      this.nestedMap,
-        this.stringObservable,
-        this.nullobservable,
-      this.nestedSet});
+      {required this.myList,
+      required this.myListWithNulls,
+      required this.builtMapString,
+      required this.myString,
+      required this.dynamicMap,
+      required this.myNested,
+      required this.normalList,
+      required this.builtMap,
+      required this.builtMapNested,
+      required this.nullList,
+      required this.nullMap,
+      required this.nullSet,
+      required this.normalSet,
+      required this.stringSet,
+      required this.nestedMap,
+      required this.nestedMapWithNulls,
+      required this.stringObservable,
+      required this.nullobservable,
+      required this.nestedSet});
 
   final ObservableList<int> myList;
+
+  final ObservableList<int?> myListWithNulls;
 
   final ObservableList<String> myString;
 
@@ -40,11 +44,11 @@ class MyModel {
 
   final ObservableMap<int, Nested> builtMapNested;
 
-  final ObservableList<String> nullList;
+  final ObservableList<String>? nullList;
 
-  final ObservableSet<String> nullSet;
+  final ObservableSet<String>? nullSet;
 
-  final ObservableMap<String, String> nullMap;
+  final ObservableMap<String, String>? nullMap;
 
   final ObservableSet<String> stringSet;
 
@@ -54,9 +58,11 @@ class MyModel {
 
   final ObservableMap<String, Nested> nestedMap;
 
+  final ObservableMap<String, Nested?> nestedMapWithNulls;
+
   final Observable<String> stringObservable;
 
-  final Observable<int> nullobservable;
+  final Observable<int>? nullobservable;
 
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
@@ -70,7 +76,7 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap, stringObservable: $stringObservable}';
+    return 'MyModel{myList: $myList, myListWithNulls: $myListWithNulls, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap, nestedMapWithNulls: $nestedMapWithNulls, stringObservable: $stringObservable, nullobservable: ${nullobservable?.value}';
   }
 }
 
@@ -78,7 +84,7 @@ class MyModel {
 class Nested {
   const Nested(this.a);
 
-  final int a;
+  final int? a;
 
   Map<String, dynamic> toJson() => _$NestedToJson(this);
 

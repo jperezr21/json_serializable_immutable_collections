@@ -7,7 +7,7 @@ part 'main.g.dart';
 class Model {
   final ObservableList<int> myIntList;
 
-  Model({this.myIntList});
+  Model({required this.myIntList});
 
   factory Model.fromJson(Map<String, dynamic> json) => _$ModelFromJson(json);
 

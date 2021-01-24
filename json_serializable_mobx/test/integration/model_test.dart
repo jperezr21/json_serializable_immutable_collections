@@ -4,6 +4,7 @@ import 'model.dart';
 
 final model = MyModel(
   myList: ObservableList.of([1, 2, 3]),
+  myListWithNulls: ObservableList.of([1, null]),
   myString: ObservableList.of(["1", "2", "3"]),
   normalList: ["a", "b"],
   normalSet: {"a", "b", "c"},
@@ -15,6 +16,7 @@ final model = MyModel(
   builtMap: ObservableMap.of({1: "hi"}),
   builtMapNested: ObservableMap.of({1: Nested(1)}),
   nestedMap: ObservableMap.of({"a": Nested(1)}),
+  nestedMapWithNulls: ObservableMap.of({"a": Nested(1), "b": null}),
   builtMapString: ObservableMap.of({"a": "b"}),
   myNested: ObservableList.of([Nested(0), Nested(1)]),
   dynamicMap: ObservableMap.of({"a": "a", "b": 1, "c": null}),
@@ -24,6 +26,7 @@ final model = MyModel(
 
 const jsonMapExpected = {
   "myList": [1, 2, 3],
+  "myListWithNulls": [1, null],
   "myString": ["1", "2", "3"],
   "normalList": ["a", "b"],
   "normalSet": ["a", "b", "c"],
@@ -42,6 +45,10 @@ const jsonMapExpected = {
   "nestedMap": {
     "a": {"a": (1)}
   },
+  "nestedMapWithNulls": {
+    "a": {"a": (1)},
+    "b": null,
+  },
   "builtMapString": {"a": "b"},
   "myNested": [
     {"a": 0},
@@ -49,7 +56,7 @@ const jsonMapExpected = {
   ],
   "dynamicMap": {"a": "a", "b": 1, "c": null},
   "stringObservable": "string",
-  "nullobservable" : null,
+  "nullobservable": null,
 };
 
 void main() {

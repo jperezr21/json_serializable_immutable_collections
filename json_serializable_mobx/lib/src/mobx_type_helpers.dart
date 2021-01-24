@@ -12,20 +12,20 @@ const mobxListTypeChecker = TypeChecker.fromRuntime(ObservableList);
 const mobxSetTypeChecker = TypeChecker.fromRuntime(ObservableSet);
 const mobxMapTypeChecker = TypeChecker.fromRuntime(ObservableMap);
 
-const withNullability = false;
+const withNullability = true;
 
 class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const MobxIterableTypeHelper();
 
   @override
-  String serialize(
+  String? serialize(
       DartType targetType, String expression, TypeHelperContext context) {
     return null;
   }
 
   @override
-  String deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context) {
+  String? deserialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context, bool defaultProvided) {
     if (!(coreIterableTypeChecker.isExactlyType(targetType) ||
         mobxListTypeChecker.isExactlyType(targetType) ||
         mobxSetTypeChecker.isExactlyType(targetType))) {
@@ -38,6 +38,8 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     var output = '$expression as List';
 
+    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
+
     // If `itemSubVal` is the same and it's not a Set, then we don't need to do
     // anything fancy
     if (closureArg == itemSubVal &&
@@ -45,7 +47,7 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
       return wrapNullableIfNecessary(
           expression,
           'ObservableList<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)',
-          context.nullable);
+          targetTypeIsNullable);
     }
 
     output = '($output)';
@@ -63,7 +65,7 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
           'ObservableSet<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)';
     }
 
-    return wrapNullableIfNecessary(expression, output, context.nullable);
+    return wrapNullableIfNecessary(expression, output, targetTypeIsNullable);
   }
 }
 
@@ -71,7 +73,7 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const MobxMapTypeHelper();
 
   @override
-  Object serialize(
+  Object? serialize(
       DartType targetType, String expression, TypeHelperContext context) {
     if (!mobxMapTypeChecker.isAssignableFromType(targetType)) {
       return null;
@@ -88,7 +90,9 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
         context.serialize(keyType, keyParam);
 
-    final optionalQuestion = context.nullable ? '?' : '';
+    final targetTypeIsNullable = targetType.isNullableType;
+
+    final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     if (closureArg == subFieldValue && keyParam == subKeyValue) {
       return expression;
@@ -99,8 +103,8 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   }
 
   @override
-  Object deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context) {
+  Object? deserialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context, bool defaultProvided) {
     if (!mobxMapTypeChecker.isExactlyType(targetType)) {
       return null;
     }
@@ -109,20 +113,23 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
 
+
     var prefix =
         "ObservableMap<${keyArg.getDisplayString(withNullability: withNullability)},${valueArg.getDisplayString(withNullability: withNullability)}>.of";
 
     checkSafeKeyType(expression, keyArg);
 
-    final valueArgIsAny = isObjectOrDynamic(valueArg);
+    final valueArgIsAny = isLikeDynamic(valueArg);
     final keyStringable = isKeyStringable(keyArg);
+
+    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
 
     if (!keyStringable) {
       if (valueArgIsAny) {
-        if (context.config.anyMap) {
-          if (isObjectOrDynamic(keyArg)) {
-            return wrapNullableIfNecessary(
-                expression, '$prefix($expression as Map)', context.nullable);
+        if (context.config.anyMap!) {
+          if (isLikeDynamic(keyArg)) {
+            return wrapNullableIfNecessary(expression,
+                '$prefix($expression as Map)', targetTypeIsNullable);
           }
         } else {
           // this is the trivial case. Do a runtime cast to the known type of JSON
@@ -130,18 +137,18 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
           return wrapNullableIfNecessary(
               expression,
               'ObservableMap<String,dynamic>.of($expression as Map<String, dynamic>)',
-              context.nullable);
+              targetTypeIsNullable);
         }
       }
 
-      if (!context.nullable &&
+      if (!targetTypeIsNullable &&
           (valueArgIsAny ||
               simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
         // No mapping of the values or null check required!
         return wrapNullableIfNecessary(
             expression,
-            'ObservableMap<String,$valueArg>.of(Map<String, $valueArg>.of($expression as Map))',
-            context.nullable);
+            'ObservableMap<String,$valueArg>.of(Map<String, $valueArg>.of($expression as Map<String,$valueArg>))',
+            targetTypeIsNullable);
       }
     }
 
@@ -151,12 +158,12 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final itemSubVal = context.deserialize(valueArg, closureArg);
 
     final mapCast =
-        context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
+        context.config.anyMap! ? 'as Map' : 'as Map<String, dynamic>';
 
     String keyUsage;
     if (isEnum(keyArg)) {
       keyUsage = context.deserialize(keyArg, keyParam).toString();
-    } else if (context.config.anyMap && !isObjectOrDynamic(keyArg)) {
+    } else if (context.config.anyMap! && !isLikeDynamic(keyArg)) {
       keyUsage = '$keyParam as String';
     } else {
       keyUsage = keyParam;
@@ -171,7 +178,7 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         expression,
         '$prefix(($expression $mapCast).map('
         '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))',
-        context.nullable);
+        targetTypeIsNullable);
   }
 }
 
@@ -179,17 +186,30 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const MobxObservableTypeHelper();
 
   @override
-  String serialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
+  Object? serialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context) {
+
     if (observableTypeChecker.isExactlyType(targetType)) {
-      return context.serialize(typeArgumentsOf(targetType, observableTypeChecker).single, "($expression)?.value");
+      final typeArg = typeArgumentsOf(targetType, observableTypeChecker)?.single;
+      final optionalQuestion = targetType.isNullableType ? '?' : '';
+
+      return context.serialize(
+          typeArg,
+          "($expression)$optionalQuestion.value");
     }
     return null;
   }
 
   @override
-  String deserialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
+  String? deserialize(
+    DartType targetType,
+    String expression,
+    TypeHelperContextWithConfig context,
+    bool defaultProvided,
+  ) {
+    final typeArg = typeArgumentsOf(targetType, observableTypeChecker)?.single;
     if (observableTypeChecker.isExactlyType(targetType)) {
-      return 'Observable(${context.deserialize(typeArgumentsOf(targetType, observableTypeChecker).single, expression)})';
+      return 'Observable(${context.deserialize(typeArg, expression)})';
     }
 
     return null;
