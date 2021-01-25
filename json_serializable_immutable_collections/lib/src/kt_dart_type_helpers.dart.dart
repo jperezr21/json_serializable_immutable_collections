@@ -157,15 +157,16 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     assert(typeArgs.length == 2);
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
+    final keyArgAsGenericString = keyArg.getDisplayString(withNullability: withNullability);
+    final valueArgAsGenericString = valueArg.getDisplayString(withNullability: withNullability);
 
-    var prefix =
-        "KtMap<${keyArg.getDisplayString(withNullability: withNullability)},${valueArg.getDisplayString(withNullability: withNullability)}>.from";
+    final prefix =
+        "KtMap<$keyArgAsGenericString,$valueArgAsGenericString>.from";
 
     checkSafeKeyType(expression, keyArg);
 
     final valueArgIsAny = isLikeDynamic(valueArg);
     final keyStringable = isKeyStringable(keyArg);
-
     final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
     final anyMap = context.config.anyMap ?? false;
 
@@ -193,7 +194,7 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         // No mapping of the values or null check required!
         return wrapNullableIfNecessary(
             expression,
-            'KtMap<String,$valueArg>.from(Map<String, $valueArg>.from($expression as Map))',
+            'KtMap<String,$valueArgAsGenericString>.from(Map<String, $valueArgAsGenericString>.from($expression as Map))',
             targetTypeIsNullable);
       }
     }

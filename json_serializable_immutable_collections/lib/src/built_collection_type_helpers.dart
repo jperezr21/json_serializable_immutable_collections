@@ -120,10 +120,11 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
 
+
     final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
 
 
-    var prefix =
+    final prefix =
         "BuiltMap<${keyArg.getDisplayString(withNullability: this.withNullability)},${valueArg.getDisplayString(withNullability: this.withNullability)}>.of";
 
     checkSafeKeyType(expression, keyArg);
@@ -156,7 +157,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         // No mapping of the values or null check required!
         return wrapNullableIfNecessary(
             expression,
-            'BuiltMap<String,$valueArg>.of(Map<String, $valueArg>.from($expression as Map))',
+            'BuiltMap<String,${valueArg.getDisplayString(withNullability: withNullability)}>.of(Map<String, ${valueArg.getDisplayString(withNullability: withNullability)}>.from($expression as Map))',
             targetTypeIsNullable);
       }
     }
