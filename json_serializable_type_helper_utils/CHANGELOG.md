@@ -1,3 +1,8 @@
+## 2.0.0-nullsafety.1
+
+- relax analyser version
+
+
 ## 2.0.0-nullsafety.0
 
 - null safety migration
