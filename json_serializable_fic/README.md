@@ -1,6 +1,6 @@
-# json_serializable_immutable_collections
+# json_serializable_fic
 
-[![Pub Package](https://img.shields.io/pub/v/json_serializable_immutable_collections.svg)](https://pub.dartlang.org/packages/json_serializable_immutable_collections)
+[![Pub Package](https://img.shields.io/pub/v/json_serializable_fic.svg)](https://pub.dartlang.org/packages/json_serializable_fic)
 
 
 (De-)Serialize more collections using json_serializable.
@@ -26,7 +26,7 @@ Do you want to use even more types? Feel free to open an issue. PRs also welcome
 Add to your dev_dependencies:
 
 ```yaml
-    json_serializable_immutable_collections: <current_version>
+    json_serializable_fic: <current_version>
 ```    
     
 Add to your `build.yaml` (create the file if necessary, this is necessary to avoid conflicts between json_serializable and this library):
@@ -35,7 +35,7 @@ Add to your `build.yaml` (create the file if necessary, this is necessary to avo
     targets:
       $default:
         builders:
-          json_serializable_immutable_collections:
+          json_serializable_fic:
             # configure your options here, same as json_serializable
             options:
               explicit_to_json: true
