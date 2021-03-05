@@ -34,7 +34,7 @@ targets:
             - lib/**
             - example/**
       # add our custom builder that builds everything (see builder.dart and the builders section below)
-      # your will need to change the name <project_package:combine_example>
+      # your will need to change the name <project_package:everything_builder>
       combine_example:everything_builder:
         options:
           explicit_to_json: true
