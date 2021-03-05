@@ -17,7 +17,10 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:json_serializable/json_serializable.dart';
 
-import 'type_helpers.dart';
+/// import all the type helpers that you want
+import 'package:json_serializable_fic/type_helpers.dart';
+import 'package:json_serializable_mobx/type_helpers.dart';
+import 'package:json_serializable_immutable_collections/type_helpers.dart';
 
 /// Supports `package:build_runner` creation and configuration of
 /// `json_serializable`.
@@ -29,8 +32,16 @@ Builder jsonSerializable(BuilderOptions options) {
     return SharedPartBuilder([
       JsonSerializableGenerator.withDefaultHelpers(
         const [
+          /// add the type helpers here
           FICIterableTypeHelper(),
           FICIMapTypeHelper(),
+          MobxIterableTypeHelper(),
+          MobxMapTypeHelper(),
+          MobxObservableTypeHelper(),
+          BuiltIterableTypeHelper(),
+          BuiltMapTypeHelper(),
+          KtIterableTypeHelper(),
+          KtMapTypeHelper()
         ],
         config: config,
       ),
