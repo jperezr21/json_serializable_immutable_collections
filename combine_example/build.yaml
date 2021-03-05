@@ -17,7 +17,7 @@ targets:
             - test/**
             - lib/**
             - example/**
-      # exclude the mobx builder builder
+      # exclude the mobx builder 
       json_serializable_mobx:
         generate_for:
           include:
@@ -25,7 +25,7 @@ targets:
            - test/**
            - lib/**
            - example/**
-      # exclude the mobx builder builder
+      # exclude the built_collection/kt_dart builder 
       json_serializable_immutable_collections:
         generate_for:
           include:
