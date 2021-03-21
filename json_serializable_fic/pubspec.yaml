@@ -1,6 +1,6 @@
 name: json_serializable_fic
 description: Adding support for fic collections for json_serializable
-version: 0.0.1-nullsafety.0
+version: 0.1.0
 homepage: https://github.com/knaeckeKami/immutable_json_list_serializer
 
 environment:

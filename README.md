@@ -11,6 +11,10 @@ This package adds support for built_value and kt.dart collections
 
 This package adds support for mobx observable collections
 
+## [json_serializable_fic](https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/json_serializable_fic)
+
+This package adds support for fast immutable collections. (basic types as of now)
+
 ## [json_serializable_type_helper_utils](https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/json_serializable_type_helper_utils)
 
 Utility functions for custom TypeHelpers, used by json_serializable_mobx and json_serializable_immutable_collections, might be used by other people do build their own TypeHelpers, too.

@@ -1,3 +1,7 @@
+## 0.5.0
+
+- support json_serializable 4.1.0
+
 ## 0.5.0-nullsafety.0
 
 - migrate to nullsafety
