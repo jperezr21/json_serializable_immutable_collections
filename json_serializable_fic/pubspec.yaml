@@ -4,14 +4,14 @@ version: 0.0.1-nullsafety.0
 homepage: https://github.com/knaeckeKami/immutable_json_list_serializer
 
 environment:
-  sdk: '>=2.12.0-259.9.beta <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dev_dependencies:
   test: ^1.16.8
 
 dependencies:
   json_serializable:  ">=4.1.0 <5.0.0"
-  json_annotation:  ">=4.0.0-nullsafety.0 <5.0.0"
+  json_annotation:  ">=4.0.0 <5.0.0"
   collection: "^1.15.0"
   json_serializable_type_helper_utils: ^2.0.0
   fast_immutable_collections: ^2.0.0

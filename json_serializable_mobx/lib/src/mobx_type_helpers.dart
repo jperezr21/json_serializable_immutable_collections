@@ -126,7 +126,7 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     if (!keyStringable) {
       if (valueArgIsAny) {
-        if (context.config.anyMap!) {
+        if (context.config.anyMap) {
           if (isLikeDynamic(keyArg)) {
             return wrapNullableIfNecessary(expression,
                 '$prefix($expression as Map)', targetTypeIsNullable);
@@ -158,12 +158,12 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final itemSubVal = context.deserialize(valueArg, closureArg);
 
     final mapCast =
-        context.config.anyMap! ? 'as Map' : 'as Map<String, dynamic>';
+        context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
 
     String keyUsage;
     if (isEnum(keyArg)) {
       keyUsage = context.deserialize(keyArg, keyParam).toString();
-    } else if (context.config.anyMap! && !isLikeDynamic(keyArg)) {
+    } else if (context.config.anyMap && !isLikeDynamic(keyArg)) {
       keyUsage = '$keyParam as String';
     } else {
       keyUsage = keyParam;
@@ -207,9 +207,10 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     TypeHelperContextWithConfig context,
     bool defaultProvided,
   ) {
-    final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
     if (observableTypeChecker.isExactlyType(targetType)) {
-      return 'Observable(${context.deserialize(typeArg, expression)})';
+      final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
+      final bool nullable = targetType.isNullableType || defaultProvided;
+      return wrapNullableIfNecessary(expression, 'Observable(${context.deserialize(typeArg, expression)})', nullable );
     }
 
     return null;

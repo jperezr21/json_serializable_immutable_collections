@@ -64,7 +64,9 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
           k, e == null ? null : Nested.fromJson(e as Map<String, dynamic>)),
     )),
     stringObservable: Observable(json['stringObservable'] as String),
-    nullobservable: Observable(json['nullobservable'] as int),
+    nullobservable: json['nullobservable'] != null
+        ? Observable(json['nullobservable'] as int)
+        : null,
     nestedSet: ObservableSet<Nested>.of((json['nestedSet'] as List)
         .map((e) => Nested.fromJson(e as Map<String, dynamic>))),
   );

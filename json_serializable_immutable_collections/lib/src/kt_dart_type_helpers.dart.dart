@@ -168,7 +168,7 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final valueArgIsAny = isLikeDynamic(valueArg);
     final keyStringable = isKeyStringable(keyArg);
     final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
-    final anyMap = context.config.anyMap ?? false;
+    final anyMap = context.config.anyMap;
 
 
     if (!keyStringable) {

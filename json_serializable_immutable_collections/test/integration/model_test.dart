@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:kt_dart/collection.dart';
@@ -90,5 +89,10 @@ void main() {
     expect(MyModel.fromJson(jsonMapExpected), model);
   });
 
+  test("can deserialize & serialize", () {
+    expect(MyModel.fromJson(jsonMapExpected).toJson(), jsonMapExpected);
+    expect(MyModel.fromJson(model.toJson()), model);
+
+  });
 
 }

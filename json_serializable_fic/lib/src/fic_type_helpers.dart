@@ -132,7 +132,7 @@ class FICIMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final valueArgIsAny = isLikeDynamic(valueArg);
     final keyStringable = isKeyStringable(keyArg);
 
-    final anyMap = context.config.anyMap ?? false;
+    final anyMap = context.config.anyMap;
 
     if (!keyStringable) {
       if (valueArgIsAny) {

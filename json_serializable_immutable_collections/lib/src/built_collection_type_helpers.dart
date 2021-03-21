@@ -10,7 +10,6 @@ import 'package:json_serializable/type_helper.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/lambda_result.dart';
-import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
 import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
 
@@ -132,7 +131,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final valueArgIsAny = isLikeDynamic(valueArg);
     final keyStringable = isKeyStringable(keyArg);
 
-    final anyMap = context.config.anyMap ?? false;
+    final anyMap = context.config.anyMap;
 
     if (!keyStringable) {
       if (valueArgIsAny) {
@@ -181,7 +180,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final toFromString = forType(keyArg);
     if (toFromString != null) {
-      keyUsage = toFromString.deserialize(keyArg!, keyUsage, false, true)!;
+      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true)!;
     }
 
     return wrapNullableIfNecessary(
