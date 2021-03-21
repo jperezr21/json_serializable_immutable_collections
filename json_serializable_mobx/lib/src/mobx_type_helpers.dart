@@ -34,7 +34,7 @@ class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final iterableGenericType = coreIterableGenericType(targetType);
 
-    final itemSubVal = context.deserialize(iterableGenericType, closureArg);
+    final itemSubVal = context.deserialize(iterableGenericType, closureArg)!;
 
     var output = '$expression as List';
 
@@ -171,7 +171,7 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final toFromString = forType(keyArg);
     if (toFromString != null) {
-      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true);
+      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true)!;
     }
 
     return wrapNullableIfNecessary(
@@ -190,7 +190,7 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
       TypeHelperContextWithConfig context) {
 
     if (observableTypeChecker.isExactlyType(targetType)) {
-      final typeArg = typeArgumentsOf(targetType, observableTypeChecker)?.single;
+      final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
       final optionalQuestion = targetType.isNullableType ? '?' : '';
 
       return context.serialize(
@@ -207,7 +207,7 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     TypeHelperContextWithConfig context,
     bool defaultProvided,
   ) {
-    final typeArg = typeArgumentsOf(targetType, observableTypeChecker)?.single;
+    final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
     if (observableTypeChecker.isExactlyType(targetType)) {
       return 'Observable(${context.deserialize(typeArg, expression)})';
     }

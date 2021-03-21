@@ -38,7 +38,7 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
     // Although it's possible that child elements may be marked unsafe
 
     var isList = ktListTypeChecker.isAssignableFromType(targetType);
-    final subField = context.serialize(itemType, closureArg);
+    final subField = context.serialize(itemType, closureArg)!;
 
     final targetTypeIsNullable = targetType.isNullableType;
 
@@ -79,7 +79,7 @@ class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
 
     final displayedGenericTypeString = iterableGenericType.getDisplayString(withNullability: this.withNullability);
 
-    final itemSubVal = context.deserialize(iterableGenericType, closureArg);
+    final itemSubVal = context.deserialize(iterableGenericType, closureArg)!;
 
 
     var output = '$expression as List';
@@ -220,7 +220,7 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final toFromString = forType(keyArg);
     if (toFromString != null) {
-      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true);
+      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true)!;
     }
 
     return wrapNullableIfNecessary(

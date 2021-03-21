@@ -42,7 +42,7 @@ class FICIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     }
     final iterableGenericType = coreIterableGenericType(targetType);
 
-    final itemSubVal = context.deserialize(iterableGenericType, closureArg);
+    final itemSubVal = context.deserialize(iterableGenericType, closureArg)!;
 
     var output = '$expression as List';
 
@@ -182,7 +182,7 @@ class FICIMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final toFromString = forType(keyArg);
     if (toFromString != null) {
-      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true);
+      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true)!;
     }
 
     return wrapNullableIfNecessary(

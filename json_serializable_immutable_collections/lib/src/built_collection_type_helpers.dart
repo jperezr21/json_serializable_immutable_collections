@@ -42,7 +42,7 @@ class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     }
     final iterableGenericType = coreIterableGenericType(targetType);
 
-    final itemSubVal = context.deserialize(iterableGenericType, closureArg);
+    final itemSubVal = context.deserialize(iterableGenericType, closureArg)!;
 
     var output = '$expression as List';
 
@@ -93,7 +93,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     checkSafeKeyType(expression, keyType);
 
     final subFieldValue = context.serialize(valueType, closureArg);
-    final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
+      final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
         context.serialize(keyType, keyParam);
 
     final targetTypeIsNullable = targetType.isNullableType;
@@ -181,7 +181,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final toFromString = forType(keyArg);
     if (toFromString != null) {
-      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true);
+      keyUsage = toFromString.deserialize(keyArg!, keyUsage, false, true)!;
     }
 
     return wrapNullableIfNecessary(
