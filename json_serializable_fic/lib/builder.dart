@@ -13,6 +13,7 @@
 
 import 'package:build/build.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:json_serializable_fic_typehelpers/json_serializable_fic_typehelpers.dart';
 
 import 'package:source_gen/source_gen.dart';
 import 'package:json_serializable/json_serializable.dart';

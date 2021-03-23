@@ -18,8 +18,8 @@ import 'package:source_gen/source_gen.dart';
 import 'package:json_serializable/json_serializable.dart';
 
 /// import all the type helpers that you want
-import 'package:json_serializable_fic/type_helpers.dart';
-import 'package:json_serializable_mobx/type_helpers.dart';
+import 'package:json_serializable_fic_typehelpers/json_serializable_fic_typehelpers.dart';
+import 'package:json_serializable_mobx_typehelpers/json_serializable_mobx_typehelpers.dart';
 import 'package:json_serializable_built_typehelpers/json_serializable_built_typehelpers.dart';
 import 'package:json_serializable_kt_typehelpers/json_serializable_kt_typehelpers.dart';
 

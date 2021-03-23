@@ -3,5 +3,5 @@
 /// and write their own builder
 library json_serializable_immutable_collections_type_helpers;
 
-export 'src/mobx_type_helpers.dart'
+export 'package:json_serializable_mobx_typehelpers/json_serializable_mobx_typehelpers.dart'
     show MobxIterableTypeHelper, MobxMapTypeHelper, MobxObservableTypeHelper;

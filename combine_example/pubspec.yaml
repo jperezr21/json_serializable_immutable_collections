@@ -22,8 +22,10 @@ dev_dependencies:
     path: ../json_serializable_built_typehelpers
   json_serializable_kt_typehelpers:
     path: ../json_serializable_kt_typehelpers
-  json_serializable_fic:
-    path: ../json_serializable_fic
+  json_serializable_fic_typehelpers:
+    path: ../json_serializable_fic_typehelpers
   json_serializable_mobx:
     path: ../json_serializable_mobx
+  json_serializable_mobx_typehelpers:
+    path: ../json_serializable_mobx_typehelpers
   build_runner: any

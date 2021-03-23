@@ -2,5 +2,5 @@
 /// normal users of this library should not need this, this is for advanced users who want to add their own, additional TypeHelpers
 /// and write their own builder
 
-export 'src/fic_type_helpers.dart'
+export 'package:json_serializable_fic_typehelpers/json_serializable_fic_typehelpers.dart'
     show FICIterableTypeHelper, FICIMapTypeHelper;
