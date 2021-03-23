@@ -20,7 +20,8 @@ import 'package:json_serializable/json_serializable.dart';
 /// import all the type helpers that you want
 import 'package:json_serializable_fic/type_helpers.dart';
 import 'package:json_serializable_mobx/type_helpers.dart';
-import 'package:json_serializable_immutable_collections/type_helpers.dart';
+import 'package:json_serializable_built_typehelpers/json_serializable_built_typehelpers.dart';
+import 'package:json_serializable_kt_typehelpers/json_serializable_kt_typehelpers.dart';
 
 /// Supports `package:build_runner` creation and configuration of
 /// `json_serializable`.

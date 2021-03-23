@@ -2,7 +2,7 @@
 /// normal users of this library should not need this, this is for advanced users who want to add their own, additional TypeHelpers
 /// and write their own builder
 
-export 'src/built_collection_type_helpers.dart'
+export 'package:json_serializable_built_typehelpers/json_serializable_built_typehelpers.dart'
     show BuiltIterableTypeHelper, BuiltMapTypeHelper;
-export 'src/kt_dart_type_helpers.dart.dart'
+export 'package:json_serializable_kt_typehelpers/json_serializable_kt_typehelpers.dart'
     show KtIterableTypeHelper, KtMapTypeHelper;

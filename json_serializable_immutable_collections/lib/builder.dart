@@ -14,7 +14,8 @@ library immutable_json_list_builder;
 
 import 'package:build/build.dart';
 import 'package:json_annotation/json_annotation.dart';
-
+import 'package:json_serializable_kt_typehelpers/json_serializable_kt_typehelpers.dart';
+import 'package:json_serializable_built_typehelpers/json_serializable_built_typehelpers.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:json_serializable/json_serializable.dart';
 
