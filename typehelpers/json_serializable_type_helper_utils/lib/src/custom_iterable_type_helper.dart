@@ -12,8 +12,8 @@ abstract class CustomIterableTypeHelper<T extends Object>
     extends TypeHelper<TypeHelperContextWithConfig> {
   late final TypeChecker typeChecker = TypeChecker.fromRuntime(T);
 
-  CustomIterableTypeHelper() :
-        assert(T != dynamic, 'you need to specify the type parameter, got $T');
+  CustomIterableTypeHelper()
+      : assert(T != dynamic, 'you need to specify the type parameter, got $T');
 
   /// convert the given expression for deserialization
   /// the expression is dart code that evaluates to an iterable,
@@ -21,7 +21,8 @@ abstract class CustomIterableTypeHelper<T extends Object>
   String convertForDeserialize(String expression, DartType resolvedGenericType);
 
   /// convert the given expression for serialization TODO document what this means
-  String convertForSerialize(String expression, DartType resolvedGenericType, bool isExpressionNullable);
+  String convertForSerialize(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable);
 
   DartType genericType(DartType type) =>
       typeArgumentsOf(type, typeChecker).single;
@@ -29,8 +30,8 @@ abstract class CustomIterableTypeHelper<T extends Object>
   @override
   String? serialize(DartType targetType, String expression,
       TypeHelperContextWithConfig context) {
-    if (!typeChecker.isAssignableFromType(targetType) ||
-        TypeChecker.fromRuntime(Iterable).isSuperTypeOf(targetType)) {
+    if ((!typeChecker.isAssignableFromType(targetType)) ||
+        _isDartCoreIterable<T>()) {
       return null;
     }
 
@@ -39,7 +40,6 @@ abstract class CustomIterableTypeHelper<T extends Object>
 
     final itemType = genericType(targetType);
 
-    var isList = typeChecker.isAssignableFromType(targetType);
     final subField = context.serialize(itemType, closureArg)!;
 
     final targetTypeIsNullable = targetType.isNullableType;
@@ -56,7 +56,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
 
       // expression now represents an Iterable (even if it started as a List
       // ...resetting `isList` to `false`.
-      isList = false;
+      //isList = false;
     }
 
     /*if (!isList) {
@@ -67,7 +67,6 @@ abstract class CustomIterableTypeHelper<T extends Object>
     return expression + optionalQuestion + '.asList()';*/
 
     return convertForSerialize(expression, itemType, targetTypeIsNullable);
-
   }
 
   @override
@@ -92,7 +91,9 @@ abstract class CustomIterableTypeHelper<T extends Object>
     // anything fancy
     if (closureArg == itemSubVal && typeChecker.isExactlyType(targetType)) {
       return wrapNullableIfNecessary(
-          expression, convertForDeserialize(output, resolvedGenericType), targetTypeIsNullable);
+          expression,
+          convertForDeserialize(output, resolvedGenericType),
+          targetTypeIsNullable);
     }
 
     output = '($output)';
@@ -106,4 +107,9 @@ abstract class CustomIterableTypeHelper<T extends Object>
 
     return wrapNullableIfNecessary(expression, output, targetTypeIsNullable);
   }
+}
+
+//danger, dirty hack ahead
+bool _isDartCoreIterable<T>() {
+  return <T>[] is List<Iterable>;
 }

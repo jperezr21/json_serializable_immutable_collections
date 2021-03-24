@@ -10,16 +10,10 @@ import 'package:json_serializable/src/utils.dart';
 
 import "package:kt_dart/collection.dart";
 
-const ktIterableTypeChecker = TypeChecker.fromRuntime(KtIterable);
-const ktListTypeChecker = TypeChecker.fromRuntime(KtList);
-const ktSetTypeChecker = TypeChecker.fromRuntime(KtSet);
 const ktMapTypeChecker = TypeChecker.fromRuntime(KtMap);
 
-DartType ktIterableGenericType(DartType type) =>
-    typeArgumentsOf(type, ktIterableTypeChecker).single;
-
 class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
-  
+
   @override
   String convertForDeserialize(String expression, DartType type) {
      return 'KtList<${type.getDisplayString(withNullability: true)}>.from($expression)';
@@ -77,7 +71,7 @@ class KtMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     if (closureArg == subFieldValue && keyParam == subKeyValue) {
-      return expression + optionalQuestion + ".asMap()";
+      return expression + optionalQuestion + '.asMap()';
     }
 
     return '$expression$optionalQuestion'

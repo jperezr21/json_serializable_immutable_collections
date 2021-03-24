@@ -2,8 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-
-
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
@@ -15,60 +13,31 @@ import 'package:json_serializable_type_helper_utils/json_serializable_type_helpe
 
 import 'package:built_collection/built_collection.dart';
 
-class BuiltIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  final bool withNullability;
-
-  const BuiltIterableTypeHelper({this.withNullability = true});
-
+class BuiltListTypeHelper extends CustomIterableTypeHelper<BuiltList> {
   @override
-  String? serialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context) {
-    //default iterable helper will serialize all iterables fine
-    return null;
+  String convertForDeserialize(
+      String expression, DartType resolvedGenericType) {
+    return '($expression).toBuiltList()';
   }
 
   @override
-  String? deserialize(
-    DartType targetType,
-    String expression,
-    TypeHelperContextWithConfig context,
-    bool defaultProvided,
-  ) {
-    if (!(coreIterableTypeChecker.isExactlyType(targetType) ||
-        builtListTypeChecker.isExactlyType(targetType) ||
-        builtSetTypeChecker.isExactlyType(targetType))) {
-      return null;
-    }
-    final iterableGenericType = coreIterableGenericType(targetType);
+  String convertForSerialize(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
+    throw StateError('not necessary as builtlist is iterable');
+  }
+}
 
-    final itemSubVal = context.deserialize(iterableGenericType, closureArg)!;
+class BuiltSetTypeHelper extends CustomIterableTypeHelper<BuiltSet> {
+  @override
+  String convertForDeserialize(
+      String expression, DartType resolvedGenericType) {
+    return '($expression).toBuiltSet()';
+  }
 
-    var output = '$expression as List';
-
-    final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
-
-    // If `itemSubVal` is the same and it's not a Set, then we don't need to do
-    // anything fancy
-    if (closureArg == itemSubVal &&
-        builtListTypeChecker.isExactlyType(targetType)) {
-      return wrapNullableIfNecessary(
-          expression, '($output).toBuiltList()', targetTypeIsNullable);
-    }
-
-    output = '($output)';
-
-    if (closureArg != itemSubVal) {
-      final lambda = LambdaResult.process(itemSubVal, closureArg);
-      output += '.map($lambda)';
-    }
-
-    if (builtListTypeChecker.isExactlyType(targetType)) {
-      output += '.toBuiltList()';
-    } else if (builtSetTypeChecker.isExactlyType(targetType)) {
-      output += '.toBuiltSet()';
-    }
-
-    return wrapNullableIfNecessary(expression, output, targetTypeIsNullable);
+  @override
+  String convertForSerialize(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
+    throw StateError('not necessary as builtlist is iterable');
   }
 }
 
@@ -92,11 +61,10 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     checkSafeKeyType(expression, keyType);
 
     final subFieldValue = context.serialize(valueType, closureArg);
-      final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
+    final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
         context.serialize(keyType, keyParam);
 
     final targetTypeIsNullable = targetType.isNullableType;
-
 
     final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
@@ -119,9 +87,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
 
-
     final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
-
 
     final prefix =
         "BuiltMap<${keyArg.getDisplayString(withNullability: this.withNullability)},${valueArg.getDisplayString(withNullability: this.withNullability)}>.of";
@@ -137,8 +103,8 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
       if (valueArgIsAny) {
         if (anyMap) {
           if (isLikeDynamic(keyArg)) {
-            return wrapNullableIfNecessary(
-                expression, '$prefix($expression as Map)', targetTypeIsNullable);
+            return wrapNullableIfNecessary(expression,
+                '$prefix($expression as Map)', targetTypeIsNullable);
           }
         } else {
           // this is the trivial case. Do a runtime cast to the known type of JSON
@@ -166,8 +132,7 @@ class BuiltMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final itemSubVal = context.deserialize(valueArg, closureArg);
 
-    final mapCast =
-    anyMap ? 'as Map' : 'as Map<String, dynamic>';
+    final mapCast = anyMap ? 'as Map' : 'as Map<String, dynamic>';
 
     String keyUsage;
     if (isEnum(keyArg)) {

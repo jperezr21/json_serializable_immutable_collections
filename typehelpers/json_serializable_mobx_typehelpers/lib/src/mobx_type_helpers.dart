@@ -8,66 +8,40 @@ import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
 
-const mobxListTypeChecker = TypeChecker.fromRuntime(ObservableList);
-const mobxSetTypeChecker = TypeChecker.fromRuntime(ObservableSet);
 const mobxMapTypeChecker = TypeChecker.fromRuntime(ObservableMap);
 
 const withNullability = true;
 
-class MobxIterableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  const MobxIterableTypeHelper();
-
+class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
   @override
-  String? serialize(
-      DartType targetType, String expression, TypeHelperContext context) {
-    return null;
+  String convertForDeserialize(
+      String expression, DartType resolvedGenericType) {
+    return "ObservableList<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)";
   }
 
   @override
-  String? deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context, bool defaultProvided) {
-    if (!(coreIterableTypeChecker.isExactlyType(targetType) ||
-        mobxListTypeChecker.isExactlyType(targetType) ||
-        mobxSetTypeChecker.isExactlyType(targetType))) {
-      return null;
-    }
-
-    final iterableGenericType = coreIterableGenericType(targetType);
-
-    final itemSubVal = context.deserialize(iterableGenericType, closureArg)!;
-
-    var output = '$expression as List';
-
-    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
-
-    // If `itemSubVal` is the same and it's not a Set, then we don't need to do
-    // anything fancy
-    if (closureArg == itemSubVal &&
-        mobxListTypeChecker.isExactlyType(targetType)) {
-      return wrapNullableIfNecessary(
-          expression,
-          'ObservableList<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)',
-          targetTypeIsNullable);
-    }
-
-    output = '($output)';
-
-    if (closureArg != itemSubVal) {
-      final lambda = LambdaResult.process(itemSubVal, closureArg);
-      output += '.map($lambda)';
-    }
-
-    if (mobxListTypeChecker.isExactlyType(targetType)) {
-      output =
-          'ObservableList<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)';
-    } else if (mobxSetTypeChecker.isExactlyType(targetType)) {
-      output =
-          'ObservableSet<${iterableGenericType.getDisplayString(withNullability: withNullability)}>.of($output)';
-    }
-
-    return wrapNullableIfNecessary(expression, output, targetTypeIsNullable);
+  String convertForSerialize(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
+    ///not needed as ObservableList is Iterable, so it's handled by the default TypeHelper
+    throw UnimplementedError();
   }
 }
+
+class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
+  @override
+  String convertForDeserialize(
+      String expression, DartType resolvedGenericType) {
+    return "ObservableSet<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)";
+  }
+
+  @override
+  String convertForSerialize(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
+    ///not needed as ObservableList is Iterable, so it's handled by the default TypeHelper
+    throw UnimplementedError();
+  }
+}
+
 
 class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const MobxMapTypeHelper();
@@ -112,7 +86,6 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     assert(typeArgs.length == 2);
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
-
 
     var prefix =
         "ObservableMap<${keyArg.getDisplayString(withNullability: withNullability)},${valueArg.getDisplayString(withNullability: withNullability)}>.of";
@@ -188,14 +161,11 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   @override
   Object? serialize(DartType targetType, String expression,
       TypeHelperContextWithConfig context) {
-
     if (observableTypeChecker.isExactlyType(targetType)) {
       final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
       final optionalQuestion = targetType.isNullableType ? '?' : '';
 
-      return context.serialize(
-          typeArg,
-          "($expression)$optionalQuestion.value");
+      return context.serialize(typeArg, "($expression)$optionalQuestion.value");
     }
     return null;
   }
@@ -210,7 +180,8 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     if (observableTypeChecker.isExactlyType(targetType)) {
       final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
       final bool nullable = targetType.isNullableType || defaultProvided;
-      return wrapNullableIfNecessary(expression, 'Observable(${context.deserialize(typeArg, expression)})', nullable );
+      return wrapNullableIfNecessary(expression,
+          'Observable(${context.deserialize(typeArg, expression)})', nullable);
     }
 
     return null;

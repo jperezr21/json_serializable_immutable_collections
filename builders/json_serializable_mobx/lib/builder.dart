@@ -30,8 +30,9 @@ Builder jsonSerializable(BuilderOptions options) {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
       JsonSerializableGenerator.withDefaultHelpers(
-        const [
-          MobxIterableTypeHelper(),
+         [
+          MobxListTypeHelper(),
+          MobxSetTypeHelper(),
           MobxMapTypeHelper(),
           MobxObservableTypeHelper(),
         ],

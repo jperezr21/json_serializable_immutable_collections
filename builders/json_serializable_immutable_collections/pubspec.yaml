@@ -20,6 +20,3 @@ dependencies:
   json_serializable_built_typehelpers:
     path: ../../typehelpers/json_serializable_built_typehelpers
 
-dependency_overrides:
-  json_serializable_type_helper_utils:
-    path: ../../typehelpers/json_serializable_type_helper_utils
