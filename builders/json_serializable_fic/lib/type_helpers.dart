@@ -3,4 +3,4 @@
 /// and write their own builder
 
 export 'package:json_serializable_fic_typehelpers/json_serializable_fic_typehelpers.dart'
-    show FICIterableTypeHelper, FICIMapTypeHelper;
+    show FICIListTypeHelper, FICIMapTypeHelper, FICISetTypeHelper;
