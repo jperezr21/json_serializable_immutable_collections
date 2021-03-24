@@ -32,7 +32,7 @@ Builder jsonSerializable(BuilderOptions options) {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
       JsonSerializableGenerator.withDefaultHelpers(
-        const [
+         [
           /// add the type helpers here
           FICIterableTypeHelper(),
           FICIMapTypeHelper(),
@@ -41,7 +41,8 @@ Builder jsonSerializable(BuilderOptions options) {
           MobxObservableTypeHelper(),
           BuiltIterableTypeHelper(),
           BuiltMapTypeHelper(),
-          KtIterableTypeHelper(),
+          KtListTypeHelper(),
+          KtSetTypeHelper(),
           KtMapTypeHelper()
         ],
         config: config,

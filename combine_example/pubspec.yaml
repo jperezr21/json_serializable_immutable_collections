@@ -9,10 +9,6 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  built_collection: any
-  fast_immutable_collections: any
-  kt_dart: any
-  mobx: any
   json_annotation: ^4.0.0
 
 
@@ -21,6 +17,7 @@ dev_dependencies:
   test: ^1.14.4
   # depend on the typehelpers that you need
   # these are used in builder.dart
+  # (on real-world projects, replace the path: depenencies with the proper released versions)
   json_serializable_built_typehelpers:
     path: ../typehelpers/json_serializable_built_typehelpers
   json_serializable_kt_typehelpers:
@@ -29,4 +26,5 @@ dev_dependencies:
     path: ../typehelpers/json_serializable_fic_typehelpers
   json_serializable_mobx_typehelpers:
     path: ../typehelpers/json_serializable_mobx_typehelpers
-  build_runner: any
+  json_serializable: ^4.1.0
+  build_runner: ^1.12.0

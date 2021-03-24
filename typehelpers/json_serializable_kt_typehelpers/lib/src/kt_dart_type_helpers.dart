@@ -18,96 +18,33 @@ const ktMapTypeChecker = TypeChecker.fromRuntime(KtMap);
 DartType ktIterableGenericType(DartType type) =>
     typeArgumentsOf(type, ktIterableTypeChecker).single;
 
-class KtIterableTypeHelper extends TypeHelper<TypeHelperContext> {
-
-  final bool withNullability;
-
-  const KtIterableTypeHelper({this.withNullability = true});
-
-
+class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
+  
   @override
-  String? serialize(
-      DartType targetType, String expression, TypeHelperContext context) {
-    if (!ktIterableTypeChecker.isAssignableFromType(targetType)) {
-      return null;
-    }
-
-    final itemType = ktIterableGenericType(targetType);
-
-    // This block will yield a regular list, which works fine for JSON
-    // Although it's possible that child elements may be marked unsafe
-
-    var isList = ktListTypeChecker.isAssignableFromType(targetType);
-    final subField = context.serialize(itemType, closureArg)!;
-
-    final targetTypeIsNullable = targetType.isNullableType;
-
-
-    final optionalQuestion = targetTypeIsNullable ? '?' : '';
-
-    // In the case of trivial JSON types (int, String, etc), `subField`
-    // will be identical to `substitute` – so no explicit mapping is needed.
-    // If they are not equal, then we to write out the substitution.
-    if (subField != closureArg) {
-      final lambda = LambdaResult.process(subField, closureArg);
-
-      expression = '$expression$optionalQuestion.map($lambda)';
-
-      // expression now represents an Iterable (even if it started as a List
-      // ...resetting `isList` to `false`.
-      isList = false;
-    }
-
-    if (!isList) {
-      // If the static type is not a List, generate one.
-      return expression += '$optionalQuestion.iter$optionalQuestion.toList()';
-    }
-
-    return expression + optionalQuestion + '.asList()';
+  String convertForDeserialize(String expression, DartType type) {
+     return 'KtList<${type.getDisplayString(withNullability: true)}>.from($expression)';
   }
 
   @override
-  String? deserialize(
-      DartType targetType, String expression, TypeHelperContext context, bool defaultProvided) {
-    if (!(ktIterableTypeChecker.isExactlyType(targetType) ||
-        ktListTypeChecker.isExactlyType(targetType) ||
-        ktSetTypeChecker.isExactlyType(targetType))) {
-      return null;
-    }
+  String convertForSerialize(String expression, DartType type, bool isExpressionNullable) {
+    final optionalQuestion = isExpressionNullable ? '?' : '';
 
-    final iterableGenericType = ktIterableGenericType(targetType);
-
-    final displayedGenericTypeString = iterableGenericType.getDisplayString(withNullability: this.withNullability);
-
-    final itemSubVal = context.deserialize(iterableGenericType, closureArg)!;
+    return expression +  optionalQuestion + '.asList()';
+  }
+}
 
 
-    var output = '$expression as List';
+class KtSetTypeHelper extends CustomIterableTypeHelper<KtSet> {
 
-    // If `itemSubVal` is the same and it's not a Set, then we don't need to do
-    // anything fancy
-    if (closureArg == itemSubVal &&
-        !ktSetTypeChecker.isExactlyType(targetType)) {
-      return 'KtList<$displayedGenericTypeString>.from($output)';
-    }
+  @override
+  String convertForDeserialize(String expression, DartType type) {
+    return 'KtSet.from($expression)';
+  }
 
-    output = '($output)';
-
-    if (closureArg != itemSubVal) {
-      final lambda = LambdaResult.process(itemSubVal, closureArg);
-      output += '.map($lambda)';
-    }
-
-    if (ktListTypeChecker.isExactlyType(targetType)) {
-      output = 'KtList<$displayedGenericTypeString>.from($output)';
-    } else if (ktSetTypeChecker.isExactlyType(targetType)) {
-      output = 'KtSet<$displayedGenericTypeString>.from($output)';
-    }
-
-    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
-
-
-    return wrapNullableIfNecessary(expression, output, targetTypeIsNullable );
+  @override
+  String convertForSerialize(String expression, DartType type, bool isExpressionNullable) {
+    final optionalQuestion = isExpressionNullable ? '?' : '';
+    return expression + optionalQuestion + '.iter.toList()';
   }
 }
 
