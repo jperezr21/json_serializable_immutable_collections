@@ -3,6 +3,8 @@ description: Example application on how to combine multiple typehelper packages
 # version: 1.0.0
 # homepage: https://www.example.com
 
+publish_to: none
+
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
@@ -13,19 +15,18 @@ dependencies:
   mobx: any
   json_annotation: ^4.0.0
 
-publish_to: none
 
 dev_dependencies:
   pedantic: ^1.9.0
   test: ^1.14.4
+  # depend on the typehelpers that you need
+  # these are used in builder.dart
   json_serializable_built_typehelpers:
-    path: ../json_serializable_built_typehelpers
+    path: ../typehelpers/json_serializable_built_typehelpers
   json_serializable_kt_typehelpers:
-    path: ../json_serializable_kt_typehelpers
+    path: ../typehelpers/json_serializable_kt_typehelpers
   json_serializable_fic_typehelpers:
-    path: ../json_serializable_fic_typehelpers
-  json_serializable_mobx:
-    path: ../json_serializable_mobx
+    path: ../typehelpers/json_serializable_fic_typehelpers
   json_serializable_mobx_typehelpers:
-    path: ../json_serializable_mobx_typehelpers
+    path: ../typehelpers/json_serializable_mobx_typehelpers
   build_runner: any
