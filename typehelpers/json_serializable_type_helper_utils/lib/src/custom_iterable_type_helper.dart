@@ -15,13 +15,42 @@ abstract class CustomIterableTypeHelper<T extends Object>
   CustomIterableTypeHelper()
       : assert(T != dynamic, 'you need to specify the type parameter, got $T');
 
-  /// convert the given expression for deserialization
-  /// the expression is dart code that evaluates to an iterable,
+  /// convert the given expression for deserialization.
+  /// the expression is Dart code that evaluates to an iterable,
   /// so you need to convert this iterable to your custom type
-  String convertForDeserialize(String expression, DartType resolvedGenericType);
+  /// @param [expression] the expression, that evaluates to an Iterable
+  /// @param [resolvedGenericType] the generic type of the list that will be deserialized
+  /// @return A String, which is a Dart expression that evaluates to your custom Iterable type
+  ///
+  /// Example for BuiltList:
+  /// ````dart
+  ///   @override
+  ///   String deserializeFromIterableExpression(
+  ///       String expression, DartType resolvedGenericType) {
+  ///     return '($expression).toBuiltList()';
+  ///   }
+  ///```
+  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType);
 
-  /// convert the given expression for serialization TODO document what this means
-  String convertForSerialize(String expression, DartType resolvedGenericType,
+  /// convert the given expression for serialization.
+  /// The expression is dart code that evaluates to your custom iterable type.
+  /// you need to return an expression that evaluates to a Dart list
+  ///
+  /// Note: you don't need to implement this if your type implements Iterable.
+  /// you can throw an exception , this method will never be called in that case
+  ///
+  /// example for kt_dart:
+  ///
+  ///
+  /// ```dart
+  ///   @override
+  ///   String serializeToList(
+  ///       String expression, DartType type, bool isExpressionNullable) {
+  ///     final optionalQuestion = isExpressionNullable ? '?' : '';
+  ///     return expression + optionalQuestion + '.iter.toList()';
+  ///   }
+  /// ```
+  String serializeToList(String expression, DartType resolvedGenericType,
       bool isExpressionNullable);
 
   DartType genericType(DartType type) =>
@@ -66,7 +95,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
 
     return expression + optionalQuestion + '.asList()';*/
 
-    return convertForSerialize(expression, itemType, targetTypeIsNullable);
+    return serializeToList(expression, itemType, targetTypeIsNullable);
   }
 
   @override
@@ -92,7 +121,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
     if (closureArg == itemSubVal && typeChecker.isExactlyType(targetType)) {
       return wrapNullableIfNecessary(
           expression,
-          convertForDeserialize(output, resolvedGenericType),
+          deserializeFromIterableExpression(output, resolvedGenericType),
           targetTypeIsNullable);
     }
 
@@ -103,7 +132,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
       output += '.map($lambda)';
     }
 
-    output = convertForDeserialize(output, resolvedGenericType);
+    output = deserializeFromIterableExpression(output, resolvedGenericType);
 
     return wrapNullableIfNecessary(expression, output, targetTypeIsNullable);
   }

@@ -15,13 +15,13 @@ import 'package:source_gen/source_gen.dart';
 
 class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
   @override
-  String convertForDeserialize(
+  String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
     return expression + '.toIList()';
   }
 
   @override
-  String convertForSerialize(String expression, DartType resolvedGenericType,
+  String serializeToList(String expression, DartType resolvedGenericType,
       bool isExpressionNullable) {
     // not needed as IList implements Iterable
     throw UnimplementedError();
@@ -30,13 +30,13 @@ class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
 
 class FICISetTypeHelper extends CustomIterableTypeHelper<ISet> {
   @override
-  String convertForDeserialize(
+  String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
     return expression + '.toISet()';
   }
 
   @override
-  String convertForSerialize(String expression, DartType resolvedGenericType,
+  String serializeToList(String expression, DartType resolvedGenericType,
       bool isExpressionNullable) {
     // not needed as IList implements Iterable
     throw UnimplementedError();
@@ -53,7 +53,7 @@ class FICIMapTypeHelper extends CustomMapTypeHelper<IMap> {
   }
 
   @override
-  String serializeToMap(String mapExpression, DartType keyType,
+  String serializeToMapExpression(String mapExpression, DartType keyType,
       DartType valueType, bool isMapExpressionNullable) {
     final optionalQuestion = isMapExpressionNullable ? '?' : '';
     return mapExpression + optionalQuestion + '.unlockLazy';

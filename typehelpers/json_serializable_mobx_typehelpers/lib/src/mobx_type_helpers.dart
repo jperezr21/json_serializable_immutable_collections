@@ -14,13 +14,13 @@ const withNullability = true;
 
 class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
   @override
-  String convertForDeserialize(
+  String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
     return 'ObservableList<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)';
   }
 
   @override
-  String convertForSerialize(String expression, DartType resolvedGenericType,
+  String serializeToList(String expression, DartType resolvedGenericType,
       bool isExpressionNullable) {
     ///not needed as ObservableList is Iterable, so it's handled by the default TypeHelper
     throw UnimplementedError();
@@ -29,13 +29,13 @@ class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
 
 class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
   @override
-  String convertForDeserialize(
+  String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
     return 'ObservableSet<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)';
   }
 
   @override
-  String convertForSerialize(String expression, DartType resolvedGenericType,
+  String serializeToList(String expression, DartType resolvedGenericType,
       bool isExpressionNullable) {
     ///not needed as ObservableList is Iterable, so it's handled by the default TypeHelper
     throw UnimplementedError();
@@ -44,38 +44,7 @@ class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
 
 
 class MobxMapTypeHelper extends CustomMapTypeHelper<ObservableMap> {
-
-  @override
-  Object? serialize(
-      DartType targetType, String expression, TypeHelperContext context) {
-    if (!mobxMapTypeChecker.isAssignableFromType(targetType)) {
-      return null;
-    }
-    final args = typeArgumentsOf(targetType, mobxMapTypeChecker);
-    assert(args.length == 2);
-
-    final keyType = args[0];
-    final valueType = args[1];
-
-    checkSafeKeyType(expression, keyType);
-
-    final subFieldValue = context.serialize(valueType, closureArg);
-    final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
-        context.serialize(keyType, keyParam);
-
-    final targetTypeIsNullable = targetType.isNullableType;
-
-    final optionalQuestion = targetTypeIsNullable ? '?' : '';
-
-    if (closureArg == subFieldValue && keyParam == subKeyValue) {
-      return expression;
-    }
-
-    return '$expression$optionalQuestion'
-        '.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
-  }
-
-
+  
   @override
   String deserializeFromMapExpression(String mapExpression, DartType keyArg, DartType valueArg) {
     final prefix =
@@ -85,7 +54,7 @@ class MobxMapTypeHelper extends CustomMapTypeHelper<ObservableMap> {
   }
 
   @override
-  String serializeToMap(String mapExpression, DartType keyType, DartType valueType, bool isMapExpressionNullable) {
+  String serializeToMapExpression(String mapExpression, DartType keyType, DartType valueType, bool isMapExpressionNullable) {
      return mapExpression; /// [ObservableMap] has MapMixin this should be enough?
   }
 }

@@ -5,12 +5,12 @@ import 'package:kt_dart/collection.dart';
 
 class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
   @override
-  String convertForDeserialize(String expression, DartType type) {
+  String deserializeFromIterableExpression(String expression, DartType type) {
     return 'KtList<${type.getDisplayString(withNullability: true)}>.from($expression)';
   }
 
   @override
-  String convertForSerialize(
+  String serializeToList(
       String expression, DartType type, bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
 
@@ -20,12 +20,12 @@ class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
 
 class KtSetTypeHelper extends CustomIterableTypeHelper<KtSet> {
   @override
-  String convertForDeserialize(String expression, DartType type) {
+  String deserializeFromIterableExpression(String expression, DartType type) {
     return 'KtSet.from($expression)';
   }
 
   @override
-  String convertForSerialize(
+  String serializeToList(
       String expression, DartType type, bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
     return expression + optionalQuestion + '.iter.toList()';
@@ -44,7 +44,7 @@ class KtMapTypeHelper extends CustomMapTypeHelper<KtMap> {
   }
 
   @override
-  String serializeToMap(String mapExpression, DartType keyType,
+  String serializeToMapExpression(String mapExpression, DartType keyType,
       DartType valueType, bool isMapExpressionNullable) {
     final optionalQuestion = isMapExpressionNullable ? '?' : '';
     return mapExpression + optionalQuestion + '.asMap()';

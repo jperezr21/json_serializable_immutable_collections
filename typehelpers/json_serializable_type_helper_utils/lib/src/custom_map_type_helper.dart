@@ -12,12 +12,22 @@ abstract class CustomMapTypeHelper<T>
     extends TypeHelper<TypeHelperContextWithConfig> {
   late final TypeChecker typeChecker = TypeChecker.fromRuntime(T);
 
+  CustomMapTypeHelper() : assert(T != dynamic, 'you need to specify the type to (de)-serialize of generic parameter');
 
   /// Deserialize your custom map from an expression, that evaluates to an
   /// Iterable<MapEntry> with the given DartTypes.
   ///
   /// Return a string, which is an expression that evaluates to your custom
   /// map implementation.
+  /// Example: if your custom map implementation has a constructor `MyMap.of(Map m)`,
+  /// implement this method like this:
+  ///
+  /// ```dart
+  ///  String deserializeFromMapExpression(String mapExpression, DartType keyArg, DartType valueArg) {
+  ///    final prefix = 'MyMap.of';
+  ///    return '$prefix($mapExpression)';
+  ///   }
+  /// ```
   String deserializeFromMapExpression(
       String mapExpression, DartType keyType, DartType valueType);
 
@@ -35,10 +45,10 @@ abstract class CustomMapTypeHelper<T>
   /// String serializeToMap(String mapExpression, DartType keyType,
   ///       DartType valueType, bool isMapExpressionNullable){
   ///          final optionalQuestion = isMapExpressionNullable ? '?' : '';
-  ///          return mapExpression + optionalQuestion + .toMap();
+  ///          return mapExpression + optionalQuestion + '.toMap()';
   /// }
   /// ```
-  String serializeToMap(String mapExpression, DartType keyType,
+  String serializeToMapExpression(String mapExpression, DartType keyType,
       DartType valueType, bool isMapExpressionNullable);
 
   @override
@@ -64,11 +74,11 @@ abstract class CustomMapTypeHelper<T>
     final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     if (closureArg == subFieldValue && keyParam == subKeyValue) {
-      return serializeToMap(
+      return serializeToMapExpression(
           expression, keyType, valueType, targetTypeIsNullable);
     }
 
-    return serializeToMap(
+    return serializeToMapExpression(
             expression, keyType, valueType, targetTypeIsNullable) +
         '$optionalQuestion.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
   }
