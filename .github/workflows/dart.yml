@@ -51,6 +51,7 @@ jobs:
       - name: Analyze project source
         run: dart analyze
         working-directory: ${{ matrix.package }}
+        continue-on-error: true
 
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
