@@ -1,4 +1,3 @@
-
 import 'package:built_collection/built_collection.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:test/test.dart';
@@ -80,7 +79,6 @@ const jsonMapExpected = {
 
 void main() {
   test("can serialize", () {
-
     final jsonMap = model.toJson();
     expect(jsonMap, jsonMapExpected);
   });
@@ -92,7 +90,5 @@ void main() {
   test("can deserialize & serialize", () {
     expect(MyModel.fromJson(jsonMapExpected).toJson(), jsonMapExpected);
     expect(MyModel.fromJson(model.toJson()), model);
-
   });
-
 }

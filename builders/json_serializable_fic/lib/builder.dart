@@ -29,7 +29,7 @@ Builder jsonSerializable(BuilderOptions options) {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
       JsonSerializableGenerator.withDefaultHelpers(
-         [
+        [
           FICIListTypeHelper(),
           FICISetTypeHelper(),
           FICIMapTypeHelper(),

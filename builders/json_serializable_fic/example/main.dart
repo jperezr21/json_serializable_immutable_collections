@@ -1,7 +1,6 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-
 part 'main.g.dart';
 
 @JsonSerializable()
@@ -16,7 +15,5 @@ class Model {
 }
 
 void main() {
-  print(
-      Model(myIntList: [1, 2, 3].toIList()).toJson()
-  );
+  print(Model(myIntList: [1, 2, 3].toIList()).toJson());
 }

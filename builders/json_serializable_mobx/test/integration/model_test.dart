@@ -79,6 +79,5 @@ void main() {
   test("can deserialize & serialize", () {
     expect(MyModel.fromJson(jsonMapExpected).toJson(), jsonMapExpected);
     expect(MyModel.fromJson(model.toJson()), model);
-
   });
 }

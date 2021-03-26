@@ -47,8 +47,6 @@ class FICIMapTypeHelper extends CustomMapTypeHelper<IMap> {
   @override
   String deserializeFromMapExpression(
       String mapExpression, DartType keyType, DartType valueType) {
-
-
     return '$mapExpression.toIMap()';
   }
 

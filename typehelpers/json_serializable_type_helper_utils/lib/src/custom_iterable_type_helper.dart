@@ -30,7 +30,8 @@ abstract class CustomIterableTypeHelper<T extends Object>
   ///     return '($expression).toBuiltList()';
   ///   }
   ///```
-  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType);
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType);
 
   /// convert the given expression for serialization.
   /// The expression is dart code that evaluates to your custom iterable type.

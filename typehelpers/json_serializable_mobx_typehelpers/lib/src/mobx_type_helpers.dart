@@ -42,20 +42,21 @@ class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
   }
 }
 
-
 class MobxMapTypeHelper extends CustomMapTypeHelper<ObservableMap> {
-  
   @override
-  String deserializeFromMapExpression(String mapExpression, DartType keyArg, DartType valueArg) {
+  String deserializeFromMapExpression(
+      String mapExpression, DartType keyArg, DartType valueArg) {
     final prefix =
         'ObservableMap<${keyArg.getDisplayString(withNullability: true)},${valueArg.getDisplayString(withNullability: true)}>.of';
     return '$prefix($mapExpression)';
-
   }
 
   @override
-  String serializeToMapExpression(String mapExpression, DartType keyType, DartType valueType, bool isMapExpressionNullable) {
-     return mapExpression; /// [ObservableMap] has MapMixin this should be enough?
+  String serializeToMapExpression(String mapExpression, DartType keyType,
+      DartType valueType, bool isMapExpressionNullable) {
+    return mapExpression;
+
+    /// [ObservableMap] has MapMixin this should be enough?
   }
 }
 

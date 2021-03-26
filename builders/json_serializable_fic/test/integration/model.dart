@@ -75,7 +75,7 @@ class MyModel {
           myList == other.myList &&
           myString == other.myString &&
           myNested == other.myNested &&
-          DeepCollectionEquality().equals(normalList,other.normalList)&&
+          DeepCollectionEquality().equals(normalList, other.normalList) &&
           DeepCollectionEquality().equals(normalSet, other.normalSet) &&
           builtMap == other.builtMap &&
           builtMapString == other.builtMapString &&

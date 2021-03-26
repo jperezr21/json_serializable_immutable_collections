@@ -12,7 +12,9 @@ abstract class CustomMapTypeHelper<T>
     extends TypeHelper<TypeHelperContextWithConfig> {
   late final TypeChecker typeChecker = TypeChecker.fromRuntime(T);
 
-  CustomMapTypeHelper() : assert(T != dynamic, 'you need to specify the type to (de)-serialize of generic parameter');
+  CustomMapTypeHelper()
+      : assert(T != dynamic,
+            'you need to specify the type to (de)-serialize of generic parameter');
 
   /// Deserialize your custom map from an expression, that evaluates to an
   /// Iterable<MapEntry> with the given DartTypes.
