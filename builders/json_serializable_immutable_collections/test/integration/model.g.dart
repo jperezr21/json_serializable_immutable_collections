@@ -13,7 +13,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
         Map<String, String>.from(json['builtMapString'] as Map)),
     myString: ((json['myString'] as List).map((e) => e as String)).toBuiltSet(),
     dynamicMap: BuiltMap<String, Object?>.of(
-        json['dynamicMap'] as Map<String, dynamic>),
+        (json['dynamicMap'] as Map<String, dynamic>)),
     myNested: ((json['myNested'] as List)
         .map((e) => Nested.fromJson(e as Map<String, dynamic>))).toBuiltList(),
     normalList:

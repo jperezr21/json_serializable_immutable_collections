@@ -39,8 +39,15 @@ class BuiltMapTypeHelper extends CustomMapTypeHelper<BuiltMap> {
   @override
   String deserializeFromMapExpression(
       String mapExpression, DartType keyType, DartType valueType) {
-    final prefix =
-        "BuiltMap<${keyType.getDisplayString(withNullability: true)},${valueType.getDisplayString(withNullability: true)}>.of";
+    String valueTypeString;
+    if (valueType.isDynamic) {
+      //use Object? instead because builtMap does not support explicit dynamic types
+      valueTypeString = 'Object?';
+    } else {
+      valueTypeString = valueType.getDisplayString(withNullability: true);
+    }
+    final keyTypeString = keyType.getDisplayString(withNullability: true);
+    final prefix = 'BuiltMap<$keyTypeString,$valueTypeString>.of';
 
     return prefix + '($mapExpression)';
   }
