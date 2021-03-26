@@ -10,7 +10,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
   return MyModel(
     myList: (json['myList'] as List).map((e) => e as int).toIList(),
     builtMapString:
-        (Map<String, String>.from(json['builtMapString'] as Map)).toIMap(),
+        Map<String, String>.from(json['builtMapString'] as Map).toIMap(),
     myString: (json['myString'] as List).map((e) => e as String).toISet(),
     dynamicMap: (json['dynamicMap'] as Map<String, dynamic>).toIMap(),
     myNested: (json['myNested'] as List)
@@ -18,29 +18,26 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
         .toIList(),
     normalList:
         (json['normalList'] as List<dynamic>).map((e) => e as String).toList(),
-    builtMap:
-        IMap<int, String>.fromEntries((json['builtMap'] as Map<String, dynamic>)
-            .map(
-              (k, e) => MapEntry(int.parse(k), e as String),
-            )
-            .entries),
-    builtMapNested: IMap<int, Nested>.fromEntries(
-        (json['builtMapNested'] as Map<String, dynamic>)
-            .map(
-              (k, e) => MapEntry(
-                  int.parse(k), Nested.fromJson(e as Map<String, dynamic>)),
-            )
-            .entries),
+    builtMap: (json['builtMap'] as Map<String, dynamic>)
+        .map(
+          (k, e) => MapEntry(int.parse(k), e as String),
+        )
+        .toIMap(),
+    builtMapNested: (json['builtMapNested'] as Map<String, dynamic>)
+        .map(
+          (k, e) => MapEntry(
+              int.parse(k), Nested.fromJson(e as Map<String, dynamic>)),
+        )
+        .toIMap(),
     nullList: json['nullList'] != null
         ? (json['nullList'] as List).map((e) => e as String).toIList()
         : null,
     nullMap: json['nullMap'] != null
-        ? IMap<String, String>.fromEntries(
-            (json['nullMap'] as Map<String, dynamic>)
-                .map(
-                  (k, e) => MapEntry(k, e as String),
-                )
-                .entries)
+        ? (json['nullMap'] as Map<String, dynamic>)
+            .map(
+              (k, e) => MapEntry(k, e as String),
+            )
+            .toIMap()
         : null,
     nullSet: json['nullSet'] != null
         ? (json['nullSet'] as List).map((e) => e as String).toISet()
@@ -54,8 +51,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
         : null,
     listWithNullable:
         (json['listWithNullable'] as List).map((e) => e as String?).toIList(),
-    nullableMap:
-        (Map<String, String?>.from(json['nullableMap'] as Map)).toIMap(),
+    nullableMap: Map<String, String?>.from(json['nullableMap'] as Map).toIMap(),
     nullableSet:
         (json['nullableSet'] as List).map((e) => e as String?).toISet(),
   );

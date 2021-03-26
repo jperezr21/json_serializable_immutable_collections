@@ -16,7 +16,7 @@ class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
   @override
   String convertForDeserialize(
       String expression, DartType resolvedGenericType) {
-    return "ObservableList<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)";
+    return 'ObservableList<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)';
   }
 
   @override
@@ -31,7 +31,7 @@ class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
   @override
   String convertForDeserialize(
       String expression, DartType resolvedGenericType) {
-    return "ObservableSet<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)";
+    return 'ObservableSet<${resolvedGenericType.getDisplayString(withNullability: true)}>.of($expression)';
   }
 
   @override
@@ -43,8 +43,7 @@ class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
 }
 
 
-class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  const MobxMapTypeHelper();
+class MobxMapTypeHelper extends CustomMapTypeHelper<ObservableMap> {
 
   @override
   Object? serialize(
@@ -76,82 +75,18 @@ class MobxMapTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
         '.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
   }
 
+
   @override
-  Object? deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context, bool defaultProvided) {
-    if (!mobxMapTypeChecker.isExactlyType(targetType)) {
-      return null;
-    }
-    final typeArgs = typeArgumentsOf(targetType, mobxMapTypeChecker);
-    assert(typeArgs.length == 2);
-    final keyArg = typeArgs.first;
-    final valueArg = typeArgs.last;
+  String deserializeFromMapExpression(String mapExpression, DartType keyArg, DartType valueArg) {
+    final prefix =
+        'ObservableMap<${keyArg.getDisplayString(withNullability: true)},${valueArg.getDisplayString(withNullability: true)}>.of';
+    return '$prefix($mapExpression)';
 
-    var prefix =
-        "ObservableMap<${keyArg.getDisplayString(withNullability: withNullability)},${valueArg.getDisplayString(withNullability: withNullability)}>.of";
+  }
 
-    checkSafeKeyType(expression, keyArg);
-
-    final valueArgIsAny = isLikeDynamic(valueArg);
-    final keyStringable = isKeyStringable(keyArg);
-
-    final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
-
-    if (!keyStringable) {
-      if (valueArgIsAny) {
-        if (context.config.anyMap) {
-          if (isLikeDynamic(keyArg)) {
-            return wrapNullableIfNecessary(expression,
-                '$prefix($expression as Map)', targetTypeIsNullable);
-          }
-        } else {
-          // this is the trivial case. Do a runtime cast to the known type of JSON
-          // map values - `Map<String, dynamic>`
-          return wrapNullableIfNecessary(
-              expression,
-              'ObservableMap<String,dynamic>.of($expression as Map<String, dynamic>)',
-              targetTypeIsNullable);
-        }
-      }
-
-      if (!targetTypeIsNullable &&
-          (valueArgIsAny ||
-              simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
-        // No mapping of the values or null check required!
-        return wrapNullableIfNecessary(
-            expression,
-            'ObservableMap<String,$valueArg>.of(Map<String, $valueArg>.of($expression as Map<String,$valueArg>))',
-            targetTypeIsNullable);
-      }
-    }
-
-    // In this case, we're going to create a new Map with matching reified
-    // types.
-
-    final itemSubVal = context.deserialize(valueArg, closureArg);
-
-    final mapCast =
-        context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
-
-    String keyUsage;
-    if (isEnum(keyArg)) {
-      keyUsage = context.deserialize(keyArg, keyParam).toString();
-    } else if (context.config.anyMap && !isLikeDynamic(keyArg)) {
-      keyUsage = '$keyParam as String';
-    } else {
-      keyUsage = keyParam;
-    }
-
-    final toFromString = forType(keyArg);
-    if (toFromString != null) {
-      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true)!;
-    }
-
-    return wrapNullableIfNecessary(
-        expression,
-        '$prefix(($expression $mapCast).map('
-        '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),))',
-        targetTypeIsNullable);
+  @override
+  String serializeToMap(String mapExpression, DartType keyType, DartType valueType, bool isMapExpressionNullable) {
+     return mapExpression; /// [ObservableMap] has MapMixin this should be enough?
   }
 }
 

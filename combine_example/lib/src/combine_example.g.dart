@@ -8,9 +8,9 @@ part of 'combine_example.dart';
 
 MyModel _$MyModelFromJson(Map<String, dynamic> json) {
   return MyModel(
-    builtList: (json['builtList'] as List).map((e) => e as int).toBuiltList(),
+    builtList: ((json['builtList'] as List).map((e) => e as int)).toBuiltList(),
     iList: (json['iList'] as List).map((e) => e as String).toIList(),
-    ktSet: KtSet<bool>.from((json['ktSet'] as List).map((e) => e as bool)),
+    ktSet: KtSet.from((json['ktSet'] as List).map((e) => e as bool)),
     mobxList: ObservableList<bool>.of(
         (json['mobxList'] as List).map((e) => e as bool)),
   );

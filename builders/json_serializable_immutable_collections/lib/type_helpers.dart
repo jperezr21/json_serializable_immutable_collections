@@ -3,6 +3,6 @@
 /// and write their own builder
 
 export 'package:json_serializable_built_typehelpers/json_serializable_built_typehelpers.dart'
-    show BuiltIterableTypeHelper, BuiltMapTypeHelper;
+    show BuiltSetTypeHelper, BuiltListTypeHelper, BuiltMapTypeHelper;
 export 'package:json_serializable_kt_typehelpers/json_serializable_kt_typehelpers.dart'
-    show KtIterableTypeHelper, KtMapTypeHelper;
+    show KtSetTypeHelper, KtListTypeHelper, KtMapTypeHelper;

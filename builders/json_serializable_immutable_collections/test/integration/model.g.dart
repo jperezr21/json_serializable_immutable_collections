@@ -76,7 +76,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
           ))
         : null,
     dynamicKtMap: KtMap<String, dynamic>.from(
-        json['dynamicKtMap'] as Map<String, dynamic>),
+        (json['dynamicKtMap'] as Map<String, dynamic>)),
     stringKtListWithNulls: KtList<String?>.from(
         (json['stringKtListWithNulls'] as List).map((e) => e as String?)),
     stringKtSetWithNulls: KtSet.from(

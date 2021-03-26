@@ -13,13 +13,13 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) {
     myListWithNulls: ObservableList<int?>.of(
         (json['myListWithNulls'] as List).map((e) => e as int?)),
     builtMapString: ObservableMap<String, String>.of(
-        Map<String, String>.of(json['builtMapString'] as Map<String, String>)),
+        Map<String, String>.from(json['builtMapString'] as Map)),
     myString: ObservableList<String>.of(
         (json['myString'] as List).map((e) => e as String)),
     myStringWithNulls: ObservableList<String?>.of(
         (json['myStringWithNulls'] as List).map((e) => e as String?)),
     dynamicMap: ObservableMap<String, dynamic>.of(
-        json['dynamicMap'] as Map<String, dynamic>),
+        (json['dynamicMap'] as Map<String, dynamic>)),
     myNested: ObservableList<Nested>.of((json['myNested'] as List)
         .map((e) => Nested.fromJson(e as Map<String, dynamic>))),
     myNestedWithNulls: ObservableList<Nested?>.of(
