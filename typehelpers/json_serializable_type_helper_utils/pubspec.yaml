@@ -1,7 +1,7 @@
 name: json_serializable_type_helper_utils
 description: Helper package for adding TypeHelpers to json_serializable. Can be used to add support for container types like collections.
 version: 3.0.0
-homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/json_serializable_type_helper_utils
+homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
