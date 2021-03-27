@@ -4,4 +4,8 @@
 library json_serializable_immutable_collections_type_helpers;
 
 export 'package:json_serializable_mobx_typehelpers/json_serializable_mobx_typehelpers.dart'
-    show MobxIterableTypeHelper, MobxMapTypeHelper, MobxObservableTypeHelper;
+    show
+        MobxSetTypeHelper,
+        MobxListTypeHelper,
+        MobxMapTypeHelper,
+        MobxObservableTypeHelper;
