@@ -16,5 +16,5 @@ dependencies:
   analyzer: ^1.0.0
   source_gen: ^1.0.0
   build: ^2.0.0
-  json_serializable_mobx_typehelpers: ^3.0.0
+  json_serializable_mobx_typehelpers: ^1.0.0
   json_annotation: ^4.0.1
