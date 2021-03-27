@@ -1,3 +1,7 @@
+## 3.0.0
+
+- introduce abstract typehelper classes that make it much easier to add custom list/map types
+
 ## 2.0.0-nullsafety.1
 
 - relax analyser version

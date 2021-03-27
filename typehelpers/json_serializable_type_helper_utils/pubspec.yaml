@@ -10,6 +10,7 @@ dependencies:
   analyzer: '^1.0.0'
   json_serializable: ^4.1.0
   collection:  ^1.15.0
+  source_gen: ^1.0.0
 
 dev_dependencies:
 
