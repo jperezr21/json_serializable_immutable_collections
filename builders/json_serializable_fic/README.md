@@ -1,3 +1,8 @@
+# Discontinued
+
+See https://github.com/marcglasberg/fast_immutable_collections/issues/6
+fast_immutable_collections now supports json_serializable out of the box.
+
 # json_serializable_fic
 
 [![Pub Package](https://img.shields.io/pub/v/json_serializable_fic.svg)](https://pub.dartlang.org/packages/json_serializable_fic)
