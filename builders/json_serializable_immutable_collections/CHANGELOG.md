@@ -1,4 +1,8 @@
-# 0.7.0
+## 0.8.0
+
+- depend on build_runner ^2.0.4
+
+## 0.7.0
 
 - major internal changes. break up into builders and type helper packages
   should not cause any change in behaviour, but released as breaking change release
