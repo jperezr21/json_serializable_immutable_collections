@@ -1,3 +1,6 @@
+## 0.7.0
+- bump dependencies for build_runner to be compatible with latest packages
+
 ## 0.6.0
 
 - major internal changes. break up into builders and type helper packages
