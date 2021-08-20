@@ -1,3 +1,7 @@
+## 0.9.0
+
+- json_serializable 5.0.0 support
+
 ## 0.7.0
 - bump dependencies for build_runner to be compatible with latest packages
 
