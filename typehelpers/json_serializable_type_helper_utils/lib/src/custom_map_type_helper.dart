@@ -7,6 +7,9 @@ import 'package:json_serializable/type_helper.dart';
 import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/utils.dart';
+import 'package:source_helper/source_helper.dart';
+
+const _keyParam = 'k';
 
 abstract class CustomMapTypeHelper<T>
     extends TypeHelper<TypeHelperContextWithConfig> {
@@ -59,7 +62,7 @@ abstract class CustomMapTypeHelper<T>
     if (!typeChecker.isAssignableFromType(targetType)) {
       return null;
     }
-    final args = typeArgumentsOf(targetType, typeChecker);
+    final args = targetType.typeArgumentsOf(typeChecker)!;
     assert(args.length == 2);
 
     final keyType = args[0];
@@ -91,7 +94,7 @@ abstract class CustomMapTypeHelper<T>
     if (!typeChecker.isExactlyType(targetType)) {
       return null;
     }
-    final typeArgs = typeArgumentsOf(targetType, typeChecker);
+    final typeArgs = targetType.typeArgumentsOf(typeChecker)!;
     assert(typeArgs.length == 2);
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
@@ -102,19 +105,20 @@ abstract class CustomMapTypeHelper<T>
 
     checkSafeKeyType(expression, keyArg);
 
-    final valueArgIsAny = isLikeDynamic(valueArg);
+    final valueArgIsAny = valueArg.isLikeDynamic;
     final keyStringable = isKeyStringable(keyArg);
     final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
     final anyMap = context.config.anyMap;
+    final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     if (!keyStringable) {
       if (valueArgIsAny) {
         if (anyMap) {
-          if (isLikeDynamic(keyArg)) {
+          if (keyArg.isLikeDynamic) {
             return wrapNullableIfNecessary(
                 expression,
                 deserializeFromMapExpression(
-                    '($expression as Map)', keyArg, valueArg),
+                    '($expression as Map$optionalQuestion)', keyArg, valueArg),
                 targetTypeIsNullable);
           }
         } else {
@@ -145,17 +149,25 @@ abstract class CustomMapTypeHelper<T>
     // In this case, we're going to create a new Map with matching reified
     // types.
 
-    final itemSubVal = context.deserialize(valueArg, closureArg);
+    var itemSubVal = context.deserialize(valueArg, closureArg).toString();
+
+    itemSubVal = wrapNullableIfNecessary(closureArg, itemSubVal, valueArg.isNullableType);
+
 
     final mapCast = anyMap ? 'as Map' : 'as Map<String, dynamic>';
 
     String keyUsage;
-    if (isEnum(keyArg)) {
-      keyUsage = context.deserialize(keyArg, keyParam).toString();
-    } else if (anyMap && !isLikeDynamic(keyArg)) {
-      keyUsage = '$keyParam as String';
+    if (keyArg.isEnum) {
+      keyUsage = context.deserialize(keyArg, _keyParam).toString();
+    } else if (context.config.anyMap &&
+        !(keyArg.isDartCoreObject || keyArg.isDynamic)) {
+      keyUsage = '$_keyParam as String';
+    } else if (context.config.anyMap &&
+        keyArg.isDartCoreObject &&
+        !keyArg.isNullableType) {
+      keyUsage = '$_keyParam as Object';
     } else {
-      keyUsage = keyParam;
+      keyUsage = _keyParam;
     }
 
     final toFromString = forType(keyArg);

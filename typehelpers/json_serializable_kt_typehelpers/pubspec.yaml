@@ -12,10 +12,10 @@ environment:
 
 dependencies:
   kt_dart: ^0.9.0
-  json_serializable: ^4.1.0
-  json_serializable_type_helper_utils: ^3.0.0
+  json_serializable_type_helper_utils:
+    path: ../json_serializable_type_helper_utils
   source_gen: ^1.0.0
-  analyzer: "^1.0.0"
+  analyzer: "^2.0.0"
 
 
 dev_dependencies:

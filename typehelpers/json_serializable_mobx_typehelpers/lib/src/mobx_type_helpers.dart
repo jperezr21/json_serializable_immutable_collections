@@ -3,10 +3,7 @@ import 'package:json_serializable_type_helper_utils/json_serializable_type_helpe
 import 'package:mobx/mobx.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:json_serializable/type_helper.dart';
-import 'package:json_serializable/src/constants.dart';
-import 'package:json_serializable/src/lambda_result.dart';
-import 'package:json_serializable/src/shared_checkers.dart';
-import 'package:json_serializable/src/utils.dart';
+import 'package:source_helper/source_helper.dart';
 
 const mobxMapTypeChecker = TypeChecker.fromRuntime(ObservableMap);
 
@@ -67,7 +64,7 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   Object? serialize(DartType targetType, String expression,
       TypeHelperContextWithConfig context) {
     if (observableTypeChecker.isExactlyType(targetType)) {
-      final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
+      final typeArg = targetType.typeArgumentsOf(observableTypeChecker)!.single;
       final optionalQuestion = targetType.isNullableType ? '?' : '';
 
       return context.serialize(typeArg, "($expression)$optionalQuestion.value");
@@ -83,7 +80,7 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     bool defaultProvided,
   ) {
     if (observableTypeChecker.isExactlyType(targetType)) {
-      final typeArg = typeArgumentsOf(targetType, observableTypeChecker).single;
+      final typeArg =  targetType.typeArgumentsOf(observableTypeChecker)!.single;
       final bool nullable = targetType.isNullableType || defaultProvided;
       return wrapNullableIfNecessary(expression,
           'Observable(${context.deserialize(typeArg, expression)})', nullable);

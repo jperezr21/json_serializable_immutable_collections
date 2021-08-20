@@ -5,6 +5,7 @@ import 'package:json_serializable/src/shared_checkers.dart';
 import 'package:json_serializable/src/constants.dart';
 import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/src/utils.dart';
+import 'package:source_helper/source_helper.dart';
 
 import '../json_serializable_type_helper_utils.dart';
 
@@ -55,7 +56,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
       bool isExpressionNullable);
 
   DartType genericType(DartType type) =>
-      typeArgumentsOf(type, typeChecker).single;
+      type.typeArgumentsOf(typeChecker)!.single;
 
   @override
   String? serialize(DartType targetType, String expression,
@@ -80,7 +81,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
     // will be identical to `substitute` – so no explicit mapping is needed.
     // If they are not equal, then we to write out the substitution.
     if (subField != closureArg) {
-      final lambda = LambdaResult.process(subField, closureArg);
+      final lambda = LambdaResult.process(subField);
 
       expression = '$expression$optionalQuestion.map($lambda)';
 
@@ -111,11 +112,16 @@ abstract class CustomIterableTypeHelper<T extends Object>
     }
     final resolvedGenericType = genericType(targetType);
 
-    final itemSubVal = context.deserialize(resolvedGenericType, closureArg)!;
+    var itemSubVal = context.deserialize(resolvedGenericType, closureArg)!.toString();
+
+    final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
+
+    itemSubVal = wrapNullableIfNecessary(closureArg, itemSubVal, resolvedGenericType.isNullableType);
+
 
     var output = '$expression as List';
 
-    final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
+
 
     // If `itemSubVal` is the same and it's not a Set, then we don't need to do
     // anything fancy
@@ -129,7 +135,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
     output = '($output)';
 
     if (closureArg != itemSubVal) {
-      final lambda = LambdaResult.process(itemSubVal, closureArg);
+      final lambda = LambdaResult.process(itemSubVal);
       output += '.map($lambda)';
     }
 
