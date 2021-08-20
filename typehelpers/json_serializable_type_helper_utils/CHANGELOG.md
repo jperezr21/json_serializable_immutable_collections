@@ -1,3 +1,7 @@
+## 4.0.0
+
+- json_serializable 5.0.0 support
+
 ## 3.0.0
 
 - introduce abstract typehelper classes that make it much easier to add custom list/map types
