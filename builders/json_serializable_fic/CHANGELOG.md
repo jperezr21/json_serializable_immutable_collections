@@ -1,3 +1,7 @@
+## 0.3.0
+
+- json_serializable 6.0.0 support
+
 ## 0.2.0
 
 - major internal changes. break up into builders and type helper packages

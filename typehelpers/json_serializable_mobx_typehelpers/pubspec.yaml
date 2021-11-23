@@ -1,6 +1,6 @@
 name: json_serializable_mobx_typehelpers
 description: A starting point for Dart libraries or applications.
-version: 2.0.0
+version: 3.0.0
 homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
 environment:
@@ -8,9 +8,9 @@ environment:
 
 dependencies:
   json_serializable: '^6.0.0'
-  # json_serializable_type_helper_utils: ^4.0.0
-  json_serializable_type_helper_utils:
-    path: ../json_serializable_type_helper_utils
+  json_serializable_type_helper_utils: ^5.0.0
+  # json_serializable_type_helper_utils:
+  #   path: ../json_serializable_type_helper_utils
   mobx: '^2.0.0'
   source_gen: '^1.0.0'
   analyzer: '^2.0.0'
