@@ -151,9 +151,6 @@ abstract class CustomMapTypeHelper<T>
 
     var itemSubVal = context.deserialize(valueArg, closureArg).toString();
 
-    itemSubVal = wrapNullableIfNecessary(closureArg, itemSubVal, valueArg.isNullableType);
-
-
     final mapCast = anyMap ? 'as Map' : 'as Map<String, dynamic>';
 
     String keyUsage;

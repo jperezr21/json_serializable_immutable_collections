@@ -1,3 +1,7 @@
+## 5.0.0
+
+- json_serializable 6.0.0 support
+
 ## 4.0.0
 
 - json_serializable 5.0.0 support
@@ -9,7 +13,6 @@
 ## 2.0.0-nullsafety.1
 
 - relax analyser version
-
 
 ## 2.0.0-nullsafety.0
 
