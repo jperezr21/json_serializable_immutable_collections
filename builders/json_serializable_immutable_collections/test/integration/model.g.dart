@@ -80,10 +80,9 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
       dynamicKtMap: KtMap<String, dynamic>.from(
           (json['dynamicKtMap'] as Map<String, dynamic>)),
       stringKtListWithNulls: KtList<String?>.from(
-          (json['stringKtListWithNulls'] as List)
-              .map((e) => e != null ? e as String? : null)),
-      stringKtSetWithNulls: KtSet.from((json['stringKtSetWithNulls'] as List)
-          .map((e) => e != null ? e as String? : null)),
+          (json['stringKtListWithNulls'] as List).map((e) => e as String?)),
+      stringKtSetWithNulls: KtSet.from(
+          (json['stringKtSetWithNulls'] as List).map((e) => e as String?)),
     );
 
 Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{

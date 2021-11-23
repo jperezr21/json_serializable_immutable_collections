@@ -116,9 +116,6 @@ abstract class CustomIterableTypeHelper<T extends Object>
 
     final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
 
-    itemSubVal = wrapNullableIfNecessary(closureArg, itemSubVal, resolvedGenericType.isNullableType);
-
-
     var output = '$expression as List';
 
 

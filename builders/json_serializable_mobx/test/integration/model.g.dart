@@ -9,25 +9,21 @@ part of 'model.dart';
 MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
       myList:
           ObservableList<int>.of((json['myList'] as List).map((e) => e as int)),
-      myListWithNulls: ObservableList<int?>.of((json['myListWithNulls'] as List)
-          .map((e) => e != null ? e as int? : null)),
+      myListWithNulls: ObservableList<int?>.of(
+          (json['myListWithNulls'] as List).map((e) => e as int?)),
       builtMapString: ObservableMap<String, String>.of(
           Map<String, String>.from(json['builtMapString'] as Map)),
       myString: ObservableList<String>.of(
           (json['myString'] as List).map((e) => e as String)),
       myStringWithNulls: ObservableList<String?>.of(
-          (json['myStringWithNulls'] as List)
-              .map((e) => e != null ? e as String? : null)),
+          (json['myStringWithNulls'] as List).map((e) => e as String?)),
       dynamicMap: ObservableMap<String, dynamic>.of(
           (json['dynamicMap'] as Map<String, dynamic>)),
       myNested: ObservableList<Nested>.of((json['myNested'] as List)
           .map((e) => Nested.fromJson(e as Map<String, dynamic>))),
       myNestedWithNulls: ObservableList<Nested?>.of(
-          (json['myNestedWithNulls'] as List).map((e) => e != null
-              ? e == null
-                  ? null
-                  : Nested.fromJson(e as Map<String, dynamic>)
-              : null)),
+          (json['myNestedWithNulls'] as List).map((e) =>
+              e == null ? null : Nested.fromJson(e as Map<String, dynamic>))),
       normalList: (json['normalList'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
