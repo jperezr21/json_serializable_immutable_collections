@@ -17,6 +17,6 @@ dependencies:
   analyzer: ^2.0.0
   source_gen: ^1.0.2
   build: ^2.0.0
-  # json_serializable_mobx_typehelpers: ^3.0.0
-  json_serializable_mobx_typehelpers:
-    path: ../../typehelpers/json_serializable_mobx_typehelpers
+  json_serializable_mobx_typehelpers: ^3.0.0
+  # json_serializable_mobx_typehelpers:
+  #  path: ../../typehelpers/json_serializable_mobx_typehelpers
