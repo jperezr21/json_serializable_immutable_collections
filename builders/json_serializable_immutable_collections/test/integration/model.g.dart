@@ -65,12 +65,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
       nestedKtMapWithNulls: KtMap<String, Nested?>.from(
           (json['nestedKtMapWithNulls'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
-            k,
-            e != null
-                ? e == null
-                    ? null
-                    : Nested.fromJson(e as Map<String, dynamic>)
-                : null),
+            k, e == null ? null : Nested.fromJson(e as Map<String, dynamic>)),
       )),
       stringKtMap: KtMap<String, String>.from(
           Map<String, String>.from(json['stringKtMap'] as Map)),

@@ -65,12 +65,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
       nestedMapWithNulls: ObservableMap<String, Nested?>.of(
           (json['nestedMapWithNulls'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
-            k,
-            e != null
-                ? e == null
-                    ? null
-                    : Nested.fromJson(e as Map<String, dynamic>)
-                : null),
+            k, e == null ? null : Nested.fromJson(e as Map<String, dynamic>)),
       )),
       stringObservable: Observable(json['stringObservable'] as String),
       nullobservable: json['nullobservable'] != null
