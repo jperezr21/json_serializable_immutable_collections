@@ -3,17 +3,16 @@ description: typehelpers for built_collection, used for json_serializable.
 version: 2.0.0
 homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
-
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   built_collection: ^5.0.0
-  json_serializable_type_helper_utils: ^4.0.0
+  # json_serializable_type_helper_utils: ^4.0.0
+  json_serializable_type_helper_utils:
+    path: ../json_serializable_type_helper_utils
   source_gen: ^1.0.0
-  analyzer: "^2.0.0"
-
-
+  analyzer: ^2.0.0
 
 dev_dependencies:
   pedantic: ^1.9.0
