@@ -9,8 +9,6 @@ environment:
 dependencies:
   built_collection: ^5.0.0
   json_serializable_type_helper_utils: ^5.0.0
-  # json_serializable_type_helper_utils:
-  #   path: ../json_serializable_type_helper_utils
   source_gen: ^1.0.0
   analyzer: ^2.0.0
 

@@ -15,9 +15,6 @@ dependencies:
 dev_dependencies:
   pedantic: ^1.9.0
   test: ^1.14.4
-  # depend on the typehelpers that you need
-  # these are used in builder.dart
-  # (on real-world projects, replace the path: depenencies with the proper released versions)
   json_serializable_built_typehelpers:
     path: ../typehelpers/json_serializable_built_typehelpers
   json_serializable_kt_typehelpers:

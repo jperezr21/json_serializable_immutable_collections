@@ -19,5 +19,3 @@ dependencies:
   analyzer: ^2.0.0
   build: ^2.0.0
   json_serializable_fic_typehelpers: ^2.0.0
-  # json_serializable_fic_typehelpers:
-  #   path: ../../typehelpers/json_serializable_fic_typehelpers

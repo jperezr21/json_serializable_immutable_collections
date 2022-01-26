@@ -20,8 +20,3 @@ dependencies:
   build: ^2.0.0
   json_serializable_kt_typehelpers: ^3.0.0
   json_serializable_built_typehelpers: ^3.0.0
-  # json_serializable_kt_typehelpers:
-  #   path: ../../typehelpers/json_serializable_kt_typehelpers
-  # json_serializable_built_typehelpers:
-  #   path: ../../typehelpers/json_serializable_built_typehelpers
-

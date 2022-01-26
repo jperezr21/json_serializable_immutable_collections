@@ -1,0 +1,13 @@
+name: json_serializable_immutable
+
+packages:
+  - builders/**
+  - combine_example
+  - typehelpers/**
+
+scripts:
+  test: 
+    run: melos exec -- dart test
+    select-package:
+      dir-exists:
+        - test
