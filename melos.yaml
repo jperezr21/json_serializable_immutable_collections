@@ -7,7 +7,20 @@ packages:
 
 scripts:
   test: 
-    run: melos exec -- dart test
+    run: |
+      # dart test has no --no-pub option
+      melos exec -- flutter test --no-pub
     select-package:
       dir-exists:
         - test
+
+  build_runner:
+    run: |
+      # FIXME: https://github.com/invertase/melos/issues/117
+      melos exec -c 1 -- \
+        "dart pub global run build_runner build --delete-conflicting-outputs"
+    select-package:
+      depends-on: 'build_runner'
+
+  postbootstrap:
+    run: dart pub global activate build_runner

@@ -46,17 +46,15 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
           (json['normalSet'] as List<dynamic>).map((e) => e as String).toSet(),
       nullablelistWithNullable: json['nullablelistWithNullable'] != null
           ? (json['nullablelistWithNullable'] as List)
-              .map((e) => e != null ? e as String? : null)
+              .map((e) => e as String?)
               .toIList()
           : null,
-      listWithNullable: (json['listWithNullable'] as List)
-          .map((e) => e != null ? e as String? : null)
-          .toIList(),
+      listWithNullable:
+          (json['listWithNullable'] as List).map((e) => e as String?).toIList(),
       nullableMap:
           Map<String, String?>.from(json['nullableMap'] as Map).toIMap(),
-      nullableSet: (json['nullableSet'] as List)
-          .map((e) => e != null ? e as String? : null)
-          .toISet(),
+      nullableSet:
+          (json['nullableSet'] as List).map((e) => e as String?).toISet(),
     );
 
 Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
