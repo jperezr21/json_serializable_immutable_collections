@@ -11,8 +11,8 @@ class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
   }
 
   @override
-  String serializeToList(
-      String expression, DartType resolvedGenericType, bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
 
     return expression + optionalQuestion + '.asList()';
@@ -21,13 +21,14 @@ class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
 
 class KtSetTypeHelper extends CustomIterableTypeHelper<KtSet> {
   @override
-  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType) {
     return 'KtSet.from($expression)';
   }
 
   @override
-  String serializeToList(
-      String expression, DartType resolvedGenericType, bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
     return expression + optionalQuestion + '.iter.toList()';
   }
