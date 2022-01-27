@@ -7,7 +7,6 @@ import 'package:json_serializable/src/utils.dart';
 import 'package:json_serializable/src/type_helpers/to_from_string.dart';
 import 'package:source_helper/source_helper.dart';
 
-
 final _intString = ToFromStringHelper('int.parse', 'toString()', 'int');
 
 void checkSafeKeyType(String expression, DartType keyArg) {

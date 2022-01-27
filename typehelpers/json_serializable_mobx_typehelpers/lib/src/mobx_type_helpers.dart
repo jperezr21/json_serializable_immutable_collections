@@ -80,7 +80,7 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     bool defaultProvided,
   ) {
     if (observableTypeChecker.isExactlyType(targetType)) {
-      final typeArg =  targetType.typeArgumentsOf(observableTypeChecker)!.single;
+      final typeArg = targetType.typeArgumentsOf(observableTypeChecker)!.single;
       final bool nullable = targetType.isNullableType || defaultProvided;
       return wrapNullableIfNecessary(expression,
           'Observable(${context.deserialize(typeArg, expression)})', nullable);

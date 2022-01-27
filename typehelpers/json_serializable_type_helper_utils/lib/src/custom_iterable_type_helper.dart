@@ -112,13 +112,12 @@ abstract class CustomIterableTypeHelper<T extends Object>
     }
     final resolvedGenericType = genericType(targetType);
 
-    var itemSubVal = context.deserialize(resolvedGenericType, closureArg)!.toString();
+    var itemSubVal =
+        context.deserialize(resolvedGenericType, closureArg)!.toString();
 
     final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
 
     var output = '$expression as List';
-
-
 
     // If `itemSubVal` is the same and it's not a Set, then we don't need to do
     // anything fancy
