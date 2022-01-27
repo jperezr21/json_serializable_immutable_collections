@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:json_serializable/type_helper.dart';
-
+// ignore: implementation_imports
 import 'package:json_serializable/src/shared_checkers.dart';
-import 'package:json_serializable/src/utils.dart';
+// ignore: implementation_imports
 import 'package:json_serializable/src/type_helpers/to_from_string.dart';
+import 'package:json_serializable/type_helper.dart';
 import 'package:source_helper/source_helper.dart';
 
 final _intString = ToFromStringHelper('int.parse', 'toString()', 'int');

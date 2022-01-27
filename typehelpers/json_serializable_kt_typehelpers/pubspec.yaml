@@ -16,6 +16,6 @@ dependencies:
   source_gen: ^1.0.0
   analyzer: ^3.0.0
 
-
 dev_dependencies:
-   test: any
+  lints: ^1.0.0
+  test: any

@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/element/type.dart';
+// ignore: implementation_imports
+import 'package:json_serializable/src/constants.dart';
+// ignore: implementation_imports
+import 'package:json_serializable/src/lambda_result.dart';
 import 'package:json_serializable/type_helper.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
-import 'package:json_serializable/src/shared_checkers.dart';
-import 'package:json_serializable/src/constants.dart';
-import 'package:json_serializable/src/lambda_result.dart';
-import 'package:json_serializable/src/utils.dart';
 import 'package:source_helper/source_helper.dart';
 
 import '../json_serializable_type_helper_utils.dart';

@@ -5,13 +5,14 @@ import 'package:kt_dart/collection.dart';
 
 class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
   @override
-  String deserializeFromIterableExpression(String expression, DartType type) {
-    return 'KtList<${type.getDisplayString(withNullability: true)}>.from($expression)';
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType) {
+    return 'KtList<${resolvedGenericType.getDisplayString(withNullability: true)}>.from($expression)';
   }
 
   @override
   String serializeToList(
-      String expression, DartType type, bool isExpressionNullable) {
+      String expression, DartType resolvedGenericType, bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
 
     return expression + optionalQuestion + '.asList()';
@@ -20,13 +21,13 @@ class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
 
 class KtSetTypeHelper extends CustomIterableTypeHelper<KtSet> {
   @override
-  String deserializeFromIterableExpression(String expression, DartType type) {
+  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
     return 'KtSet.from($expression)';
   }
 
   @override
   String serializeToList(
-      String expression, DartType type, bool isExpressionNullable) {
+      String expression, DartType resolvedGenericType, bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
     return expression + optionalQuestion + '.iter.toList()';
   }

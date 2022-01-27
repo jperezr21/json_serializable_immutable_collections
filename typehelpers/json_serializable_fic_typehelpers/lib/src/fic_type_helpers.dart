@@ -4,14 +4,7 @@
 
 import 'package:analyzer/dart/element/type.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-
-import 'package:json_serializable/type_helper.dart';
-import 'package:json_serializable/src/shared_checkers.dart';
-import 'package:json_serializable/src/constants.dart';
-import 'package:json_serializable/src/lambda_result.dart';
-import 'package:json_serializable/src/utils.dart';
 import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
-import 'package:source_gen/source_gen.dart';
 
 class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
   @override

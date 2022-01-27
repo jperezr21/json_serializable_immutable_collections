@@ -76,6 +76,7 @@ class MyModel {
   Map<String, dynamic> toJson() => _$MyModelToJson(this);
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MyModel && toString() == other.toString();

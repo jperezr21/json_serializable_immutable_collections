@@ -2,7 +2,7 @@ name: json_serializable_immutable
 
 packages:
   - builders/**
-  - combine_example
+  - combine_example/*
   - typehelpers/**
 
 scripts:
@@ -21,6 +21,9 @@ scripts:
         "dart pub global run build_runner build --delete-conflicting-outputs"
     select-package:
       depends-on: 'build_runner'
+
+  analyze:
+    run: melos exec -- dart analyze .
 
   postbootstrap:
     run: dart pub global activate build_runner

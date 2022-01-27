@@ -12,3 +12,6 @@ dependencies:
   source_helper: ^1.2.1
   collection: ^1.15.0
   source_gen: ^1.0.0
+
+dev_dependencies: 
+  lints: ^1.0.0
