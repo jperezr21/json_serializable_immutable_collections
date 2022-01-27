@@ -1,3 +1,7 @@
+## 0.3.1
+
+ - **FEAT**: analyzer 3.0.0.
+
 ## 0.3.0
 
 - json_serializable 6.0.0 support
