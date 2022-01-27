@@ -1,12 +1,9 @@
-import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
-import 'package:json_serializable_type_helper_utils/src/utils.dart';
-import 'package:source_gen/source_gen.dart' show TypeChecker;
-
 import 'package:analyzer/dart/element/type.dart';
-import 'package:json_serializable/type_helper.dart';
+// ignore: implementation_imports
 import 'package:json_serializable/src/constants.dart';
-import 'package:json_serializable/src/shared_checkers.dart';
-import 'package:json_serializable/src/utils.dart';
+import 'package:json_serializable/type_helper.dart';
+import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
+import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:source_helper/source_helper.dart';
 
 const _keyParam = 'k';
@@ -98,8 +95,6 @@ abstract class CustomMapTypeHelper<T>
     assert(typeArgs.length == 2);
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
-    final keyArgAsGenericString =
-        keyArg.getDisplayString(withNullability: true);
     final valueArgAsGenericString =
         valueArg.getDisplayString(withNullability: true);
 

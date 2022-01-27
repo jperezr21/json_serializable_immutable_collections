@@ -42,9 +42,9 @@ class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
 class MobxMapTypeHelper extends CustomMapTypeHelper<ObservableMap> {
   @override
   String deserializeFromMapExpression(
-      String mapExpression, DartType keyArg, DartType valueArg) {
+      String mapExpression, DartType keyType, DartType valueType) {
     final prefix =
-        'ObservableMap<${keyArg.getDisplayString(withNullability: true)},${valueArg.getDisplayString(withNullability: true)}>.of';
+        'ObservableMap<${keyType.getDisplayString(withNullability: true)},${valueType.getDisplayString(withNullability: true)}>.of';
     return '$prefix($mapExpression)';
   }
 
@@ -67,7 +67,7 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
       final typeArg = targetType.typeArgumentsOf(observableTypeChecker)!.single;
       final optionalQuestion = targetType.isNullableType ? '?' : '';
 
-      return context.serialize(typeArg, "($expression)$optionalQuestion.value");
+      return context.serialize(typeArg, '($expression)$optionalQuestion.value');
     }
     return null;
   }
@@ -80,8 +80,8 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     bool defaultProvided,
   ) {
     if (observableTypeChecker.isExactlyType(targetType)) {
-      final typeArg =  targetType.typeArgumentsOf(observableTypeChecker)!.single;
-      final bool nullable = targetType.isNullableType || defaultProvided;
+      final typeArg = targetType.typeArgumentsOf(observableTypeChecker)!.single;
+      final nullable = targetType.isNullableType || defaultProvided;
       return wrapNullableIfNecessary(expression,
           'Observable(${context.deserialize(typeArg, expression)})', nullable);
     }

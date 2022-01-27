@@ -17,10 +17,6 @@ jobs:
     
     strategy:
       matrix:
-        package:
-          - builders/json_serializable_immutable_collections
-          - builders/json_serializable_mobx
-          - builders/json_serializable_fic
         channel:
           - stable
           - beta
@@ -28,33 +24,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      - uses: dart-lang/setup-dart@v1
-      #- uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ matrix.channel }}
 
       - name: Install dependencies
-        run: dart pub get
-        working-directory: ${{ matrix.package }}
+        run: |
+          dart pub global activate melos
+          melos bootstrap
         
-      - name: Codeg generation
-        run: dart run build_runner build --delete-conflicting-outputs
-        working-directory: ${{ matrix.package }}
+      - name: Code generation
+        run: melos run build_runner --no-select
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
-        working-directory: ${{ matrix.package }}
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
-        run: dart analyze
-        working-directory: ${{ matrix.package }}
+        run: melos analyze --no-select
 
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
       - name: Run tests
-        run: dart test
-        working-directory: ${{ matrix.package }}
+        run: melos run test --no-select
