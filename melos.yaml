@@ -3,6 +3,7 @@ name: json_serializable_immutable
 packages:
   - builders/**
   - combine_example/*
+  - fake_json_example/*
   - typehelpers/**
 
 scripts:

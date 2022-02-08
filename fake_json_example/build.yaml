@@ -1,0 +1,34 @@
+targets:
+  $default:
+    builders:
+      # exclude the default json_serializable builder
+      json_serializable:json_serializable:
+        generate_for:
+          include:
+          exclude:
+            - test/**
+            - lib/**
+            - example/**
+      # add our custom builder that builds everything (see builder.dart and the builders section below)
+      # your will need to change the name <project_package:everything_builder>
+      fake_json_example:fake_json_builder:
+        options:
+          explicit_to_json: true
+        generate_for:
+         include:
+            - lib/**
+            - test/**
+            - example/**
+
+
+builders:
+  # you can rename this but be sure the referene it correctly in the target section above
+  fake_json_builder:
+    # change to the path of your builder.dart file
+    import: "package:fake_json_example/builder.dart"
+    # leave this as is
+    builder_factories: ["jsonSerializable"]
+    build_extensions: {".dart": ["json_serializable.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

@@ -1,0 +1,20 @@
+name: fake_json_example
+description: Example application on how to add allowlist of certain types
+# version: 1.0.0
+# homepage: https://www.example.com
+
+publish_to: none
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  json_annotation: ^4.3.0
+
+dev_dependencies:
+  lints: ^1.0.0
+  test: ^1.14.4
+  json_serializable_type_helper_utils:
+    path: ../typehelpers/json_serializable_type_helper_utils
+  json_serializable: ^6.0.1
+  build_runner: ^2.0.0
