@@ -1,14 +1,3 @@
 
-This is an example project on how to combine the TypeHelpers of multiple json_serializable_* packages
-and support, for example, types from fast_immutable_collections and mobx.
+This is an example project on how to add an allowlist of types that should be ignored by json_serializable.
 
-# How to add this your project (see the corresponding files in the example project for details)
-
-- Add all the typehelper packages that you want to support to your dependencies
-
-- Create a builder.dart file and use the `JsonSerializableGenerator.withDefaultHelpers` method to add
- all the `TypeHelpers` that you want
-
-- in your build.yaml, add the builder from your build.dart
-
-- run build_runner and verify that it works
