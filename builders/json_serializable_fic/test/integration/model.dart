@@ -65,9 +65,10 @@ class MyModel {
 
   Map<String, dynamic> toJson() => _$MyModelToJson(this);
 
+
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, listWithNullable: $listWithNullable, nullablelistWithNullable: $nullablelistWithNullable, nullSet: $nullSet, nullableSet: $nullableSet, nullMap: $nullMap, nullableMap: $nullableMap, dynamicMap: $dynamicMap}';
+    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, listWithNullable: $listWithNullable, nullablelistWithNullable: $nullablelistWithNullable, nullSet: $nullSet, nullableSet: $nullableSet, nullMap: $nullMap, nullableMap: $nullableMap, dynamicMap: $dynamicMap, enumMap: $enumMap}';
   }
 
   @override
@@ -90,7 +91,8 @@ class MyModel {
           nullableSet == other.nullableSet &&
           nullMap == other.nullMap &&
           nullableMap == other.nullableMap &&
-          dynamicMap == other.dynamicMap;
+          dynamicMap == other.dynamicMap &&
+          enumMap == other.enumMap;
 
   @override
   int get hashCode =>
