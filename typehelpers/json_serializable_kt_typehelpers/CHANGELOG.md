@@ -1,3 +1,7 @@
+## 3.1.1
+
+- **CHORE**: lints, analyzer
+
 ## 3.1.0
 
  - **FEAT**: analyzer 3.0.0.

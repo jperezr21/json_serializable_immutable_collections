@@ -1,3 +1,7 @@
+## 5.1.1
+
+- **CHORE**: update lints, analyzer
+
 ## 5.1.0
 
  - **FEAT**: analyzer 3.0.0.

@@ -1,6 +1,6 @@
 name: json_serializable_built_typehelpers
 description: typehelpers for built_collection, used for json_serializable.
-version: 3.1.0
+version: 3.1.1
 homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
 environment:
