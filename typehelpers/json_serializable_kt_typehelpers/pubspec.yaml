@@ -1,5 +1,5 @@
 name: json_serializable_kt_typehelpers
-description: A starting point for Dart libraries or applications.
+description: typehelpers for collections in kt.dart for json_serializable
 version: 3.1.1
 homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
