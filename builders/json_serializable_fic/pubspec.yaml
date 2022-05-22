@@ -1,6 +1,6 @@
 name: json_serializable_fic
 description: Adding support for fast immutable collections for json_serializable
-version: 0.3.2
+version: 0.3.3
 homepage: https://github.com/knaeckeKami/immutable_json_list_serializer
 
 environment:

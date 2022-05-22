@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import 'package:test/test.dart';
@@ -22,7 +24,12 @@ final model = MyModel(
     listWithNullable: ["1", null].toIList(),
     nullablelistWithNullable: ["1", null].toIList(),
     nullableMap: {"a": null}.toIMap(),
-    nullableSet: {"", null}.toISet());
+    nullableSet: {"", null}.toISet(),
+    enumMap: IMap<MyEnum, String>({
+      MyEnum.one: "1",
+      MyEnum.two: "2",
+    }),
+  );
 
 const jsonMapExpected = {
   "myList": [1, 2, 3],
@@ -47,7 +54,8 @@ const jsonMapExpected = {
   "listWithNullable": ["1", null],
   "nullablelistWithNullable": ["1", null],
   "nullableMap": {"a": null},
-  "nullableSet": ["", null]
+  "nullableSet": ["", null],
+  "enumMap": {"one": "1", "two": "2"},
 };
 
 void main() {
@@ -62,6 +70,6 @@ void main() {
 
   test("can deserialize & serialize", () {
     expect(MyModel.fromJson(jsonMapExpected).toJson(), jsonMapExpected);
-    expect(MyModel.fromJson(model.toJson()), model);
+    expect(MyModel.fromJson(jsonDecode(jsonEncode(model.toJson()))), model);
   });
 }

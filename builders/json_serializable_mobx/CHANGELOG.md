@@ -1,3 +1,7 @@
+## 0.10.2
+ 
+ - **CHORE**: update dependencies
+
 ## 0.10.1
 
  - **FEAT**: analyzer 3.0.0.

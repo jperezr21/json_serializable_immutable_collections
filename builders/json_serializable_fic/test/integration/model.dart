@@ -23,6 +23,7 @@ class MyModel {
     required this.listWithNullable,
     required this.nullableMap,
     required this.nullableSet,
+    required this.enumMap
   });
 
   final IList<int> myList;
@@ -56,6 +57,8 @@ class MyModel {
   final IMap<String, String?> nullableMap;
 
   final IMap<String, dynamic> dynamicMap;
+
+  final IMap<MyEnum, String> enumMap;
 
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
@@ -126,4 +129,10 @@ class Nested {
 
   @override
   int get hashCode => a.hashCode;
+}
+
+enum MyEnum {
+  one,
+  two,
+  three,
 }

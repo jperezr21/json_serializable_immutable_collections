@@ -55,6 +55,11 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
           Map<String, String?>.from(json['nullableMap'] as Map).toIMap(),
       nullableSet:
           (json['nullableSet'] as List).map((e) => e as String?).toISet(),
+      enumMap: (json['enumMap'] as Map<String, dynamic>)
+          .map(
+            (k, e) => MapEntry($enumDecode(_$MyEnumEnumMap, k), e as String),
+          )
+          .toIMap(),
     );
 
 Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
@@ -76,7 +81,15 @@ Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
       'nullMap': instance.nullMap?.unlockLazy,
       'nullableMap': instance.nullableMap.unlockLazy,
       'dynamicMap': instance.dynamicMap.unlockLazy,
+      'enumMap': instance.enumMap.unlockLazy
+          .map((k, e) => MapEntry(_$MyEnumEnumMap[k], e)),
     };
+
+const _$MyEnumEnumMap = {
+  MyEnum.one: 'one',
+  MyEnum.two: 'two',
+  MyEnum.three: 'three',
+};
 
 Nested _$NestedFromJson(Map<String, dynamic> json) => Nested(
       json['a'] as int,
