@@ -164,7 +164,7 @@ abstract class CustomMapTypeHelper<T>
 
     final toFromString = forType(keyArg);
     if (toFromString != null) {
-      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true)!;
+      keyUsage = toFromString.deserialize(keyArg, keyUsage, false, true).toString();
     }
 
     return wrapNullableIfNecessary(
