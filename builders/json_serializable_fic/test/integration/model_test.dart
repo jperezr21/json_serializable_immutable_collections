@@ -6,30 +6,30 @@ import 'package:test/test.dart';
 import 'model.dart';
 
 final model = MyModel(
-    myList: [1, 2, 3].toIList(),
-    myString: ["1", "2", "3"].toISet(),
-    normalList: ["a", "b"],
-    normalSet: {"a", "b", "c"},
-    builtMap: {1: "a", 2: "b"}.toIMap(),
-    builtMapString: {"a": "a"}.toIMap(),
-    builtMapNested: {1: Nested(1)}.toIMap(),
-    myNested: [Nested(1)].toIList(),
-    nullList: null,
-    nullSet: null,
-    nullMap: null,
-    dynamicMap: {
-      "a": 1,
-      "b": "string",
-    }.toIMap(),
-    listWithNullable: ["1", null].toIList(),
-    nullablelistWithNullable: ["1", null].toIList(),
-    nullableMap: {"a": null}.toIMap(),
-    nullableSet: {"", null}.toISet(),
-    enumMap: IMap<MyEnum, String>({
-      MyEnum.one: "1",
-      MyEnum.two: "2",
-    }),
-  );
+  myList: [1, 2, 3].toIList(),
+  myString: ["1", "2", "3"].toISet(),
+  normalList: ["a", "b"],
+  normalSet: {"a", "b", "c"},
+  builtMap: {1: "a", 2: "b"}.toIMap(),
+  builtMapString: {"a": "a"}.toIMap(),
+  builtMapNested: {1: Nested(1)}.toIMap(),
+  myNested: [Nested(1)].toIList(),
+  nullList: null,
+  nullSet: null,
+  nullMap: null,
+  dynamicMap: {
+    "a": 1,
+    "b": "string",
+  }.toIMap(),
+  listWithNullable: ["1", null].toIList(),
+  nullablelistWithNullable: ["1", null].toIList(),
+  nullableMap: {"a": null}.toIMap(),
+  nullableSet: {"", null}.toISet(),
+  enumMap: IMap<MyEnum, String>({
+    MyEnum.one: "1",
+    MyEnum.two: "2",
+  }),
+);
 
 const jsonMapExpected = {
   "myList": [1, 2, 3],
