@@ -82,7 +82,7 @@ Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
       'nullableMap': instance.nullableMap.unlockLazy,
       'dynamicMap': instance.dynamicMap.unlockLazy,
       'enumMap': instance.enumMap.unlockLazy
-          .map((k, e) => MapEntry(_$MyEnumEnumMap[k], e)),
+          .map((k, e) => MapEntry(_$MyEnumEnumMap[k]!, e)),
     };
 
 const _$MyEnumEnumMap = {
