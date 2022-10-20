@@ -1,3 +1,7 @@
+## 3.1.2
+
+ - **CHORE**: update dependencies
+
 ## 3.1.1
 
 - **CHORE**: lints, analyzer
