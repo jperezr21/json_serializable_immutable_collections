@@ -1,3 +1,7 @@
+## 5.1.2
+
+- **CHORE**: update dependencies
+
 ## 5.1.1
 
 - **CHORE**: update lints, analyzer
