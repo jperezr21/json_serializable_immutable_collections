@@ -2,9 +2,11 @@
 
 # json_serializable_immutable_collections
 
-## Mainainers wanted
+## Maintainers wanted
 
 I can no longer maintain this project. If someone wants to take it over, please reach out.
+
+___
 
 This repository holds packages that are meant to extend to functionality of json_serializable, in particular to support more collection/container types.
 See https://github.com/google/json_serializable.dart/issues/593.
