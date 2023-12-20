@@ -10,8 +10,8 @@ scripts:
     run: |
       # FIXME: https://github.com/dart-lang/sdk/issues/45307
       melos exec -- flutter test --no-pub
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
 
   build_runner:
@@ -19,8 +19,8 @@ scripts:
       # FIXME: https://github.com/invertase/melos/issues/117
       melos exec -c 1 -- \
         "dart pub global run build_runner build --delete-conflicting-outputs"
-    select-package:
-      depends-on: 'build_runner'
+    packageFilters:
+      dependsOn: 'build_runner'
 
   analyze:
     run: melos exec -- dart analyze .

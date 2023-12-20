@@ -3,5 +3,5 @@ String wrapNullableIfNecessary(
   if (!nullable) {
     return output;
   }
-  return expression + ' != null ? ' + output + ' : null';
+  return '$expression != null ? $output : null';
 }

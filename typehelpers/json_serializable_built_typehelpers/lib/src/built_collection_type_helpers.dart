@@ -40,7 +40,7 @@ class BuiltMapTypeHelper extends CustomMapTypeHelper<BuiltMap> {
   String deserializeFromMapExpression(
       String mapExpression, DartType keyType, DartType valueType) {
     String valueTypeString;
-    if (valueType.isDynamic) {
+    if (valueType is DynamicType) {
       //use Object? instead because builtMap does not support explicit dynamic types
       valueTypeString = 'Object?';
     } else {
@@ -49,13 +49,13 @@ class BuiltMapTypeHelper extends CustomMapTypeHelper<BuiltMap> {
     final keyTypeString = keyType.getDisplayString(withNullability: true);
     final prefix = 'BuiltMap<$keyTypeString,$valueTypeString>.of';
 
-    return prefix + '($mapExpression)';
+    return '$prefix($mapExpression)';
   }
 
   @override
   String serializeToMapExpression(String mapExpression, DartType keyType,
       DartType valueType, bool isMapExpressionNullable) {
     final optionalQuestion = isMapExpressionNullable ? '?' : '';
-    return mapExpression + optionalQuestion + '.toMap()';
+    return '$mapExpression$optionalQuestion.toMap()';
   }
 }

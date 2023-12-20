@@ -83,7 +83,7 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myListWithNulls: $myListWithNulls, myString: $myString, myStringWithNulls: $myStringWithNulls, myNested: $myNested, myNestedWithNulls: $myNestedWithNulls, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap, nestedMapWithNulls: $nestedMapWithNulls, stringObservable: $stringObservable, nullobservable: ${nullobservable?.value}';
+    return 'MyModel{myList: $myList, myListWithNulls: $myListWithNulls, myString: $myString, myStringWithNulls: $myStringWithNulls, myNested: $myNested, myNestedWithNulls: $myNestedWithNulls, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, nullSet: $nullSet, nullMap: $nullMap, stringSet: $stringSet, nestedSet: $nestedSet, dynamicMap: $dynamicMap, nestedMap: $nestedMap, nestedMapWithNulls: $nestedMapWithNulls, stringObservable: ${stringObservable.value}, nullobservable: ${nullobservable?.value}';
   }
 }
 
