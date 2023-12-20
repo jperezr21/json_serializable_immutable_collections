@@ -80,9 +80,7 @@ abstract class CustomMapTypeHelper<T>
           expression, keyType, valueType, targetTypeIsNullable);
     }
 
-    return serializeToMapExpression(
-            expression, keyType, valueType, targetTypeIsNullable) +
-        '$optionalQuestion.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
+    return '${serializeToMapExpression(expression, keyType, valueType, targetTypeIsNullable)}$optionalQuestion.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
   }
 
   @override
@@ -152,7 +150,7 @@ abstract class CustomMapTypeHelper<T>
     if (keyArg.isEnum) {
       keyUsage = context.deserialize(keyArg, _keyParam).toString();
     } else if (context.config.anyMap &&
-        !(keyArg.isDartCoreObject || keyArg.isDynamic)) {
+        !(keyArg.isDartCoreObject || keyArg is DynamicType)) {
       keyUsage = '$_keyParam as String';
     } else if (context.config.anyMap &&
         keyArg.isDartCoreObject &&

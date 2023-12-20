@@ -10,7 +10,7 @@ class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
   @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
-    return expression + '.toIList()';
+    return '$expression.toIList()';
   }
 
   @override
@@ -25,7 +25,7 @@ class FICISetTypeHelper extends CustomIterableTypeHelper<ISet> {
   @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
-    return expression + '.toISet()';
+    return '$expression.toISet()';
   }
 
   @override
@@ -47,6 +47,6 @@ class FICIMapTypeHelper extends CustomMapTypeHelper<IMap> {
   String serializeToMapExpression(String mapExpression, DartType keyType,
       DartType valueType, bool isMapExpressionNullable) {
     final optionalQuestion = isMapExpressionNullable ? '?' : '';
-    return mapExpression + optionalQuestion + '.unlockLazy';
+    return '$mapExpression$optionalQuestion.unlockLazy';
   }
 }

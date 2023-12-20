@@ -15,7 +15,7 @@ class KtListTypeHelper extends CustomIterableTypeHelper<KtList> {
       bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
 
-    return expression + optionalQuestion + '.asList()';
+    return '$expression$optionalQuestion.asList()';
   }
 }
 
@@ -30,7 +30,7 @@ class KtSetTypeHelper extends CustomIterableTypeHelper<KtSet> {
   String serializeToList(String expression, DartType resolvedGenericType,
       bool isExpressionNullable) {
     final optionalQuestion = isExpressionNullable ? '?' : '';
-    return expression + optionalQuestion + '.iter.toList()';
+    return '$expression$optionalQuestion.iter.toList()';
   }
 }
 
@@ -49,6 +49,6 @@ class KtMapTypeHelper extends CustomMapTypeHelper<KtMap> {
   String serializeToMapExpression(String mapExpression, DartType keyType,
       DartType valueType, bool isMapExpressionNullable) {
     final optionalQuestion = isMapExpressionNullable ? '?' : '';
-    return mapExpression + optionalQuestion + '.asMap()';
+    return '$mapExpression$optionalQuestion.asMap()';
   }
 }
