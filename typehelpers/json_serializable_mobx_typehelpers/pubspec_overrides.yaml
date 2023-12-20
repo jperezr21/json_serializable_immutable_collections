@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: json_serializable_type_helper_utils
+dependency_overrides:
+  json_serializable_type_helper_utils:
+    path: ../json_serializable_type_helper_utils
