@@ -5,7 +5,7 @@ part 'model.g.dart';
 
 @JsonSerializable()
 class MyModel {
-const MyModel(
+  const MyModel(
       {required this.myList,
       required this.myListWithNulls,
       required this.builtMapString,
