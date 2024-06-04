@@ -19,5 +19,5 @@ dependencies:
   source_gen: ^1.0.0
   analyzer: ^6.3.0
   build: ^2.0.0
-  json_serializable_kt_typehelpers: ^4.0.0
-  json_serializable_built_typehelpers: ^4.0.0
+  json_serializable_kt_typehelpers: ^6.0.0
+  json_serializable_built_typehelpers: ^6.0.0
