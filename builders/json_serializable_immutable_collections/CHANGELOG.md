@@ -1,14 +1,25 @@
+# Changelog
+
+## 1.0.1
+
+- Update analyzer to ^7.3.0
+- Update source_gen to ^2.0.0
+
+## 1.0.0
+
+- Initial release
+
 ## 0.10.3
 
 - **CHORE**: update dependencies
 
 ## 0.10.2
 
- - **CHORE**: update dependencies
+- **CHORE**: update dependencies
 
 ## 0.10.1
 
- - **FEAT**: analyzer 3.0.0.
+- **FEAT**: analyzer 3.0.0.
 
 ## 0.10.0
 
@@ -32,7 +43,6 @@
 
 - support json_serializable 4.1.0
 
-
 ## 0.6.0-nullsafety.0
 
 - migrate to nullsafety
@@ -40,7 +50,6 @@
 ## 0.5.0
 
 - support analyzer ^0.40.0
-
 
 ## 0.4.2
 
@@ -75,7 +84,7 @@
 
 - Badge
 
-## 0.0.4 
+## 0.0.4
 
 - Pana fixes
 
@@ -83,11 +92,9 @@
 
 - Documentation fixes
 
-
 ## 0.0.2
 
 - Documentation fixes
-
 
 ## 0.0.1
 

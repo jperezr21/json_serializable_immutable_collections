@@ -1,11 +1,10 @@
 name: json_serializable_kt_typehelpers
 description: typehelpers for collections in kt.dart for json_serializable
-version: 4.0.0
+version: 4.0.1
 homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
-
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 #dependencies:
 #  path: ^1.7.0
@@ -13,8 +12,8 @@ environment:
 dependencies:
   kt_dart: ^0.9.0
   json_serializable_type_helper_utils: ^6.0.0
-  source_gen: ^1.0.0
-  analyzer: ^6.3.0
+  source_gen: ^2.0.0
+  analyzer: ^7.3.0
 
 dev_dependencies:
   lints: ^2.0.0

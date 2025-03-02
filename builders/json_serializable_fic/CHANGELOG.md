@@ -1,3 +1,14 @@
+# Changelog
+
+## 1.0.1
+
+- Update analyzer to ^7.3.0
+- Update source_gen to ^2.0.0
+
+## 1.0.0
+
+- Initial release
+
 ## 0.3.4
 
 - **CHORE**: update dependencies
@@ -12,7 +23,7 @@
 
 ## 0.3.1
 
- - **FEAT**: analyzer 3.0.0.
+- **FEAT**: analyzer 3.0.0.
 
 ## 0.3.0
 

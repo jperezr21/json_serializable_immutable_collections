@@ -1,14 +1,25 @@
+# Changelog
+
+## 1.0.1
+
+- Update analyzer to ^7.3.0
+- Update source_gen to ^2.0.0
+
+## 1.0.0
+
+- Initial release
+
 ## 0.10.3
 
 - **CHORE**: update dependencies
 
 ## 0.10.2
- 
- - **CHORE**: update dependencies
+
+- **CHORE**: update dependencies
 
 ## 0.10.1
 
- - **FEAT**: analyzer 3.0.0.
+- **FEAT**: analyzer 3.0.0.
 
 ## 0.10.0
 
@@ -19,6 +30,7 @@
 - json_serializable 5.0.0 support
 
 ## 0.7.0
+
 - bump dependencies for build_runner to be compatible with latest packages
 
 ## 0.6.0

@@ -1,3 +1,14 @@
+# Changelog
+
+## 4.0.1
+
+- Update analyzer to ^7.3.0
+- Update source_gen to ^2.0.0
+
+## 4.0.0
+
+- Initial release with Dart 3 support
+
 ## 3.1.2
 
 - **CHORE**: update dependencies
@@ -8,7 +19,7 @@
 
 ## 3.1.0
 
- - **FEAT**: analyzer 3.0.0.
+- **FEAT**: analyzer 3.0.0.
 
 ## 3.0.0
 
