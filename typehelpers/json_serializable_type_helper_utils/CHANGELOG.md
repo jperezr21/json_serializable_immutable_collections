@@ -1,15 +1,12 @@
-## 6.0.2
+## 6.1.0
 
 - Update json_serializable to ^6.9.4
-
-## 6.0.1
-
 - Update analyzer to ^7.3.0
 - Update source_gen to ^2.0.0
 
 ## 6.0.0
 
-- Initial release with Dart 3 support
+- Dart 3 support
 
 ## 5.1.2
 

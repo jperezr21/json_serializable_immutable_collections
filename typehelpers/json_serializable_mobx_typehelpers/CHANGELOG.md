@@ -1,16 +1,10 @@
-## 4.0.2
+## 3.2.0
 
 - Update mobx to ^2.5.0
 - Update json_serializable to ^6.9.4
-
-## 4.0.1
-
 - Update analyzer to ^7.3.0
 - Update source_gen to ^2.0.0
-
-## 4.0.0
-
-- Initial release with Dart 3 support
+- Dart 3 support
 
 ## 3.1.2
 

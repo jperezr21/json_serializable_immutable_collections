@@ -1,9 +1,6 @@
-## 2.1.4
+## 2.2.0
 
 - Update json_serializable to ^6.9.4
-
-## 2.1.3
-
 - Update analyzer to ^7.3.0
 - Update source_gen to ^2.0.0
 
