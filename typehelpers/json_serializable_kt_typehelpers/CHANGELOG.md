@@ -1,3 +1,7 @@
+## 4.1.1
+
+- **CHORE**: fix lint issues
+
 ## 4.1.0
 
 - Update kt_dart to ^1.1.0

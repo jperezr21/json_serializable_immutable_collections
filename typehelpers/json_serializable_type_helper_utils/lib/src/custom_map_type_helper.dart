@@ -17,7 +17,7 @@ abstract class CustomMapTypeHelper<T>
             'you need to specify the type to (de)-serialize of generic parameter');
 
   /// Deserialize your custom map from an expression, that evaluates to an
-  /// Iterable<MapEntry> with the given DartTypes.
+  /// `Iterable<MapEntry>` with the given DartTypes.
   ///
   /// Return a string, which is an expression that evaluates to your custom
   /// map implementation.
@@ -93,8 +93,7 @@ abstract class CustomMapTypeHelper<T>
     assert(typeArgs.length == 2);
     final keyArg = typeArgs.first;
     final valueArg = typeArgs.last;
-    final valueArgAsGenericString =
-        valueArg.getDisplayString(withNullability: true);
+    final valueArgAsGenericString = valueArg.getDisplayString();
 
     checkSafeKeyType(expression, keyArg);
 

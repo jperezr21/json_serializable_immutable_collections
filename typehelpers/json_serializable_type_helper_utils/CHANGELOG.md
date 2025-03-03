@@ -1,3 +1,7 @@
+## 6.0.1
+
+- **CHORE**: fix lint issues
+
 ## 6.0.0
 
 - Dart 3 support

@@ -1,3 +1,7 @@
+## 1.1.1
+
+- **CHORE**: fix lint issues
+
 ## 1.1.0
 
 - Update build_runner to ^2.4.15

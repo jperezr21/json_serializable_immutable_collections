@@ -1,3 +1,7 @@
+## 4.1.1
+
+- **CHORE**: fix lint issues
+
 ## 4.1.0
 
 - Update analyzer to ^7.3.0

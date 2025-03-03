@@ -1,3 +1,7 @@
+## 1.1.1
+
+- **CHORE**: fix lint issues
+
 ## 1.1.0
 
 - Update mobx to ^2.5.0

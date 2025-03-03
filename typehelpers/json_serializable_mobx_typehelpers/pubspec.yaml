@@ -1,6 +1,6 @@
 name: json_serializable_mobx_typehelpers
 description: typehelpers for collections in mobx for json_serializable
-version: 3.2.0
+version: 3.2.1
 homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
 environment:

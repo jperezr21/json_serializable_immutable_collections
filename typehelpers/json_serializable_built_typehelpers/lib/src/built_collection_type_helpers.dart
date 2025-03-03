@@ -3,9 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:analyzer/dart/element/type.dart';
-import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
-
 import 'package:built_collection/built_collection.dart';
+import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
 
 class BuiltListTypeHelper extends CustomIterableTypeHelper<BuiltList> {
   @override
@@ -44,9 +43,9 @@ class BuiltMapTypeHelper extends CustomMapTypeHelper<BuiltMap> {
       //use Object? instead because builtMap does not support explicit dynamic types
       valueTypeString = 'Object?';
     } else {
-      valueTypeString = valueType.getDisplayString(withNullability: true);
+      valueTypeString = valueType.getDisplayString();
     }
-    final keyTypeString = keyType.getDisplayString(withNullability: true);
+    final keyTypeString = keyType.getDisplayString();
     final prefix = 'BuiltMap<$keyTypeString,$valueTypeString>.of';
 
     return '$prefix($mapExpression)';

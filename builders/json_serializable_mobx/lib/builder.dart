@@ -1,23 +1,8 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-/// Configuration for using `package:build`-compatible build systems.
-///
-/// See:
-/// * [build_runner](https://pub.dev/packages/build_runner)
-///
-/// This library is **not** intended to be imported by typical end-users unless
-/// you are creating a custom compilation pipeline. See documentation for
-/// details, and `build.yaml` for how these builders are configured by default.
-library immutable_json_list_builder;
-
 import 'package:build/build.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:json_serializable_mobx_typehelpers/json_serializable_mobx_typehelpers.dart';
-
-import 'package:source_gen/source_gen.dart';
 import 'package:json_serializable/json_serializable.dart';
+import 'package:json_serializable_mobx_typehelpers/json_serializable_mobx_typehelpers.dart';
+import 'package:source_gen/source_gen.dart';
 
 import 'type_helpers.dart';
 
