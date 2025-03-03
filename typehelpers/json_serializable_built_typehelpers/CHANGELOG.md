@@ -1,5 +1,3 @@
-# Changelog
-
 ## 4.0.1
 
 - Update analyzer to ^7.3.0

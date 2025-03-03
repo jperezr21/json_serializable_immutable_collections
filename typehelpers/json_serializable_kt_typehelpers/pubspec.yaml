@@ -6,9 +6,6 @@ homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
-#dependencies:
-#  path: ^1.7.0
-
 dependencies:
   kt_dart: ^0.9.0
   json_serializable_type_helper_utils: ^6.0.0

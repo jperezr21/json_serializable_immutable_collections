@@ -7,10 +7,10 @@ part of 'model.dart';
 // **************************************************************************
 
 MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
-      myList:
-          ObservableList<int>.of((json['myList'] as List).map((e) => e as int)),
+      myList: ObservableList<int>.of(
+          (json['myList'] as List).map((e) => (e as num).toInt())),
       myListWithNulls: ObservableList<int?>.of(
-          (json['myListWithNulls'] as List).map((e) => e as int?)),
+          (json['myListWithNulls'] as List).map((e) => (e as num?)?.toInt())),
       builtMapString: ObservableMap<String, String>.of(
           Map<String, String>.from(json['builtMapString'] as Map)),
       myString: ObservableList<String>.of(
@@ -65,7 +65,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
       )),
       stringObservable: Observable(json['stringObservable'] as String),
       nullobservable: json['nullobservable'] != null
-          ? Observable(json['nullobservable'] as int)
+          ? Observable((json['nullobservable'] as num).toInt())
           : null,
       nestedSet: ObservableSet<Nested>.of((json['nestedSet'] as List)
           .map((e) => Nested.fromJson(e as Map<String, dynamic>))),
@@ -99,7 +99,7 @@ Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
     };
 
 Nested _$NestedFromJson(Map<String, dynamic> json) => Nested(
-      json['a'] as int?,
+      (json['a'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$NestedToJson(Nested instance) => <String, dynamic>{

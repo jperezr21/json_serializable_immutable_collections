@@ -1,4 +1,7 @@
-# Changelog
+## 4.0.2
+
+- Update mobx to ^2.5.0
+- Update json_serializable to ^6.9.4
 
 ## 4.0.1
 

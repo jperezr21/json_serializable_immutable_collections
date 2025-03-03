@@ -6,7 +6,7 @@ packages:
   - typehelpers/**
 
 scripts:
-  test: 
+  test:
     run: |
       # FIXME: https://github.com/dart-lang/sdk/issues/45307
       melos exec -- flutter test --no-pub
@@ -15,12 +15,7 @@ scripts:
         - test
 
   build_runner:
-    run: |
-      # FIXME: https://github.com/invertase/melos/issues/117
-      melos exec -c 1 -- \
-        "dart pub global run build_runner build --delete-conflicting-outputs"
-    packageFilters:
-      dependsOn: 'build_runner'
+    run: melos exec --depends-on=build_runner -- "dart run build_runner build -d"
 
   analyze:
     run: melos exec -- dart analyze .

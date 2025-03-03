@@ -1,4 +1,6 @@
-# Changelog
+## 6.0.2
+
+- Update json_serializable to ^6.9.4
 
 ## 6.0.1
 

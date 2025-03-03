@@ -1,4 +1,8 @@
-# Changelog
+## 1.0.2
+
+- Update mobx to ^2.5.0
+- Update build_runner to ^2.4.15
+- Update json_serializable to ^6.9.4
 
 ## 1.0.1
 

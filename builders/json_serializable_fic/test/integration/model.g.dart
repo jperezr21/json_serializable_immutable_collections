@@ -7,7 +7,7 @@ part of 'model.dart';
 // **************************************************************************
 
 MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
-      myList: (json['myList'] as List).map((e) => e as int).toIList(),
+      myList: (json['myList'] as List).map((e) => (e as num).toInt()).toIList(),
       builtMapString:
           Map<String, String>.from(json['builtMapString'] as Map).toIMap(),
       myString: (json['myString'] as List).map((e) => e as String).toISet(),
@@ -92,7 +92,7 @@ const _$MyEnumEnumMap = {
 };
 
 Nested _$NestedFromJson(Map<String, dynamic> json) => Nested(
-      json['a'] as int,
+      (json['a'] as num).toInt(),
     );
 
 Map<String, dynamic> _$NestedToJson(Nested instance) => <String, dynamic>{
