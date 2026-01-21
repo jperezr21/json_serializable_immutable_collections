@@ -39,14 +39,14 @@ const jsonMapExpected = {
   "stringSet": ["1", "2"],
   "nestedSet": [
     {"a": 1},
-    {"a": 2}
+    {"a": 2},
   ],
   "builtMap": {"1": "hi"},
   "builtMapNested": {
-    "1": {"a": (1)}
+    "1": {"a": (1)},
   },
   "nestedMap": {
-    "a": {"a": (1)}
+    "a": {"a": (1)},
   },
   "nestedMapWithNulls": {
     "a": {"a": (1)},
@@ -55,7 +55,7 @@ const jsonMapExpected = {
   "builtMapString": {"a": "b"},
   "myNested": [
     {"a": 0},
-    {"a": 1}
+    {"a": 1},
   ],
   "myNestedWithNulls": [
     {"a": 0},

@@ -6,21 +6,25 @@ description: Example application on how to combine multiple typehelper packages
 publish_to: none
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.9.0 <4.0.0"
+
+resolution: workspace
 
 dependencies:
   json_annotation: ^4.3.0
+  built_collection: ^5.0.0
+  fast_immutable_collections: ^2.0.2
+  kt_dart: ^1.1.0
+  mobx: ^2.5.0
+  build: ^4.0.4
+  source_gen: ^4.2.0
+  json_serializable_built_typehelpers: ^4.1.2
+  json_serializable_kt_typehelpers: ^4.1.2
+  json_serializable_fic_typehelpers: ^2.2.1
+  json_serializable_mobx_typehelpers: ^3.2.2
+  json_serializable: ^6.9.4
 
 dev_dependencies:
   lints: ^5.1.1
   test: ^1.14.4
-  json_serializable_built_typehelpers:
-    path: ../typehelpers/json_serializable_built_typehelpers
-  json_serializable_kt_typehelpers:
-    path: ../typehelpers/json_serializable_kt_typehelpers
-  json_serializable_fic_typehelpers:
-    path: ../typehelpers/json_serializable_fic_typehelpers
-  json_serializable_mobx_typehelpers:
-    path: ../typehelpers/json_serializable_mobx_typehelpers
-  json_serializable: ^6.9.4
   build_runner: ^2.4.15

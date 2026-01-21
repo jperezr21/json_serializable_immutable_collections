@@ -14,20 +14,17 @@ Builder jsonSerializable(BuilderOptions options) {
   try {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
-      JsonSerializableGenerator.withDefaultHelpers(
-        [
-          MobxListTypeHelper(),
-          MobxSetTypeHelper(),
-          MobxMapTypeHelper(),
-          MobxObservableTypeHelper(),
-        ],
-        config: config,
-      ),
-      const JsonLiteralGenerator()
+      JsonSerializableGenerator.withDefaultHelpers([
+        MobxListTypeHelper(),
+        MobxSetTypeHelper(),
+        MobxMapTypeHelper(),
+        MobxObservableTypeHelper(),
+      ], config: config),
+      const JsonLiteralGenerator(),
     ], 'json_serializable');
   } on CheckedFromJsonException catch (e) {
     final List<String> lines = [
-      'Could not parse the options provided for `json_serializable_mobx`.'
+      'Could not parse the options provided for `json_serializable_mobx`.',
     ];
 
     if (e.key != null) {

@@ -10,6 +10,7 @@
 /// This library is **not** intended to be imported by typical end-users unless
 /// you are creating a custom compilation pipeline. See documentation for
 /// details, and `build.yaml` for how these builders are configured by default.
+library;
 
 import 'package:build/build.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -31,30 +32,27 @@ Builder jsonSerializable(BuilderOptions options) {
   try {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
-      JsonSerializableGenerator.withDefaultHelpers(
-        [
-          /// add the type helpers here
-          FICIListTypeHelper(),
-          FICISetTypeHelper(),
-          FICIMapTypeHelper(),
-          MobxListTypeHelper(),
-          MobxSetTypeHelper(),
-          MobxMapTypeHelper(),
-          MobxObservableTypeHelper(),
-          BuiltListTypeHelper(),
-          BuiltSetTypeHelper(),
-          BuiltMapTypeHelper(),
-          KtListTypeHelper(),
-          KtSetTypeHelper(),
-          KtMapTypeHelper()
-        ],
-        config: config,
-      ),
-      const JsonLiteralGenerator()
+      JsonSerializableGenerator.withDefaultHelpers([
+        /// add the type helpers here
+        FICIListTypeHelper(),
+        FICISetTypeHelper(),
+        FICIMapTypeHelper(),
+        MobxListTypeHelper(),
+        MobxSetTypeHelper(),
+        MobxMapTypeHelper(),
+        MobxObservableTypeHelper(),
+        BuiltListTypeHelper(),
+        BuiltSetTypeHelper(),
+        BuiltMapTypeHelper(),
+        KtListTypeHelper(),
+        KtSetTypeHelper(),
+        KtMapTypeHelper(),
+      ], config: config),
+      const JsonLiteralGenerator(),
     ], 'json_serializable');
   } on CheckedFromJsonException catch (e) {
     final lines = <String>[
-      'Could not parse the options provided for `json_serializable`.'
+      'Could not parse the options provided for `json_serializable`.',
     ];
 
     if (e.key != null) {

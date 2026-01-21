@@ -14,7 +14,7 @@ abstract class CustomIterableTypeHelper<T extends Object>
   TypeChecker get typeChecker;
 
   CustomIterableTypeHelper()
-      : assert(T != dynamic, 'you need to specify the type parameter, got $T');
+    : assert(T != dynamic, 'you need to specify the type parameter, got $T');
 
   /// convert the given expression for deserialization.
   /// the expression is Dart code that evaluates to an iterable,
@@ -32,7 +32,9 @@ abstract class CustomIterableTypeHelper<T extends Object>
   ///   }
   ///```
   String deserializeFromIterableExpression(
-      String expression, DartType resolvedGenericType);
+    String expression,
+    DartType resolvedGenericType,
+  );
 
   /// convert the given expression for serialization.
   /// The expression is dart code that evaluates to your custom iterable type.
@@ -52,15 +54,21 @@ abstract class CustomIterableTypeHelper<T extends Object>
   ///     return expression + optionalQuestion + '.iter.toList()';
   ///   }
   /// ```
-  String serializeToList(String expression, DartType resolvedGenericType,
-      bool isExpressionNullable);
+  String serializeToList(
+    String expression,
+    DartType resolvedGenericType,
+    bool isExpressionNullable,
+  );
 
   DartType genericType(DartType type) =>
       type.typeArgumentsOf(typeChecker)!.single;
 
   @override
-  String? serialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context) {
+  String? serialize(
+    DartType targetType,
+    String expression,
+    TypeHelperContextWithConfig context,
+  ) {
     if ((!typeChecker.isAssignableFromType(targetType)) ||
         _isDartCoreIterable<T>()) {
       return null;
@@ -112,8 +120,9 @@ abstract class CustomIterableTypeHelper<T extends Object>
     }
     final resolvedGenericType = genericType(targetType);
 
-    var itemSubVal =
-        context.deserialize(resolvedGenericType, closureArg)!.toString();
+    var itemSubVal = context
+        .deserialize(resolvedGenericType, closureArg)!
+        .toString();
 
     final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
 
@@ -123,9 +132,10 @@ abstract class CustomIterableTypeHelper<T extends Object>
     // anything fancy
     if (closureArg == itemSubVal && typeChecker.isExactlyType(targetType)) {
       return wrapNullableIfNecessary(
-          expression,
-          deserializeFromIterableExpression(output, resolvedGenericType),
-          targetTypeIsNullable);
+        expression,
+        deserializeFromIterableExpression(output, resolvedGenericType),
+        targetTypeIsNullable,
+      );
     }
 
     output = '($output)';

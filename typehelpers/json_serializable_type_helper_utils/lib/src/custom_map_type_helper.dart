@@ -13,8 +13,10 @@ abstract class CustomMapTypeHelper<T>
   TypeChecker get typeChecker;
 
   CustomMapTypeHelper()
-      : assert(T != dynamic,
-            'you need to specify the type to (de)-serialize of generic parameter');
+    : assert(
+        T != dynamic,
+        'you need to specify the type to (de)-serialize of generic parameter',
+      );
 
   /// Deserialize your custom map from an expression, that evaluates to an
   /// `Iterable<MapEntry>` with the given DartTypes.
@@ -31,7 +33,10 @@ abstract class CustomMapTypeHelper<T>
   ///   }
   /// ```
   String deserializeFromMapExpression(
-      String mapExpression, DartType keyType, DartType valueType);
+    String mapExpression,
+    DartType keyType,
+    DartType valueType,
+  );
 
   /// Serialize your custom map implementation to a standard Map.
   ///
@@ -50,12 +55,19 @@ abstract class CustomMapTypeHelper<T>
   ///          return mapExpression + optionalQuestion + '.toMap()';
   /// }
   /// ```
-  String serializeToMapExpression(String mapExpression, DartType keyType,
-      DartType valueType, bool isMapExpressionNullable);
+  String serializeToMapExpression(
+    String mapExpression,
+    DartType keyType,
+    DartType valueType,
+    bool isMapExpressionNullable,
+  );
 
   @override
   Object? serialize(
-      DartType targetType, String expression, TypeHelperContext context) {
+    DartType targetType,
+    String expression,
+    TypeHelperContext context,
+  ) {
     if (!typeChecker.isAssignableFromType(targetType)) {
       return null;
     }
@@ -68,7 +80,8 @@ abstract class CustomMapTypeHelper<T>
     checkSafeKeyType(expression, keyType);
 
     final subFieldValue = context.serialize(valueType, closureArg);
-    final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
+    final subKeyValue =
+        forType(keyType)?.serialize(keyType, keyParam, false) ??
         context.serialize(keyType, keyParam);
 
     final targetTypeIsNullable = targetType.isNullableType;
@@ -77,15 +90,23 @@ abstract class CustomMapTypeHelper<T>
 
     if (closureArg == subFieldValue && keyParam == subKeyValue) {
       return serializeToMapExpression(
-          expression, keyType, valueType, targetTypeIsNullable);
+        expression,
+        keyType,
+        valueType,
+        targetTypeIsNullable,
+      );
     }
 
     return '${serializeToMapExpression(expression, keyType, valueType, targetTypeIsNullable)}$optionalQuestion.map(($keyParam, $closureArg) => MapEntry($subKeyValue, $subFieldValue))';
   }
 
   @override
-  Object? deserialize(DartType targetType, String expression,
-      TypeHelperContextWithConfig context, bool defaultProvided) {
+  Object? deserialize(
+    DartType targetType,
+    String expression,
+    TypeHelperContextWithConfig context,
+    bool defaultProvided,
+  ) {
     if (!typeChecker.isExactlyType(targetType)) {
       return null;
     }
@@ -108,19 +129,27 @@ abstract class CustomMapTypeHelper<T>
         if (anyMap) {
           if (keyArg.isLikeDynamic) {
             return wrapNullableIfNecessary(
-                expression,
-                deserializeFromMapExpression(
-                    '($expression as Map$optionalQuestion)', keyArg, valueArg),
-                targetTypeIsNullable);
+              expression,
+              deserializeFromMapExpression(
+                '($expression as Map$optionalQuestion)',
+                keyArg,
+                valueArg,
+              ),
+              targetTypeIsNullable,
+            );
           }
         } else {
           // this is the trivial case. Do a runtime cast to the known type of JSON
           // map values - `Map<String, dynamic>`
           return wrapNullableIfNecessary(
-              expression,
-              deserializeFromMapExpression(
-                  '($expression as Map<String, dynamic>)', keyArg, valueArg),
-              targetTypeIsNullable);
+            expression,
+            deserializeFromMapExpression(
+              '($expression as Map<String, dynamic>)',
+              keyArg,
+              valueArg,
+            ),
+            targetTypeIsNullable,
+          );
         }
       }
 
@@ -129,12 +158,14 @@ abstract class CustomMapTypeHelper<T>
               simpleJsonTypeChecker.isAssignableFromType(valueArg))) {
         // No mapping of the values or null check required!
         return wrapNullableIfNecessary(
-            expression,
-            deserializeFromMapExpression(
-                'Map<String, $valueArgAsGenericString>.from($expression as Map)',
-                keyArg,
-                valueArg),
-            targetTypeIsNullable);
+          expression,
+          deserializeFromMapExpression(
+            'Map<String, $valueArgAsGenericString>.from($expression as Map)',
+            keyArg,
+            valueArg,
+          ),
+          targetTypeIsNullable,
+        );
       }
     }
 
@@ -161,17 +192,20 @@ abstract class CustomMapTypeHelper<T>
 
     final toFromString = forType(keyArg);
     if (toFromString != null) {
-      keyUsage =
-          toFromString.deserialize(keyArg, keyUsage, false, true).toString();
+      keyUsage = toFromString
+          .deserialize(keyArg, keyUsage, false, true)
+          .toString();
     }
 
     return wrapNullableIfNecessary(
-        expression,
-        deserializeFromMapExpression(
-            '($expression $mapCast).map('
-            '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),)',
-            keyArg,
-            valueArg),
-        targetTypeIsNullable);
+      expression,
+      deserializeFromMapExpression(
+        '($expression $mapCast).map('
+        '($keyParam, $closureArg) => MapEntry($keyUsage, $itemSubVal),)',
+        keyArg,
+        valueArg,
+      ),
+      targetTypeIsNullable,
+    );
   }
 }

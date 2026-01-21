@@ -5,28 +5,29 @@ part 'model.g.dart';
 
 @JsonSerializable()
 class MyModel {
-  const MyModel(
-      {required this.myList,
-      required this.myListWithNulls,
-      required this.builtMapString,
-      required this.myString,
-      required this.myStringWithNulls,
-      required this.dynamicMap,
-      required this.myNested,
-      required this.myNestedWithNulls,
-      required this.normalList,
-      required this.builtMap,
-      required this.builtMapNested,
-      required this.nullList,
-      required this.nullMap,
-      required this.nullSet,
-      required this.normalSet,
-      required this.stringSet,
-      required this.nestedMap,
-      required this.nestedMapWithNulls,
-      required this.stringObservable,
-      required this.nullobservable,
-      required this.nestedSet});
+  const MyModel({
+    required this.myList,
+    required this.myListWithNulls,
+    required this.builtMapString,
+    required this.myString,
+    required this.myStringWithNulls,
+    required this.dynamicMap,
+    required this.myNested,
+    required this.myNestedWithNulls,
+    required this.normalList,
+    required this.builtMap,
+    required this.builtMapNested,
+    required this.nullList,
+    required this.nullMap,
+    required this.nullSet,
+    required this.normalSet,
+    required this.stringSet,
+    required this.nestedMap,
+    required this.nestedMapWithNulls,
+    required this.stringObservable,
+    required this.nullobservable,
+    required this.nestedSet,
+  });
 
   final ObservableList<int> myList;
 

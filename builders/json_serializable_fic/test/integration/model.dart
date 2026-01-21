@@ -6,24 +6,25 @@ part 'model.g.dart';
 
 @JsonSerializable()
 class MyModel {
-  const MyModel(
-      {required this.myList,
-      required this.builtMapString,
-      required this.myString,
-      required this.dynamicMap,
-      required this.myNested,
-      required this.normalList,
-      required this.builtMap,
-      required this.builtMapNested,
-      required this.nullList,
-      required this.nullMap,
-      required this.nullSet,
-      required this.normalSet,
-      required this.nullablelistWithNullable,
-      required this.listWithNullable,
-      required this.nullableMap,
-      required this.nullableSet,
-      required this.enumMap});
+  const MyModel({
+    required this.myList,
+    required this.builtMapString,
+    required this.myString,
+    required this.dynamicMap,
+    required this.myNested,
+    required this.normalList,
+    required this.builtMap,
+    required this.builtMapNested,
+    required this.nullList,
+    required this.nullMap,
+    required this.nullSet,
+    required this.normalSet,
+    required this.nullablelistWithNullable,
+    required this.listWithNullable,
+    required this.nullableMap,
+    required this.nullableSet,
+    required this.enumMap,
+  });
 
   final IList<int> myList;
 
@@ -131,8 +132,4 @@ class Nested {
   int get hashCode => a.hashCode;
 }
 
-enum MyEnum {
-  one,
-  two,
-  three,
-}
+enum MyEnum { one, two, three }

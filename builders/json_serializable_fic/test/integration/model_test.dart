@@ -17,18 +17,12 @@ final model = MyModel(
   nullList: null,
   nullSet: null,
   nullMap: null,
-  dynamicMap: {
-    "a": 1,
-    "b": "string",
-  }.toIMap(),
+  dynamicMap: {"a": 1, "b": "string"}.toIMap(),
   listWithNullable: ["1", null].toIList(),
   nullablelistWithNullable: ["1", null].toIList(),
   nullableMap: {"a": null}.toIMap(),
   nullableSet: {"", null}.toISet(),
-  enumMap: IMap<MyEnum, String>({
-    MyEnum.one: "1",
-    MyEnum.two: "2",
-  }),
+  enumMap: IMap<MyEnum, String>({MyEnum.one: "1", MyEnum.two: "2"}),
 );
 
 const jsonMapExpected = {
@@ -39,18 +33,15 @@ const jsonMapExpected = {
   "builtMap": {"1": "a", "2": "b"},
   "builtMapString": {"a": "a"},
   "builtMapNested": {
-    "1": {"a": 1}
+    "1": {"a": 1},
   },
   "myNested": [
-    {"a": 1}
+    {"a": 1},
   ],
   "nullList": null,
   "nullSet": null,
   "nullMap": null,
-  "dynamicMap": {
-    "a": 1,
-    "b": "string",
-  },
+  "dynamicMap": {"a": 1, "b": "string"},
   "listWithNullable": ["1", null],
   "nullablelistWithNullable": ["1", null],
   "nullableMap": {"a": null},

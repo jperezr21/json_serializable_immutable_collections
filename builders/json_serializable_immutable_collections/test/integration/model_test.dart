@@ -23,10 +23,7 @@ final model = MyModel(
   nestedKtSet: KtSet.from([Nested(1)]),
   nullKtList: null,
   nullKtSet: null,
-  dynamicMap: BuiltMap<String, Object>.of({
-    "a": 1,
-    "b": "string",
-  }),
+  dynamicMap: BuiltMap<String, Object>.of({"a": 1, "b": "string"}),
   stringKtMap: KtMap.from({"a": "a"}),
   stringKtMapWithNulls: KtMap.from({"a": null}),
   nestedKtMap: KtMap.from({"a": Nested(0)}),
@@ -43,10 +40,10 @@ const jsonMapExpected = {
   "builtMap": {"1": "a", "2": "b"},
   "builtMapString": {"a": "a"},
   "builtMapNested": {
-    "1": {"a": 1}
+    "1": {"a": 1},
   },
   "myNested": [
-    {"a": 1}
+    {"a": 1},
   ],
   "nullList": null,
   "nullSet": null,
@@ -56,21 +53,18 @@ const jsonMapExpected = {
   "stringKtListWithNulls": ["", null],
   "stringKtSetWithNulls": ["", null],
   "nestedKtList": [
-    {"a": 1}
+    {"a": 1},
   ],
   "nestedKtSet": [
-    {"a": 1}
+    {"a": 1},
   ],
   "nullKtList": null,
   "nullKtSet": null,
-  "dynamicMap": {
-    "a": 1,
-    "b": "string",
-  },
+  "dynamicMap": {"a": 1, "b": "string"},
   "stringKtMap": {"a": "a"},
   "stringKtMapWithNulls": {"a": null},
   "nestedKtMap": {
-    "a": {"a": 0}
+    "a": {"a": 0},
   },
   "nestedKtMapWithNulls": {"a": null},
   "nullKtMap": null,

@@ -13,22 +13,19 @@ Builder jsonSerializable(BuilderOptions options) {
   try {
     final config = JsonSerializable.fromJson(options.config);
     return SharedPartBuilder([
-      JsonSerializableGenerator.withDefaultHelpers(
-        [
-          BuiltListTypeHelper(),
-          BuiltSetTypeHelper(),
-          BuiltMapTypeHelper(),
-          KtListTypeHelper(),
-          KtSetTypeHelper(),
-          KtMapTypeHelper()
-        ],
-        config: config,
-      ),
-      const JsonLiteralGenerator()
+      JsonSerializableGenerator.withDefaultHelpers([
+        BuiltListTypeHelper(),
+        BuiltSetTypeHelper(),
+        BuiltMapTypeHelper(),
+        KtListTypeHelper(),
+        KtSetTypeHelper(),
+        KtMapTypeHelper(),
+      ], config: config),
+      const JsonLiteralGenerator(),
     ], 'json_serializable');
   } on CheckedFromJsonException catch (e) {
     final lines = <String>[
-      'Could not parse the options provided for `json_serializable`.'
+      'Could not parse the options provided for `json_serializable`.',
     ];
 
     if (e.key != null) {

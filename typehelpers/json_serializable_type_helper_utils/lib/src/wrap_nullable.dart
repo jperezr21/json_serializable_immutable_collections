@@ -1,5 +1,8 @@
 String wrapNullableIfNecessary(
-    String expression, String output, bool nullable) {
+  String expression,
+  String output,
+  bool nullable,
+) {
   if (!nullable) {
     return output;
   }

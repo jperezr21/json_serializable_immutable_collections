@@ -12,13 +12,17 @@ final _intString = ToFromStringHelper('int.parse', 'toString()', 'int');
 void checkSafeKeyType(String expression, DartType keyArg) {
   // We're not going to handle converting key types at the moment
   // So the only safe types for key are dynamic/Object/String/enum
-  final safeKey = keyArg.isLikeDynamic ||
+  final safeKey =
+      keyArg.isLikeDynamic ||
       coreStringTypeChecker.isExactlyType(keyArg) ||
       isKeyStringable(keyArg);
 
   if (!safeKey) {
-    throw UnsupportedTypeError(keyArg, expression,
-        'Map keys must be one of: ${allowedTypeNames.join(', ')}.');
+    throw UnsupportedTypeError(
+      keyArg,
+      expression,
+      'Map keys must be one of: ${allowedTypeNames.join(', ')}.',
+    );
   }
 }
 
@@ -27,21 +31,16 @@ void checkSafeKeyType(String expression, DartType keyArg) {
 /// Used in [_checkSafeKeyType] to provide a helpful error with unsupported
 /// types.
 Iterable<String> get allowedTypeNames => const [
-      'Object',
-      'dynamic',
-      'enum',
-      'String',
-    ].followedBy(instances.map((i) => i.coreTypeName));
+  'Object',
+  'dynamic',
+  'enum',
+  'String',
+].followedBy(instances.map((i) => i.coreTypeName));
 const keyParam = 'k';
 
 /// [ToFromStringHelper] instances representing non-String types that can
 /// be used as [Map] keys.
-final instances = [
-  bigIntString,
-  dateTimeString,
-  _intString,
-  uriString,
-];
+final instances = [bigIntString, dateTimeString, _intString, uriString];
 
 ToFromStringHelper? forType(DartType type) =>
     instances.singleWhereOrNull((i) => i.matches(type));

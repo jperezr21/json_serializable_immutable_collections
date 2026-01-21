@@ -1,7 +1,39 @@
-name: json_serializable_immutable_collections
+name: json_serializable_immutable_collections_workspace
+publish_to: none
 
 environment:
   sdk: '>=3.9.0 <4.0.0'
 
+workspace:
+  - builders/json_serializable_fic
+  - builders/json_serializable_immutable_collections
+  - builders/json_serializable_mobx
+  - combine_example
+  - typehelpers/json_serializable_built_typehelpers
+  - typehelpers/json_serializable_fic_typehelpers
+  - typehelpers/json_serializable_kt_typehelpers
+  - typehelpers/json_serializable_mobx_typehelpers
+  - typehelpers/json_serializable_type_helper_utils
+
 dev_dependencies:
-  melos: ^3.4.0
+  melos: ^7.3.0
+
+melos:
+  scripts:
+    test:
+      run: |
+        # FIXME: https://github.com/dart-lang/sdk/issues/45307
+        melos exec -- flutter test --no-pub
+      packageFilters:
+        dirExists:
+          - test
+
+    build_runner:
+      run: melos exec --depends-on=build_runner -- "dart run build_runner build -d"
+
+    analyze:
+      run: melos exec -- dart analyze .
+
+    postbootstrap:
+      run: dart pub global activate build_runner
+  sdkPath: .fvm/flutter_sdk
