@@ -23,6 +23,12 @@ final model = MyModel(
   nullableMap: {"a": null}.toIMap(),
   nullableSet: {"", null}.toISet(),
   enumMap: IMap<MyEnum, String>({MyEnum.one: "1", MyEnum.two: "2"}),
+  myListSet: ListSet.of(["x", "y", "z"]),
+  myListMap: ListMap.of({"key1": 10, "key2": 20}),
+  myMapOfSets: IMapOfSets<String, int>({
+    "set1": {1, 2, 3},
+    "set2": {4, 5},
+  }),
 );
 
 const jsonMapExpected = {
@@ -47,6 +53,12 @@ const jsonMapExpected = {
   "nullableMap": {"a": null},
   "nullableSet": ["", null],
   "enumMap": {"one": "1", "two": "2"},
+  "myListSet": ["x", "y", "z"],
+  "myListMap": {"key1": 10, "key2": 20},
+  "myMapOfSets": {
+    "set1": [1, 2, 3],
+    "set2": [4, 5],
+  },
 };
 
 void main() {

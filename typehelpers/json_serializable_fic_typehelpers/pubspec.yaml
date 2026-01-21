@@ -1,6 +1,6 @@
 name: json_serializable_fic_typehelpers
 description: typehelpers for fast_immutable_collections for json_serializable
-version: 2.2.2
+version: 2.2.3
 homepage: https://github.com/knaeckeKami/json_serializable_immutable_collections/tree/master/
 
 environment:

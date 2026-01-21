@@ -1,3 +1,7 @@
+## 1.1.4
+
+- **FEAT**: Add support for `fast_immutable_collections` `ListMap`, `ListSet` and `IMapOfSets` types.
+
 ## 1.1.3
 
 - **CHORE**: Update `fast_immutable_collections` to ^11.1.0

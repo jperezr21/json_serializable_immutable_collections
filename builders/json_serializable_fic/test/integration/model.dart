@@ -24,6 +24,9 @@ class MyModel {
     required this.nullableMap,
     required this.nullableSet,
     required this.enumMap,
+    required this.myListSet,
+    required this.myListMap,
+    required this.myMapOfSets,
   });
 
   final IList<int> myList;
@@ -60,6 +63,12 @@ class MyModel {
 
   final IMap<MyEnum, String> enumMap;
 
+  final ListSet<String> myListSet;
+
+  final ListMap<String, int> myListMap;
+
+  final IMapOfSets<String, int> myMapOfSets;
+
   factory MyModel.fromJson(Map<String, dynamic> json) =>
       _$MyModelFromJson(json);
 
@@ -67,7 +76,7 @@ class MyModel {
 
   @override
   String toString() {
-    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, listWithNullable: $listWithNullable, nullablelistWithNullable: $nullablelistWithNullable, nullSet: $nullSet, nullableSet: $nullableSet, nullMap: $nullMap, nullableMap: $nullableMap, dynamicMap: $dynamicMap, enumMap: $enumMap}';
+    return 'MyModel{myList: $myList, myString: $myString, myNested: $myNested, normalList: $normalList, normalSet: $normalSet, builtMap: $builtMap, builtMapString: $builtMapString, builtMapNested: $builtMapNested, nullList: $nullList, listWithNullable: $listWithNullable, nullablelistWithNullable: $nullablelistWithNullable, nullSet: $nullSet, nullableSet: $nullableSet, nullMap: $nullMap, nullableMap: $nullableMap, dynamicMap: $dynamicMap, enumMap: $enumMap, myListSet: $myListSet, myListMap: $myListMap, myMapOfSets: $myMapOfSets}';
   }
 
   @override
@@ -91,26 +100,35 @@ class MyModel {
           nullMap == other.nullMap &&
           nullableMap == other.nullableMap &&
           dynamicMap == other.dynamicMap &&
-          enumMap == other.enumMap;
+          enumMap == other.enumMap &&
+          DeepCollectionEquality().equals(myListSet, other.myListSet) &&
+          DeepCollectionEquality().equals(myListMap, other.myListMap) &&
+          myMapOfSets == other.myMapOfSets;
 
   @override
-  int get hashCode =>
-      myList.hashCode ^
-      myString.hashCode ^
-      myNested.hashCode ^
-      normalList.hashCode ^
-      normalSet.hashCode ^
-      builtMap.hashCode ^
-      builtMapString.hashCode ^
-      builtMapNested.hashCode ^
-      nullList.hashCode ^
-      listWithNullable.hashCode ^
-      nullablelistWithNullable.hashCode ^
-      nullSet.hashCode ^
-      nullableSet.hashCode ^
-      nullMap.hashCode ^
-      nullableMap.hashCode ^
-      dynamicMap.hashCode;
+  int get hashCode {
+    final deepEquality = DeepCollectionEquality();
+    return myList.hashCode ^
+        myString.hashCode ^
+        myNested.hashCode ^
+        deepEquality.hash(normalList) ^
+        deepEquality.hash(normalSet) ^
+        builtMap.hashCode ^
+        builtMapString.hashCode ^
+        builtMapNested.hashCode ^
+        nullList.hashCode ^
+        listWithNullable.hashCode ^
+        nullablelistWithNullable.hashCode ^
+        nullSet.hashCode ^
+        nullableSet.hashCode ^
+        nullMap.hashCode ^
+        nullableMap.hashCode ^
+        dynamicMap.hashCode ^
+        enumMap.hashCode ^
+        deepEquality.hash(myListSet) ^
+        deepEquality.hash(myListMap) ^
+        myMapOfSets.hashCode;
+  }
 }
 
 @JsonSerializable()

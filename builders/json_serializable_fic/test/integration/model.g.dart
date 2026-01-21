@@ -55,6 +55,14 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
   enumMap: (json['enumMap'] as Map<String, dynamic>)
       .map((k, e) => MapEntry($enumDecode(_$MyEnumEnumMap, k), e as String))
       .toIMap(),
+  myListSet: ListSet.of(
+    ((json['myListSet'] as List).map((e) => e as String)).toList(),
+  ),
+  myListMap: ListMap.of(Map<String, int>.from(json['myListMap'] as Map)),
+  myMapOfSets: ((json['myMapOfSets'] as Map<String, dynamic>).map(
+    (k, v) =>
+        MapEntry(k, Set<int>.from((v as List).map((e) => (e as num).toInt()))),
+  )).lock,
 );
 
 Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
@@ -82,6 +90,11 @@ Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
   'dynamicMap': instance.dynamicMap.unlockLazy,
   'enumMap': instance.enumMap.unlockLazy.map(
     (k, e) => MapEntry(_$MyEnumEnumMap[k]!, e),
+  ),
+  'myListSet': instance.myListSet.toJson((value) => value),
+  'myListMap': instance.myListMap,
+  'myMapOfSets': instance.myMapOfSets.unlock.map(
+    (k, v) => MapEntry(k, v.toList()),
   ),
 };
 

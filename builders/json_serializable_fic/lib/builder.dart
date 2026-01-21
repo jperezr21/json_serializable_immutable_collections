@@ -18,6 +18,9 @@ Builder jsonSerializable(BuilderOptions options) {
         FICIListTypeHelper(),
         FICISetTypeHelper(),
         FICIMapTypeHelper(),
+        FICListSetTypeHelper(),
+        FICListMapTypeHelper(),
+        FICIMapOfSetsTypeHelper(),
       ], config: config),
       const JsonLiteralGenerator(),
     ], 'json_serializable');
