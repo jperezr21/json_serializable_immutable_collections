@@ -22,3 +22,4 @@ scripts:
 
   postbootstrap:
     run: dart pub global activate build_runner
+sdkPath: .fvm/flutter_sdk

@@ -1,3 +1,7 @@
+## 1.1.2
+
+- **CHORE**: Update `build`, `source_gen` and `analyzer` dependencies
+
 ## 1.1.1
 
 - **CHORE**: fix lint issues

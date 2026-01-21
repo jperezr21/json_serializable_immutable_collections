@@ -1,3 +1,7 @@
+## 4.1.2
+
+- **CHORE**: Update `source_gen` and `analyzer` dependencies
+
 ## 4.1.1
 
 - **CHORE**: fix lint issues

@@ -1,3 +1,7 @@
+## 2.2.1
+
+- **CHORE**: Update `source_gen` and `analyzer` dependencies
+
 ## 2.2.0
 
 - Update json_serializable to ^6.9.4

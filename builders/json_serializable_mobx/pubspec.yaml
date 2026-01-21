@@ -1,6 +1,6 @@
 name: json_serializable_mobx
 description: Adding support for mobx collections for json_serializable
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/knaeckeKami/immutable_json_list_serializer
 
 environment:
@@ -18,4 +18,4 @@ dependencies:
   analyzer: ^10.0.1
   source_gen: ^4.2.0
   build: ^4.0.4
-  json_serializable_mobx_typehelpers: ^4.0.0
+  json_serializable_mobx_typehelpers: ^3.2.2

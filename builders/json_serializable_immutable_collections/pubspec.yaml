@@ -1,6 +1,6 @@
 name: json_serializable_immutable_collections
 description: Adding support for immutable collections for json_serializable
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/knaeckeKami/immutable_json_list_serializer
 
 environment:
@@ -19,5 +19,5 @@ dependencies:
   source_gen: ^4.2.0
   analyzer: ^10.0.1
   build: ^4.0.4
-  json_serializable_kt_typehelpers: ^4.0.0
-  json_serializable_built_typehelpers: ^4.0.0
+  json_serializable_kt_typehelpers: ^4.1.2
+  json_serializable_built_typehelpers: ^4.1.2

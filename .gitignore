@@ -85,3 +85,6 @@ build/
 
 # Melos dependency overrides
 **/pubspec_overrides.yaml
+
+# FVM Version Cache
+.fvm/

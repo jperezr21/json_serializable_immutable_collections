@@ -1,3 +1,7 @@
+## 6.0.2
+
+- **CHORE**: Update `source_gen` and `analyzer` dependencies
+
 ## 6.0.1
 
 - **CHORE**: fix lint issues

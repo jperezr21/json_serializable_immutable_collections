@@ -1,3 +1,7 @@
+## 3.2.2
+
+- **CHORE**: Update `source_gen` and `analyzer` dependencies
+
 ## 3.2.1
 
 - **CHORE**: fix lint issues
