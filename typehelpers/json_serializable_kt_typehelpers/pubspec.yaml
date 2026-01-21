@@ -9,8 +9,8 @@ environment:
 dependencies:
   kt_dart: ^1.1.0
   json_serializable_type_helper_utils: ^6.0.0
-  source_gen: ^2.0.0
-  analyzer: ^7.3.0
+  source_gen: ^4.2.0
+  analyzer: ^10.0.1
 
 dev_dependencies:
   lints: ^5.1.1

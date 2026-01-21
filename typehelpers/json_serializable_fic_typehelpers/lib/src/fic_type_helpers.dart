@@ -5,8 +5,13 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
+import 'package:source_gen/source_gen.dart' show TypeChecker;
 
 class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
+  @override
+  TypeChecker get typeChecker => const TypeChecker.typeNamed(IList,
+      inPackage: 'fast_immutable_collections');
+
   @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
@@ -23,6 +28,10 @@ class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
 
 class FICISetTypeHelper extends CustomIterableTypeHelper<ISet> {
   @override
+  TypeChecker get typeChecker => const TypeChecker.typeNamed(ISet,
+      inPackage: 'fast_immutable_collections');
+
+  @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
     return '$expression.toISet()';
@@ -37,6 +46,10 @@ class FICISetTypeHelper extends CustomIterableTypeHelper<ISet> {
 }
 
 class FICIMapTypeHelper extends CustomMapTypeHelper<IMap> {
+  @override
+  TypeChecker get typeChecker => const TypeChecker.typeNamed(IMap,
+      inPackage: 'fast_immutable_collections');
+
   @override
   String deserializeFromMapExpression(
       String mapExpression, DartType keyType, DartType valueType) {

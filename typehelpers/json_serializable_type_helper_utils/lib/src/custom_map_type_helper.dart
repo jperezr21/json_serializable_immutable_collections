@@ -10,7 +10,7 @@ const _keyParam = 'k';
 
 abstract class CustomMapTypeHelper<T>
     extends TypeHelper<TypeHelperContextWithConfig> {
-  late final TypeChecker typeChecker = TypeChecker.fromRuntime(T);
+  TypeChecker get typeChecker;
 
   CustomMapTypeHelper()
       : assert(T != dynamic,

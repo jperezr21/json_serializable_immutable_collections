@@ -7,11 +7,11 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  source_gen: ^2.0.0
+  source_gen: ^4.2.0
   fast_immutable_collections: ^2.0.2
   json_serializable: ^6.9.4
   json_serializable_type_helper_utils: ^6.0.0
-  analyzer: ^7.3.0
+  analyzer: ^10.0.1
 
 dev_dependencies:
   lints: ^5.1.1

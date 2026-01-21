@@ -5,8 +5,13 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
+import 'package:source_gen/source_gen.dart' show TypeChecker;
 
 class BuiltListTypeHelper extends CustomIterableTypeHelper<BuiltList> {
+  @override
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(BuiltList, inPackage: 'built_collection');
+
   @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
@@ -22,6 +27,10 @@ class BuiltListTypeHelper extends CustomIterableTypeHelper<BuiltList> {
 
 class BuiltSetTypeHelper extends CustomIterableTypeHelper<BuiltSet> {
   @override
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(BuiltSet, inPackage: 'built_collection');
+
+  @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
     return '($expression).toBuiltSet()';
@@ -35,6 +44,10 @@ class BuiltSetTypeHelper extends CustomIterableTypeHelper<BuiltSet> {
 }
 
 class BuiltMapTypeHelper extends CustomMapTypeHelper<BuiltMap> {
+  @override
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(BuiltMap, inPackage: 'built_collection');
+
   @override
   String deserializeFromMapExpression(
       String mapExpression, DartType keyType, DartType valueType) {

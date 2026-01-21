@@ -5,9 +5,14 @@ import 'package:mobx/mobx.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:source_helper/source_helper.dart';
 
-const mobxMapTypeChecker = TypeChecker.fromRuntime(ObservableMap);
+const mobxMapTypeChecker =
+    TypeChecker.typeNamed(ObservableMap, inPackage: 'mobx');
 
 class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
+  @override
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(ObservableList, inPackage: 'mobx');
+
   @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
@@ -24,6 +29,10 @@ class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
 
 class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
   @override
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(ObservableSet, inPackage: 'mobx');
+
+  @override
   String deserializeFromIterableExpression(
       String expression, DartType resolvedGenericType) {
     return 'ObservableSet<${resolvedGenericType.getDisplayString()}>.of($expression)';
@@ -38,6 +47,9 @@ class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
 }
 
 class MobxMapTypeHelper extends CustomMapTypeHelper<ObservableMap> {
+  @override
+  TypeChecker get typeChecker => mobxMapTypeChecker;
+
   @override
   String deserializeFromMapExpression(
       String mapExpression, DartType keyType, DartType valueType) {
@@ -88,4 +100,5 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   }
 }
 
-const observableTypeChecker = TypeChecker.fromRuntime(Observable);
+const observableTypeChecker =
+    TypeChecker.typeNamed(Observable, inPackage: 'mobx');

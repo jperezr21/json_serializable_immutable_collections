@@ -11,7 +11,7 @@ import '../json_serializable_type_helper_utils.dart';
 
 abstract class CustomIterableTypeHelper<T extends Object>
     extends TypeHelper<TypeHelperContextWithConfig> {
-  late final TypeChecker typeChecker = TypeChecker.fromRuntime(T);
+  TypeChecker get typeChecker;
 
   CustomIterableTypeHelper()
       : assert(T != dynamic, 'you need to specify the type parameter, got $T');
