@@ -16,8 +16,8 @@ dependencies:
   json_serializable: ^6.9.4
   json_annotation: ^4.3.0
   build_runner: ^2.4.15
-  source_gen: ^2.0.0
-  analyzer: ^7.3.0
-  build: ^2.0.0
+  source_gen: ^4.2.0
+  analyzer: ^10.0.1
+  build: ^4.0.4
   json_serializable_kt_typehelpers: ^4.0.0
   json_serializable_built_typehelpers: ^4.0.0

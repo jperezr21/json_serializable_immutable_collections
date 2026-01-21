@@ -8,10 +8,10 @@ environment:
 
 dependencies:
   json_serializable: ^6.9.4
-  analyzer: ^7.3.0
+  analyzer: ^10.0.1
   source_helper: ^1.2.1
   collection: ^1.15.0
-  source_gen: ^2.0.0
+  source_gen: ^4.2.0
 
 dev_dependencies:
   lints: ^5.1.1

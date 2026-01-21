@@ -5,17 +5,19 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:json_serializable_type_helper_utils/json_serializable_type_helper_utils.dart';
+import 'package:source_gen/source_gen.dart' show TypeChecker;
 
 class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
   @override
-  String deserializeFromIterableExpression(
-      String expression, DartType resolvedGenericType) {
+  TypeChecker get typeChecker => const TypeChecker.typeNamed(IList, inPackage: 'fast_immutable_collections');
+
+  @override
+  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
     return '$expression.toIList()';
   }
 
   @override
-  String serializeToList(String expression, DartType resolvedGenericType,
-      bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType, bool isExpressionNullable) {
     // not needed as IList implements Iterable
     throw UnimplementedError();
   }
@@ -23,14 +25,15 @@ class FICIListTypeHelper extends CustomIterableTypeHelper<IList> {
 
 class FICISetTypeHelper extends CustomIterableTypeHelper<ISet> {
   @override
-  String deserializeFromIterableExpression(
-      String expression, DartType resolvedGenericType) {
+  TypeChecker get typeChecker => const TypeChecker.typeNamed(ISet, inPackage: 'fast_immutable_collections');
+
+  @override
+  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
     return '$expression.toISet()';
   }
 
   @override
-  String serializeToList(String expression, DartType resolvedGenericType,
-      bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType, bool isExpressionNullable) {
     // not needed as IList implements Iterable
     throw UnimplementedError();
   }
@@ -38,14 +41,16 @@ class FICISetTypeHelper extends CustomIterableTypeHelper<ISet> {
 
 class FICIMapTypeHelper extends CustomMapTypeHelper<IMap> {
   @override
-  String deserializeFromMapExpression(
-      String mapExpression, DartType keyType, DartType valueType) {
+  TypeChecker get typeChecker => const TypeChecker.typeNamed(IMap, inPackage: 'fast_immutable_collections');
+
+  @override
+  String deserializeFromMapExpression(String mapExpression, DartType keyType, DartType valueType) {
     return '$mapExpression.toIMap()';
   }
 
   @override
-  String serializeToMapExpression(String mapExpression, DartType keyType,
-      DartType valueType, bool isMapExpressionNullable) {
+  String serializeToMapExpression(
+      String mapExpression, DartType keyType, DartType valueType, bool isMapExpressionNullable) {
     final optionalQuestion = isMapExpressionNullable ? '?' : '';
     return '$mapExpression$optionalQuestion.unlockLazy';
   }
