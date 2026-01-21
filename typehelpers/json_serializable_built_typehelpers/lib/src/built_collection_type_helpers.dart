@@ -9,40 +9,48 @@ import 'package:source_gen/source_gen.dart' show TypeChecker;
 
 class BuiltListTypeHelper extends CustomIterableTypeHelper<BuiltList> {
   @override
-  TypeChecker get typeChecker => const TypeChecker.typeNamed(BuiltList, inPackage: 'built_collection');
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(BuiltList, inPackage: 'built_collection');
 
   @override
-  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType) {
     return '($expression).toBuiltList()';
   }
 
   @override
-  String serializeToList(String expression, DartType resolvedGenericType, bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
     throw StateError('not necessary as builtlist is iterable');
   }
 }
 
 class BuiltSetTypeHelper extends CustomIterableTypeHelper<BuiltSet> {
   @override
-  TypeChecker get typeChecker => const TypeChecker.typeNamed(BuiltSet, inPackage: 'built_collection');
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(BuiltSet, inPackage: 'built_collection');
 
   @override
-  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType) {
     return '($expression).toBuiltSet()';
   }
 
   @override
-  String serializeToList(String expression, DartType resolvedGenericType, bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
     throw StateError('not necessary as builtlist is iterable');
   }
 }
 
 class BuiltMapTypeHelper extends CustomMapTypeHelper<BuiltMap> {
   @override
-  TypeChecker get typeChecker => const TypeChecker.typeNamed(BuiltMap, inPackage: 'built_collection');
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(BuiltMap, inPackage: 'built_collection');
 
   @override
-  String deserializeFromMapExpression(String mapExpression, DartType keyType, DartType valueType) {
+  String deserializeFromMapExpression(
+      String mapExpression, DartType keyType, DartType valueType) {
     String valueTypeString;
     if (valueType is DynamicType) {
       //use Object? instead because builtMap does not support explicit dynamic types
@@ -57,8 +65,8 @@ class BuiltMapTypeHelper extends CustomMapTypeHelper<BuiltMap> {
   }
 
   @override
-  String serializeToMapExpression(
-      String mapExpression, DartType keyType, DartType valueType, bool isMapExpressionNullable) {
+  String serializeToMapExpression(String mapExpression, DartType keyType,
+      DartType valueType, bool isMapExpressionNullable) {
     final optionalQuestion = isMapExpressionNullable ? '?' : '';
     return '$mapExpression$optionalQuestion.toMap()';
   }

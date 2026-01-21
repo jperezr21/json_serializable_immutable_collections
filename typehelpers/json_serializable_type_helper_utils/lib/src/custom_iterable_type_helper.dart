@@ -9,10 +9,12 @@ import 'package:source_helper/source_helper.dart';
 
 import '../json_serializable_type_helper_utils.dart';
 
-abstract class CustomIterableTypeHelper<T extends Object> extends TypeHelper<TypeHelperContextWithConfig> {
+abstract class CustomIterableTypeHelper<T extends Object>
+    extends TypeHelper<TypeHelperContextWithConfig> {
   TypeChecker get typeChecker;
 
-  CustomIterableTypeHelper() : assert(T != dynamic, 'you need to specify the type parameter, got $T');
+  CustomIterableTypeHelper()
+      : assert(T != dynamic, 'you need to specify the type parameter, got $T');
 
   /// convert the given expression for deserialization.
   /// the expression is Dart code that evaluates to an iterable,
@@ -29,7 +31,8 @@ abstract class CustomIterableTypeHelper<T extends Object> extends TypeHelper<Typ
   ///     return '($expression).toBuiltList()';
   ///   }
   ///```
-  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType);
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType);
 
   /// convert the given expression for serialization.
   /// The expression is dart code that evaluates to your custom iterable type.
@@ -49,13 +52,17 @@ abstract class CustomIterableTypeHelper<T extends Object> extends TypeHelper<Typ
   ///     return expression + optionalQuestion + '.iter.toList()';
   ///   }
   /// ```
-  String serializeToList(String expression, DartType resolvedGenericType, bool isExpressionNullable);
+  String serializeToList(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable);
 
-  DartType genericType(DartType type) => type.typeArgumentsOf(typeChecker)!.single;
+  DartType genericType(DartType type) =>
+      type.typeArgumentsOf(typeChecker)!.single;
 
   @override
-  String? serialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
-    if ((!typeChecker.isAssignableFromType(targetType)) || _isDartCoreIterable<T>()) {
+  String? serialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context) {
+    if ((!typeChecker.isAssignableFromType(targetType)) ||
+        _isDartCoreIterable<T>()) {
       return null;
     }
 
@@ -105,7 +112,8 @@ abstract class CustomIterableTypeHelper<T extends Object> extends TypeHelper<Typ
     }
     final resolvedGenericType = genericType(targetType);
 
-    var itemSubVal = context.deserialize(resolvedGenericType, closureArg)!.toString();
+    var itemSubVal =
+        context.deserialize(resolvedGenericType, closureArg)!.toString();
 
     final targetTypeIsNullable = defaultProvided || targetType.isNullableType;
 
@@ -115,7 +123,9 @@ abstract class CustomIterableTypeHelper<T extends Object> extends TypeHelper<Typ
     // anything fancy
     if (closureArg == itemSubVal && typeChecker.isExactlyType(targetType)) {
       return wrapNullableIfNecessary(
-          expression, deserializeFromIterableExpression(output, resolvedGenericType), targetTypeIsNullable);
+          expression,
+          deserializeFromIterableExpression(output, resolvedGenericType),
+          targetTypeIsNullable);
     }
 
     output = '($output)';

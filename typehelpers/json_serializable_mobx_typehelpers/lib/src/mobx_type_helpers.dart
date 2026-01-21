@@ -5,19 +5,23 @@ import 'package:mobx/mobx.dart';
 import 'package:source_gen/source_gen.dart' show TypeChecker;
 import 'package:source_helper/source_helper.dart';
 
-const mobxMapTypeChecker = TypeChecker.typeNamed(ObservableMap, inPackage: 'mobx');
+const mobxMapTypeChecker =
+    TypeChecker.typeNamed(ObservableMap, inPackage: 'mobx');
 
 class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
   @override
-  TypeChecker get typeChecker => const TypeChecker.typeNamed(ObservableList, inPackage: 'mobx');
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(ObservableList, inPackage: 'mobx');
 
   @override
-  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType) {
     return 'ObservableList<${resolvedGenericType.getDisplayString()}>.of($expression)';
   }
 
   @override
-  String serializeToList(String expression, DartType resolvedGenericType, bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
     ///not needed as ObservableList is Iterable, so it's handled by the default TypeHelper
     throw UnimplementedError();
   }
@@ -25,15 +29,18 @@ class MobxListTypeHelper extends CustomIterableTypeHelper<ObservableList> {
 
 class MobxSetTypeHelper extends CustomIterableTypeHelper<ObservableSet> {
   @override
-  TypeChecker get typeChecker => const TypeChecker.typeNamed(ObservableSet, inPackage: 'mobx');
+  TypeChecker get typeChecker =>
+      const TypeChecker.typeNamed(ObservableSet, inPackage: 'mobx');
 
   @override
-  String deserializeFromIterableExpression(String expression, DartType resolvedGenericType) {
+  String deserializeFromIterableExpression(
+      String expression, DartType resolvedGenericType) {
     return 'ObservableSet<${resolvedGenericType.getDisplayString()}>.of($expression)';
   }
 
   @override
-  String serializeToList(String expression, DartType resolvedGenericType, bool isExpressionNullable) {
+  String serializeToList(String expression, DartType resolvedGenericType,
+      bool isExpressionNullable) {
     ///not needed as ObservableList is Iterable, so it's handled by the default TypeHelper
     throw UnimplementedError();
   }
@@ -44,14 +51,16 @@ class MobxMapTypeHelper extends CustomMapTypeHelper<ObservableMap> {
   TypeChecker get typeChecker => mobxMapTypeChecker;
 
   @override
-  String deserializeFromMapExpression(String mapExpression, DartType keyType, DartType valueType) {
-    final prefix = 'ObservableMap<${keyType.getDisplayString()},${valueType.getDisplayString()}>.of';
+  String deserializeFromMapExpression(
+      String mapExpression, DartType keyType, DartType valueType) {
+    final prefix =
+        'ObservableMap<${keyType.getDisplayString()},${valueType.getDisplayString()}>.of';
     return '$prefix($mapExpression)';
   }
 
   @override
-  String serializeToMapExpression(
-      String mapExpression, DartType keyType, DartType valueType, bool isMapExpressionNullable) {
+  String serializeToMapExpression(String mapExpression, DartType keyType,
+      DartType valueType, bool isMapExpressionNullable) {
     return mapExpression;
 
     /// [ObservableMap] has MapMixin this should be enough?
@@ -62,7 +71,8 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
   const MobxObservableTypeHelper();
 
   @override
-  Object? serialize(DartType targetType, String expression, TypeHelperContextWithConfig context) {
+  Object? serialize(DartType targetType, String expression,
+      TypeHelperContextWithConfig context) {
     if (observableTypeChecker.isExactlyType(targetType)) {
       final typeArg = targetType.typeArgumentsOf(observableTypeChecker)!.single;
       final optionalQuestion = targetType.isNullableType ? '?' : '';
@@ -82,11 +92,13 @@ class MobxObservableTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     if (observableTypeChecker.isExactlyType(targetType)) {
       final typeArg = targetType.typeArgumentsOf(observableTypeChecker)!.single;
       final nullable = targetType.isNullableType || defaultProvided;
-      return wrapNullableIfNecessary(expression, 'Observable(${context.deserialize(typeArg, expression)})', nullable);
+      return wrapNullableIfNecessary(expression,
+          'Observable(${context.deserialize(typeArg, expression)})', nullable);
     }
 
     return null;
   }
 }
 
-const observableTypeChecker = TypeChecker.typeNamed(Observable, inPackage: 'mobx');
+const observableTypeChecker =
+    TypeChecker.typeNamed(Observable, inPackage: 'mobx');
