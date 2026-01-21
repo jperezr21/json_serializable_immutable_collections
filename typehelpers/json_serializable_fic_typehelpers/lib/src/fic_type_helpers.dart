@@ -148,7 +148,6 @@ class FICListMapTypeHelper extends CustomMapTypeHelper<ListMap> {
 }
 
 class FICIMapOfSetsTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
-  @override
   final TypeChecker typeChecker = const TypeChecker.typeNamed(
     IMapOfSets,
     inPackage: 'fast_immutable_collections',
@@ -208,7 +207,6 @@ class FICIMapOfSetsTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
     final keyType = _getKeyType(targetType);
     final valueType = _getValueType(targetType);
     final targetTypeIsNullable = targetType.isNullableType || defaultProvided;
-    final optionalQuestion = targetTypeIsNullable ? '?' : '';
 
     checkSafeKeyType(expression, keyType);
 

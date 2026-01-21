@@ -14,6 +14,7 @@ dependencies:
   json_serializable: ^6.11.4
   json_serializable_type_helper_utils: ^6.0.2
   analyzer: ^10.0.1
+  source_helper: ^1.2.1
 
 dev_dependencies:
   lints: ^6.0.0
