@@ -13,7 +13,7 @@ resolution: workspace
 dependencies:
   json_annotation: ^4.3.0
   built_collection: ^5.0.0
-  fast_immutable_collections: ^2.0.2
+  fast_immutable_collections: ^11.1.0
   kt_dart: ^1.1.0
   mobx: ^2.5.0
   build: ^4.0.4
@@ -22,9 +22,9 @@ dependencies:
   json_serializable_kt_typehelpers: ^4.1.2
   json_serializable_fic_typehelpers: ^2.2.1
   json_serializable_mobx_typehelpers: ^3.2.2
-  json_serializable: ^6.9.4
+  json_serializable: ^6.11.4
 
 dev_dependencies:
-  lints: ^5.1.1
+  lints: ^6.0.0
   test: ^1.14.4
   build_runner: ^2.4.15

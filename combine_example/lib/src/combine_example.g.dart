@@ -20,6 +20,6 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
 Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
   'builtList': instance.builtList.toList(),
   'ktSet': instance.ktSet.iter.toList(),
-  'iList': instance.iList.toList(),
+  'iList': instance.iList.toJson((value) => value),
   'mobxList': instance.mobxList,
 };

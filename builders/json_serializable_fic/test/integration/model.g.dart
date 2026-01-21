@@ -58,9 +58,9 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) => MyModel(
 );
 
 Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
-  'myList': instance.myList.toList(),
-  'myString': instance.myString.toList(),
-  'myNested': instance.myNested.map((e) => e.toJson()).toList(),
+  'myList': instance.myList.toJson((value) => value),
+  'myString': instance.myString.toJson((value) => value),
+  'myNested': instance.myNested.toJson((value) => value.toJson()),
   'normalList': instance.normalList,
   'normalSet': instance.normalSet.toList(),
   'builtMap': instance.builtMap.unlockLazy.map(
@@ -70,11 +70,13 @@ Map<String, dynamic> _$MyModelToJson(MyModel instance) => <String, dynamic>{
   'builtMapNested': instance.builtMapNested.unlockLazy.map(
     (k, e) => MapEntry(k.toString(), e.toJson()),
   ),
-  'nullList': instance.nullList?.toList(),
-  'listWithNullable': instance.listWithNullable.toList(),
-  'nullablelistWithNullable': instance.nullablelistWithNullable?.toList(),
-  'nullSet': instance.nullSet?.toList(),
-  'nullableSet': instance.nullableSet.toList(),
+  'nullList': instance.nullList?.toJson((value) => value),
+  'listWithNullable': instance.listWithNullable.toJson((value) => value),
+  'nullablelistWithNullable': instance.nullablelistWithNullable?.toJson(
+    (value) => value,
+  ),
+  'nullSet': instance.nullSet?.toJson((value) => value),
+  'nullableSet': instance.nullableSet.toJson((value) => value),
   'nullMap': instance.nullMap?.unlockLazy,
   'nullableMap': instance.nullableMap.unlockLazy,
   'dynamicMap': instance.dynamicMap.unlockLazy,

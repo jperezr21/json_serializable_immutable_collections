@@ -1,3 +1,9 @@
+## 1.1.3
+
+- **CHORE**: Update `fast_immutable_collections` to ^11.1.0
+- **CHORE**: Update `json_serializable` to ^6.11.4
+- **CHORE**: Update `lints` to ^6.0.0
+
 ## 1.1.2
 
 - **CHORE**: Update `build`, `source_gen` and `analyzer` dependencies

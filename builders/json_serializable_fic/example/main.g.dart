@@ -13,5 +13,5 @@ Model _$ModelFromJson(Map<String, dynamic> json) => Model(
 );
 
 Map<String, dynamic> _$ModelToJson(Model instance) => <String, dynamic>{
-  'myIntList': instance.myIntList.toList(),
+  'myIntList': instance.myIntList.toJson((value) => value),
 };

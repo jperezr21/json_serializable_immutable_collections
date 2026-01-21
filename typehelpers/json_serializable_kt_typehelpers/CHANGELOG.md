@@ -1,3 +1,7 @@
+## 4.1.3
+
+- **CHORE**: Update `lints` to ^6.0.0
+
 ## 4.1.2
 
 - **CHORE**: Update `source_gen` and `analyzer` dependencies
