@@ -181,7 +181,8 @@ class FICIMapOfSetsTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     // Serialize each Set<V> value to List<V>
     final subFieldValue = context.serialize(valueType, closureArg);
-    final subKeyValue = forType(keyType)?.serialize(keyType, keyParam, false) ??
+    final subKeyValue =
+        forType(keyType)?.serialize(keyType, keyParam, false) ??
         context.serialize(keyType, keyParam);
 
     if (closureArg == subFieldValue && keyParam == subKeyValue) {
@@ -213,7 +214,9 @@ class FICIMapOfSetsTypeHelper extends TypeHelper<TypeHelperContextWithConfig> {
 
     final itemSubValObj = context.deserialize(valueType, closureArg);
     final itemSubVal = itemSubValObj.toString();
-    final mapCast = context.config.anyMap ? 'as Map' : 'as Map<String, dynamic>';
+    final mapCast = context.config.anyMap
+        ? 'as Map'
+        : 'as Map<String, dynamic>';
 
     String keyUsage;
     if (keyType.isEnum) {
