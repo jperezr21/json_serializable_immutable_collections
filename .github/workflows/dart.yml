@@ -23,11 +23,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3.2
+        with:
+          flavor: ${{ matrix.channel }}
 
       - name: Install dependencies
         run: |
-          fvm dart pub global activate melos
+          dart pub global activate melos
           melos bootstrap
           melos run postbootstrap
         
@@ -36,7 +38,7 @@ jobs:
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       - name: Verify formatting
-        run: fvm dart format --output=none --set-exit-if-changed .
+        run: dart format --output=none --set-exit-if-changed .
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
